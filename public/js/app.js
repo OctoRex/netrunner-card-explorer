@@ -1,19 +1,4 @@
 var app = angular.module('app', []);
-
-app.filter('side', function(){
-  return function (input, side) {
-    input = input || [];
-    var out = [];
-    for (var i = 0; i < input.length; i++) {
-      if (input[i].side_code == side){
-        out.push(input[i]);
-      }
-    }
-    
-    return out;
-  }
-});
-
 app.controller('CardsCtrl', function($scope, sideFilter){
   
   $scope.fullSet = window.cards;
@@ -60,5 +45,18 @@ app.controller('CardsCtrl', function($scope, sideFilter){
   
   $scope.changeSide = function(side) {
     $scope.cards = sideFilter($scope.fullSet, side);
+  }
+});
+app.filter('side', function(){
+  return function (input, side) {
+    input = input || [];
+    var out = [];
+    for (var i = 0; i < input.length; i++) {
+      if (input[i].side_code == side){
+        out.push(input[i]);
+      }
+    }
+    
+    return out;
   }
 });
