@@ -1,0 +1,21 @@
+{
+  "name": "BlacKat Card Explorer",
+  "version": "0.0.1",
+  "description": "A convenient way to browser Netrunner Cards",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OctoRex/netrunner-card-explorer.git"
+  },
+  "author": "Iain Kydd",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OctoRex/netrunner-card-explorer/issues"
+  },
+  "homepage": "https://github.com/OctoRex/netrunner-card-explorer#readme",
+  "devDependencies": {
+    "gulp": "^3.9.0"
+  }
+}

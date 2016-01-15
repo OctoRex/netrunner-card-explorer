@@ -1,0 +1,21 @@
+<!DOCTYPE>
+<html>
+  <head><script type="text/javascript" src="js/cards.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+    <script src="js/app.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  </head>
+  <body ng-app="app">
+    <div ng-controller="CardsCtrl" >
+    <button ng-click="changeSide('corp')">Corp</button>
+    <button ng-click="changeSide('runner')">Runner</button>
+    <select ng-model="sort.option" ng-options="option.value as option.title for option in sort.options" ng-change="sort.change(sort.option)">
+    </select>
+    <div>
+      <span ng-repeat="card in cards | orderBy:sort.filter">
+        <img src="http://netrunnerdb.com{{card.imagesrc}}" />
+      </span>
+    </div>
+  </div>
+  </body>
+</html>
