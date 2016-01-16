@@ -1,0 +1,25 @@
+#controls {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20em;
+  min-height: 100%;
+  sides {
+    h4 {
+      display: inline-block;
+    }
+  }
+}
+
+#cards {
+  position: absolute;
+  top: 0;
+  left: 24em;
+  .card-tile {
+    margin: 5px;
+    display: inline-block;
+    img {
+      width: 14em;
+    }
+  }
+}
