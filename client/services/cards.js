@@ -26,40 +26,25 @@ app.service('CardsSvc', function(sideFilter){
     return cards;
   }
   
-  var initSets = function(input) {
-    var setCodes = ['draft'];
-    var sets = {
-      all: [],
-      selected: []
-    };
-    
-    for (var i = 0; i < input.length; i++) {
-      var card = input[i];
-      if (setCodes.indexOf(card.set_code) == -1) {
-        setCodes.push(card.set_code);
-        sets.all.push({value: card.set_code, label: card.setname});
-        sets.selected.push(card.set_code);
-      }
-    }
-    
-    return sets;
-  }
-  
-  this.cards = initCards(window.cards);
-  this.sets = initSets(window.cards);
+  this.cards = initCards(window.data.cards);
   
   var typeOrder = ['identity', 'program', 'hardware', 'resource', 
-  'event', 'agenda', 'ice', 'asset', 'upgrade', 'operation'];
+    'event', 'agenda', 'ice', 'asset', 'upgrade', 'operation'];
   
   var typeSort = function(card) {
     return typeOrder.indexOf(card.type_code);
+  }
+  
+  var costSort = function(card) {
+    return (typeof card.cost == 'undefined') ? 1 : card.cost * -1;
   }
   
   this.sort = {
     methods : {
       title: ['title'],
       type: [typeSort, 'subtype_code', 'title'],
-      faction: ['faction', typeSort, 'title']
+      faction: ['faction', typeSort, 'title'],
+      cost: [costSort, 'faction', typeSort, 'title']
     } 
   }
 
@@ -75,13 +60,4 @@ app.service('CardsSvc', function(sideFilter){
   
   // set the corp to show first
   this.setSide('corp');
-  
-  this.setSets = function(updates) {
-    this.sets.selected = [];
-    for(set in updates) {
-      if (updates[set]) {
-        this.sets.selected.push(set);
-      }
-    }
-  }
 });

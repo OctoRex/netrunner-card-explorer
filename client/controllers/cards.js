@@ -1,8 +1,12 @@
-app.controller('CardsCtrl', function($scope, CardsSvc){
+app.controller('CardsCtrl', function($scope, CardsSvc, SetsSvc, TypesSvc, SubtypesSvc){
 
   $scope.cards = CardsSvc.cards;
   
   $scope.sort = CardsSvc.sort;
   
-  $scope.sets = CardsSvc.sets;
+  $scope.sets = SetsSvc.sets;
+  
+  $scope.types = TypesSvc.types;
+  
+  $scope.subtypes = SubtypesSvc.subtypes;
 });

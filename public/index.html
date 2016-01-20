@@ -1,15 +1,17 @@
 <!DOCTYPE>
 <html>
-  <head><script type="text/javascript" src="js/cards.js"></script>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
-    <script src="js/app.js"></script>
+    <script type="text/javascript" src="js/data.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Rajdhani' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="css/app.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   </head>
   <body ng-app="app">
     <div>
       <div id="controls" ng-controller="ControlsCtrl">
-        <h3>BlacKat</h3>
+        <h2 id="title">BlacKat</h2>
         <div id="sides">
           <a href="javascript:void(0)" ng-click="changeSide('corp')">Corp</a>
           <a href="javascript:void(0)" ng-click="changeSide('runner')">Runner</a>
@@ -25,9 +27,30 @@
             </label>
           </div>
         </div>
+        <h4 ng-click="toggleTypes()">Types</h4>
+        <div id="types">
+          <div class="checkbox" ng-repeat="type in types.all" ng-show="showTypes">
+            <label>
+              <input type="checkbox" ng-model="selectedTypes[type.value]" ng-change="updateTypes(selectedTypes)"/> {{type.label}}
+            </label>
+          </div>
+        </div>
+        <h4 ng-click="toggleSubtypes()">Subtypes</h4>
+        <div id="subtypes">
+          <div class="checkbox" ng-repeat="subtype in subtypes.all" ng-show="showSubtypes">
+            <label>
+              <input type="checkbox" ng-model="selectedSubtypes[subtype.value]" ng-change="updateSubtypes(selectedSubtypes)"/> {{subtype.label}}
+            </label>
+          </div>
+        </div>
+        <h4>Factions!!</h4>
+        <h4>Solo/Mute</h4>
+        <h4>Sort by Sets</h4>
+        <h4>Search</h4>
+        <h4>Only show appropriate Types! (corp/runner)</h4>
       </div>
       <div id="cards" ng-controller="CardsCtrl">
-        <div class="card-tile" ng-repeat="card in cards.display | orderBy:sort.current | sets:sets.selected">
+        <div class="card-tile" ng-repeat="card in cards.display | orderBy:sort.current | sets:sets.selected | types:types.selected | subtypes:subtypes.selected">
           <img src="http://netrunnerdb.com{{card.imagesrc}}" />
         </div>
       </div>

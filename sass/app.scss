@@ -1,25 +1,58 @@
+@mixin card-dimensions($width) {
+  width: $width + px;
+  height: ($width * 419 / 300) + px;
+}
+
+body {
+  font-size: 14px;
+  font-family: 'Rajdhani', sans-serif;
+}
+
+#title {
+  font-weight:800;
+}
+
 #controls {
+  padding-left: 15px;
   position: absolute;
   top: 0;
   left: 0;
-  width: 20em;
+  width: 14em;
   min-height: 100%;
   sides {
     h4 {
       display: inline-block;
     }
   }
+  .checkbox {
+    margin: 0px 0px;
+  }
 }
 
 #cards {
   position: absolute;
   top: 0;
-  left: 24em;
+  left: 16em;
+  margin-top: 5em;
+  margin-bottom: 5em;
   .card-tile {
     margin: 5px;
-    display: inline-block;
+    @include card-dimensions(200);
+    overflow:visible;
+    float:left;
+    display:block;
+  
     img {
-      width: 14em;
+      position:relative;
+      width: 200px;
+    }
+    
+    img:hover {
+      width: 300px;
+      height: 418px;
+      left:-50px;
+      top: (-1 * 50 * (418 / 300)) + px;
+      z-index:9999;
     }
   }
 }

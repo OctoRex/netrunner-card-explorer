@@ -18,6 +18,14 @@
   "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
-    "gulp-sass": "^2.1.1"
+    "gulp-file": "^0.2.0",
+    "gulp-insert": "^0.5.0",
+    "gulp-modify": "^0.1.1",
+    "gulp-remote-src": "^0.4.0",
+    "gulp-sass": "^2.1.1",
+    "through2": "^2.0.0"
+  },
+  "dependencies": {
+    "gulp-rename": "^1.2.2"
   }
 }
