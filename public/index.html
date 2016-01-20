@@ -27,6 +27,14 @@
             </label>
           </div>
         </div>
+        <h4 ng-click="toggleFactions()">Factions</h4>
+        <div id="sets">
+          <div class="checkbox" ng-repeat="faction in factions.all" ng-show="showFactions">
+            <label>
+              <input type="checkbox" ng-model="selectedFactions[faction.value]" ng-change="updateFactions(selectedFactions)"/> {{faction.label}}
+            </label>
+          </div>
+        </div>
         <h4 ng-click="toggleTypes()">Types</h4>
         <div id="types">
           <div class="checkbox" ng-repeat="type in types.all" ng-show="showTypes">
@@ -43,14 +51,13 @@
             </label>
           </div>
         </div>
-        <h4>Factions!!</h4>
         <h4>Solo/Mute</h4>
         <h4>Sort by Sets</h4>
         <h4>Search</h4>
         <h4>Only show appropriate Types! (corp/runner)</h4>
       </div>
       <div id="cards" ng-controller="CardsCtrl">
-        <div class="card-tile" ng-repeat="card in cards.display | orderBy:sort.current | sets:sets.selected | types:types.selected | subtypes:subtypes.selected">
+        <div class="card-tile" ng-repeat="card in cards.display | orderBy:sort.current | sets:sets.selected | types:types.selected | subtypes:subtypes.selected | factions:factions.selected">
           <img src="http://netrunnerdb.com{{card.imagesrc}}" />
         </div>
       </div>

@@ -1,4 +1,4 @@
-app.controller('ControlsCtrl', function($scope, CardsSvc, SetsSvc, TypesSvc, SubtypesSvc){
+app.controller('ControlsCtrl', function($scope, CardsSvc, SetsSvc, TypesSvc, SubtypesSvc, FactionsSvc){
   
   $scope.sortOptions = [
     {
@@ -16,6 +16,10 @@ app.controller('ControlsCtrl', function($scope, CardsSvc, SetsSvc, TypesSvc, Sub
     {
       title: 'Cost', 
       value: 'cost'
+    },
+    {
+      title: 'Set Order', 
+      value: 'sets'
     }
   ];
   
@@ -94,5 +98,26 @@ app.controller('ControlsCtrl', function($scope, CardsSvc, SetsSvc, TypesSvc, Sub
   
   $scope.toggleSubtypes = function() {
     $scope.showSubtypes = !$scope.showSubtypes;
+  }
+  
+  
+  
+  
+  $scope.factions = FactionsSvc.factions;
+  
+  $scope.selectedFactions = {};
+  
+  for (var i = 0; i < $scope.factions.all.length; i++) {
+    $scope.selectedFactions[$scope.factions.all[i].value] = true;
+  }
+  
+  $scope.updateFactions = function(updates) {
+    FactionsSvc.setFactions(updates);
+  }
+  
+  $scope.showFactions = false;
+  
+  $scope.toggleFactions = function() {
+    $scope.showFactions = !$scope.showFactions;
   }
 });

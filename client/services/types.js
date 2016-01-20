@@ -1,4 +1,4 @@
-app.service('TypesSvc', function(sideFilter){
+app.service('TypesSvc', function(){
   
   var initTypes = function(input) {
     var typeCodes = [];
@@ -8,18 +8,18 @@ app.service('TypesSvc', function(sideFilter){
     };
     
     for (var i = 0; i < input.length; i++) {
-      var card = input[i];
-      if (typeCodes.indexOf(card.type_code) == -1) {
-        typeCodes.push(card.type_code);
-        types.all.push({value: card.type_code, label: card.type});
-        types.selected.push(card.type_code);
+      var type = input[i];
+      if (typeCodes.indexOf(type.value) == -1) {
+        typeCodes.push(type.value);
+        types.all.push(type);
+        types.selected.push(type.value);
       }
     }
     
     return types;
   }
   
-  this.types = initTypes(window.data.cards);
+  this.types = initTypes(window.data.types);
   
   this.setTypes = function(updates) {
     this.types.selected = [];

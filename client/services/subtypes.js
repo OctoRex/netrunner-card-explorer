@@ -1,4 +1,4 @@
-app.service('SubtypesSvc', function(sideFilter){
+app.service('SubtypesSvc', function(){
   
   var initSubtypes = function(input) {
     var subtypeCodes = [];
@@ -8,24 +8,18 @@ app.service('SubtypesSvc', function(sideFilter){
     };
     
     for (var i = 0; i < input.length; i++) {
-      var card = input[i];
-      if (card.subtype_code) {
-        var codes = card.subtype_code.split(' - ');
-        var names = card.subtype.split(' - ');
-        for (var j = 0; j < codes.length; j++) {
-          if (subtypeCodes.indexOf(codes[j]) == -1) {
-            subtypeCodes.push(codes[j]);
-            subtypes.all.push({value: codes[j], label: names[j]});
-            subtypes.selected.push(codes[j]);
-          }
-        }
+      var subtype = input[i];
+      if (subtypeCodes.indexOf(subtype.value) == -1) {
+        subtypeCodes.push(subtype.value);
+        subtypes.all.push(subtype);
+        subtypes.selected.push(subtype.value);
       }
     }
     
     return subtypes;
   }
   
-  this.subtypes = initSubtypes(window.data.cards);
+  this.subtypes = initSubtypes(window.data.subtypes);
   
   this.setSubtypes = function(updates) {
     this.subtypes.selected = [];

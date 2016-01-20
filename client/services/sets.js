@@ -1,7 +1,7 @@
-app.service('SetsSvc', function(sideFilter){
+app.service('SetsSvc', function(){
   
   var initSets = function(input) {
-    var setCodes = ['draft'];
+    var setCodes = [];
     var sets = {
       all: [],
       selected: []

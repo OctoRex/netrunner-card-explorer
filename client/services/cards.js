@@ -44,7 +44,8 @@ app.service('CardsSvc', function(sideFilter){
       title: ['title'],
       type: [typeSort, 'subtype_code', 'title'],
       faction: ['faction', typeSort, 'title'],
-      cost: [costSort, 'faction', typeSort, 'title']
+      cost: [costSort, 'faction', typeSort, 'title'],
+      sets: 'code'
     } 
   }
 
