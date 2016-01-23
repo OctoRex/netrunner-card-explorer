@@ -1,4 +1,19 @@
 module.exports = {
+  
+  cards : function(cards) {
+    
+    var out = [];
+    
+    for (var i = 0; i < cards.length; i++) {
+      var card = cards[i];
+      if (card.imagesrc) {
+        out.push(card);
+      }
+    }
+    
+    return out;
+  },
+  
   sets : function(cards) {
     var setCodes = ['draft'];
     var sets = [];
@@ -51,7 +66,7 @@ module.exports = {
   },
 
   factions : function(cards) {
-    var factionCodes = ['neutral'];
+    var factionCodes = [];
     var factions = [];
     
     for (var i = 0; i < cards.length; i++) {

@@ -1,4 +1,4 @@
-app.controller('ControlsCtrl', function($scope, CardsSvc, SetsSvc, TypesSvc, SubtypesSvc, FactionsSvc){
+app.controller('ControlsCtrl', function($scope, CardsSvc, SetsSvc, TypesSvc, SubtypesSvc, FactionsSvc, SearchSvc){
   
   $scope.sortOptions = [
     {
@@ -41,12 +41,28 @@ app.controller('ControlsCtrl', function($scope, CardsSvc, SetsSvc, TypesSvc, Sub
   
   $scope.selectedSets = {};
   
-  for (var i = 0; i < $scope.sets.all.length; i++) {
-    $scope.selectedSets[$scope.sets.all[i].value] = true;
+  $scope.checkAllSets = function() {
+    for (var i = 0; i < $scope.sets.all.length; i++) {
+      $scope.selectedSets[$scope.sets.all[i].value] = true;
+    }
   }
   
-  $scope.updateSets = function(updates) {
-    SetsSvc.setSets(updates);
+  $scope.checkAllSets();
+  
+  $scope.allSets = function(){
+    $scope.checkAllSets();
+    $scope.updateSets();
+  }
+  
+  $scope.noSets = function(){
+    for (set in $scope.selectedSets) {
+      $scope.selectedSets[set] = false;
+    }
+    $scope.updateSets();
+  }
+  
+  $scope.updateSets = function() {
+    SetsSvc.setSets($scope.selectedSets);
   }
   
   $scope.showSets = false;
@@ -63,18 +79,34 @@ app.controller('ControlsCtrl', function($scope, CardsSvc, SetsSvc, TypesSvc, Sub
   
   $scope.selectedTypes = {};
   
-  for (var i = 0; i < $scope.types.all.length; i++) {
-    $scope.selectedTypes[$scope.types.all[i].value] = true;
+  $scope.checkAllTypes = function() {
+    for (var i = 0; i < $scope.types.all.length; i++) {
+      $scope.selectedTypes[$scope.types.all[i].value] = true;
+    }
   }
   
-  $scope.updateTypes = function(updates) {
-    TypesSvc.setTypes(updates);
+  $scope.checkAllTypes();
+  
+  $scope.updateTypes = function() {
+    TypesSvc.setTypes($scope.selectedTypes);
   }
   
   $scope.showTypes = false;
   
   $scope.toggleTypes = function() {
     $scope.showTypes = !$scope.showTypes;
+  }
+  
+  $scope.allTypes = function(){
+    $scope.checkAllTypes();
+    $scope.updateTypes();
+  }
+  
+  $scope.noTypes = function(){
+    for (type in $scope.selectedTypes) {
+      $scope.selectedTypes[type] = false;
+    }
+    $scope.updateTypes();
   }
   
   
@@ -86,18 +118,34 @@ app.controller('ControlsCtrl', function($scope, CardsSvc, SetsSvc, TypesSvc, Sub
   
   $scope.selectedSubtypes = {};
   
-  for (var i = 0; i < $scope.subtypes.all.length; i++) {
-    $scope.selectedSubtypes[$scope.subtypes.all[i].value] = true;
+  $scope.checkAllSubtypes = function(){
+    for (var i = 0; i < $scope.subtypes.all.length; i++) {
+      $scope.selectedSubtypes[$scope.subtypes.all[i].value] = true;
+    }
   }
   
-  $scope.updateSubtypes = function(updates) {
-    SubtypesSvc.setSubtypes(updates);
+  $scope.checkAllSubtypes();
+  
+  $scope.updateSubtypes = function() {
+    SubtypesSvc.setSubtypes($scope.selectedSubtypes);
   }
   
   $scope.showSubtypes = false;
   
   $scope.toggleSubtypes = function() {
     $scope.showSubtypes = !$scope.showSubtypes;
+  }
+  
+  $scope.allSubtypes = function(){
+    $scope.checkAllSubtypes();
+    $scope.updateSubtypes();
+  }
+  
+  $scope.noSubtypes = function(){
+    for (subtype in $scope.selectedSubtypes) {
+      $scope.selectedSubtypes[subtype] = false;
+    }
+    $scope.updateSubtypes();
   }
   
   
@@ -120,4 +168,6 @@ app.controller('ControlsCtrl', function($scope, CardsSvc, SetsSvc, TypesSvc, Sub
   $scope.toggleFactions = function() {
     $scope.showFactions = !$scope.showFactions;
   }
+  
+  $scope.search = SearchSvc.search;
 });

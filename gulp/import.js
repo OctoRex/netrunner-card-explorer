@@ -12,8 +12,8 @@ gulp.task('import', function(){
     .pipe(intercept(function(file){
       
       var contents = file.contents.toString();
-      var cards = JSON.parse(file.contents.toString());
-      contents = 'var data = data || {}; data.cards = ' + contents + ";\n";
+      var cards = parser.cards(JSON.parse(file.contents.toString()));
+      contents = 'var data = data || {}; data.cards = ' + JSON.stringify(cards) + ";\n";
       contents += 'data.sets = ' + JSON.stringify(parser.sets(cards)) + ";\n";
       contents += 'data.types = ' + JSON.stringify(parser.types(cards)) + ";\n";
       contents += 'data.subtypes = ' + JSON.stringify(parser.subtypes(cards)) + ";\n";
@@ -26,6 +26,6 @@ gulp.task('import', function(){
     .pipe(gulp.dest('public/js'));
 });
 
-gulp.task('watch:import', function() {
+gulp.task('watch:import', ['import'], function() {
   gulp.watch('gulp/import.js', ['import']);
 });

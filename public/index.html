@@ -19,45 +19,65 @@
         <div id="sort" class="form-group">
           <select class="form-control" ng-model="sortOption" ng-options="option.value as option.title for option in sortOptions" ng-change="changeSort(sortOption)"></select>
         </div>
+        <div id="search" class="form-group">
+          <input type="text" ng-model="search.term" />
+        </div>
         <h4 ng-click="toggleSets()">Sets</h4>
-        <div id="sets">
-          <div class="checkbox" ng-repeat="set in sets.all" ng-show="showSets">
+        <div id="sets" ng-show="showSets">
+          <div class="mass-selector">
+            <span ng-click="allSets();">All</span> | <span ng-click="noSets()">None</span> 
+          </div>
+          <div class="checkbox" ng-repeat="set in sets.all">
             <label>
-              <input type="checkbox" ng-model="selectedSets[set.value]" ng-change="updateSets(selectedSets)"/> {{set.label}}
+              <input type="checkbox" ng-model="selectedSets[set.value]" ng-change="updateSets()"/> {{set.label}}
             </label>
           </div>
         </div>
         <h4 ng-click="toggleFactions()">Factions</h4>
-        <div id="sets">
-          <div class="checkbox" ng-repeat="faction in factions.all" ng-show="showFactions">
+        <div id="factions" ng-show="showFactions">
+          <div class="checkbox" ng-repeat="faction in factions.all">
             <label>
-              <input type="checkbox" ng-model="selectedFactions[faction.value]" ng-change="updateFactions(selectedFactions)"/> {{faction.label}}
+              <input type="checkbox" ng-model="selectedFactions[faction.value]" ng-change="updateFactions()"/> {{faction.label}}
             </label>
           </div>
         </div>
         <h4 ng-click="toggleTypes()">Types</h4>
-        <div id="types">
-          <div class="checkbox" ng-repeat="type in types.all" ng-show="showTypes">
+        <div id="types" ng-show="showTypes">
+          <div class="mass-selector">
+            <span ng-click="allTypes()">All</span> | <span ng-click="noTypes()">None</span> 
+          </div>
+          <div class="checkbox" ng-repeat="type in types.all">
             <label>
-              <input type="checkbox" ng-model="selectedTypes[type.value]" ng-change="updateTypes(selectedTypes)"/> {{type.label}}
+              <input type="checkbox" ng-model="selectedTypes[type.value]" ng-change="updateTypes()"/> {{type.label}}
             </label>
           </div>
         </div>
         <h4 ng-click="toggleSubtypes()">Subtypes</h4>
-        <div id="subtypes">
-          <div class="checkbox" ng-repeat="subtype in subtypes.all" ng-show="showSubtypes">
+        <div id="subtypes" ng-show="showSubtypes">
+          <div class="mass-selector">
+            <span ng-click="allSubtypes()">All</span> | <span ng-click="noSubtypes()">None</span> 
+          </div>
+          <div class="checkbox" ng-repeat="subtype in subtypes.all">
             <label>
               <input type="checkbox" ng-model="selectedSubtypes[subtype.value]" ng-change="updateSubtypes(selectedSubtypes)"/> {{subtype.label}}
             </label>
           </div>
         </div>
-        <h4>Solo/Mute</h4>
-        <h4>Sort by Sets</h4>
+        <hr />
+        <h3>Todo</h3>
         <h4>Search</h4>
-        <h4>Only show appropriate Types! (corp/runner)</h4>
+        <h4>Only show appropriate filter Types! (corp/runner)</h4>
+        <h4>Sort by Strength?</h4>
+        <h4>Conditional Filters (like the above)?</h4>
+        <h4>Make filters not repetitive</h4>
+        <h4>Make markup not repetitive</h4>
+        <h4>Cards with no sub-types are not appearing.</h4>
+        <h4>One card is a weird dud, no img etc (runner side).</h4>
+        <h4>Sort filters alpha</h4>
+        <h4>Sort caching stuff for NRDB</h4>
       </div>
       <div id="cards" ng-controller="CardsCtrl">
-        <div class="card-tile" ng-repeat="card in cards.display | orderBy:sort.current | sets:sets.selected | types:types.selected | subtypes:subtypes.selected | factions:factions.selected">
+        <div class="card-tile" ng-repeat="card in cards.display | orderBy:sort.current | sets:sets.selected | types:types.selected | subtypes:subtypes.selected | factions:factions.selected | filter:{title:search.term}">
           <img src="http://netrunnerdb.com{{card.imagesrc}}" />
         </div>
       </div>

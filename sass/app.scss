@@ -36,7 +36,7 @@ body {
   margin-top: 5em;
   margin-bottom: 5em;
   .card-tile {
-    margin: 5px;
+    margin: 3px;
     @include card-dimensions(200);
     overflow:visible;
     float:left;
