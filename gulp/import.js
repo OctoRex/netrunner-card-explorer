@@ -1,13 +1,31 @@
 var gulp = require('gulp');
+var fs = require('fs');
 var rename = require('gulp-rename');
 var intercept = require('gulp-intercept');
 var remoteSrc = require('gulp-remote-src');
 var parser = require('../server/data-parser.js');
 
 gulp.task('import', function(){
+  
+  var headers = {}
+  
+  try {
+    var stat = fs.statSync('public/js/data.js');
+    var yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    // headers['If-Modified-Since'] = yesterday.toUTCString();
+  } catch(e) {
+    // do nothing
+  }
     
   remoteSrc('api/cards/', {
-      base: 'http://netrunnerdb.com/'
+      base: 'http://netrunnerdb.com/',
+      requestOptions: {
+        headers
+      }
+    })
+    .on('error', function(err) {
+      console.log(err);
     })
     .pipe(intercept(function(file){
       

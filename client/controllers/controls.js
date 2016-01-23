@@ -24,12 +24,14 @@ app.controller('ControlsCtrl', function($scope, CardsSvc, SetsSvc, TypesSvc, Sub
   ];
   
   $scope.sortOption = 'faction';
+  $scope.currentSide = 'corp';
   
   $scope.changeSort = function(value){
     CardsSvc.changeSort(value);
   }
   
   $scope.changeSide = function(side) {
+    $scope.currentSide = side;
     CardsSvc.setSide(side);
   }
   

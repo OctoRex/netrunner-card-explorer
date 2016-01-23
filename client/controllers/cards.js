@@ -13,4 +13,5 @@ app.controller('CardsCtrl', function($scope, CardsSvc, SetsSvc, TypesSvc, Subtyp
   $scope.factions = FactionsSvc.factions;
   
   $scope.search = SearchSvc.search;
+
 });
