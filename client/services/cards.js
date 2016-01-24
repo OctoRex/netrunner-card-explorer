@@ -1,51 +1,40 @@
-app.service('CardsSvc', function(sideFilter){
+app.service('CardsSvc', function(TypesSvc, sideFilter){
   
-  var initCards = function(input) {
-    var cards = {
-      all: [],
-      corp: {
-        all: [],
-        filtered: []
-      },
-      runner: {
-        all: [],
-        filtered: []
-      },
-      display: []
-    }
-    
-    for (var i = 0; i < input.length; i++) {
-      var card = input[i];
-      if (card.set_code != 'draft') {
-        cards.all.push(card);
-        cards[card.side_code].all.push(card);
-        cards[card.side_code].filtered.push(card);
-      }
-    }
-    
-    return cards;
+  var cards = window.data.cards;
+  
+  this.cards = {
+    all: cards,
+    corp: sideFilter(cards, 'corp'),
+    runner: sideFilter(cards, 'runner'),
+    display: []
   }
-  
-  this.cards = initCards(window.data.cards);
-  
-  var typeOrder = ['identity', 'program', 'hardware', 'resource', 
-    'event', 'agenda', 'ice', 'asset', 'upgrade', 'operation'];
   
   var typeSort = function(card) {
-    return typeOrder.indexOf(card.type_code);
+    return TypesSvc.typeOrder.indexOf(card.type_code);
   }
   
-  var costSort = function(card) {
-    return (typeof card.cost == 'undefined') ? 1 : card.cost * -1;
+  var numericSort = function (property) {
+    return function(card) {
+      return (typeof card[property] == 'undefined') ? 1 : card[property] * -1;
+    }
+  }
+  
+  var factionSort = function(card) {
+    return (card.faction_code == 'neutral') ? 'ZZZ' : card.faction;
   }
   
   this.sort = {
     methods : {
-      title: ['title'],
+      title: 'title',
       type: [typeSort, 'subtype_code', 'title'],
-      faction: ['faction', typeSort, 'title'],
-      cost: [costSort, 'faction', typeSort, 'title'],
-      sets: 'code'
+      faction: [factionSort, typeSort, 'title'],
+      cost: [numericSort('cost'), factionSort, typeSort, 'title'],
+      sets: 'code',
+      strength: [numericSort('strength'), typeSort, 'title'] ,
+      trash: [numericSort('trash'), typeSort, 'title'],
+      agenda: [numericSort('agendapoints'), numericSort('advancementcost'), typeSort, 'title'],
+      influence: [numericSort('factioncost'), factionSort, typeSort, 'title'],
+      illustrator: ['illustrator', 'title']
     } 
   }
 
@@ -56,7 +45,7 @@ app.service('CardsSvc', function(sideFilter){
   }
   
   this.setSide = function(side) {
-    this.cards.display = this.cards[side].filtered;
+    this.cards.display = this.cards[side];
   }
   
   // set the corp to show first

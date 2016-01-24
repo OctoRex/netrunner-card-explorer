@@ -2,173 +2,147 @@ app.controller('ControlsCtrl', function($scope, CardsSvc, SetsSvc, TypesSvc, Sub
   
   $scope.sortOptions = [
     {
-      title: 'Alphabetically', 
-      value: 'title'
+      title: 'Sort by Faction', 
+      value: 'faction',
+      side: 'corprunner'
     },
     {
-      title: 'Type', 
-      value: 'type'
+      title: 'Sort by Type', 
+      value: 'type',
+      side: 'corprunner'
     },
     {
-      title: 'Faction', 
-      value: 'faction'
+      title: 'Sort by Name', 
+      value: 'title',
+      side: 'corprunner'
     },
     {
-      title: 'Cost', 
-      value: 'cost'
+      title: 'Sort by Set Order', 
+      value: 'sets',
+      side: 'corprunner'
     },
     {
-      title: 'Set Order', 
-      value: 'sets'
+      title: 'Sort by Cost', 
+      value: 'cost',
+      side: 'corprunner'
+    },
+    {
+      title: 'Sort by Strength', 
+      value: 'strength',
+      side: 'corprunner'
+    },
+    {
+      title: 'Sort by Trash Cost', 
+      value: 'trash',
+      side: 'corp'
+    },
+    {
+      title: 'Sort by Agenda Points', 
+      value: 'agenda',
+      side: 'corp'
+    },
+    {
+      title: 'Sort by Influence Cost', 
+      value: 'influence',
+      side: 'corprunner'
+    },
+    {
+      title: 'Sort by Illustrator', 
+      value: 'illustrator',
+      side: 'corprunner'
     }
   ];
   
   $scope.sortOption = 'faction';
   $scope.currentSide = 'corp';
   
-  $scope.changeSort = function(value){
-    CardsSvc.changeSort(value);
+  $scope.changeSort = function(){
+    CardsSvc.changeSort($scope.sortOption);
   }
   
   $scope.changeSide = function(side) {
     $scope.currentSide = side;
     CardsSvc.setSide(side);
+    var current = $scope.sortOptions.find(function(option) {
+      return option.value == $scope.sortOption;
+    });
+    if (current.side.search(side) == -1) {
+      $scope.sortOption = 'faction';
+      
+      $scope.changeSort();
+    }
   }
   
   
-  
-  
+  var checkAll = function(selected) {
+    return function(item){
+      item.selected = selected;
+    }
+  }
   
   $scope.sets = SetsSvc.sets;
+  $scope.updateSets = SetsSvc.setSets;
   
-  $scope.selectedSets = {};
-  
-  $scope.checkAllSets = function() {
-    for (var i = 0; i < $scope.sets.all.length; i++) {
-      $scope.selectedSets[$scope.sets.all[i].value] = true;
-    }
-  }
-  
-  $scope.checkAllSets();
+  $scope.sets.all.forEach(checkAll(true));;
   
   $scope.allSets = function(){
-    $scope.checkAllSets();
+    $scope.sets.all.forEach(checkAll(true));
     $scope.updateSets();
   }
   
-  $scope.noSets = function(){
-    for (set in $scope.selectedSets) {
-      $scope.selectedSets[set] = false;
-    }
+  $scope.noSets = function() {
+    $scope.sets.all.forEach(checkAll(false));
     $scope.updateSets();
   }
   
-  $scope.updateSets = function() {
-    SetsSvc.setSets($scope.selectedSets);
-  }
-  
-  $scope.showSets = false;
-  
-  $scope.toggleSets = function() {
-    $scope.showSets = !$scope.showSets;
-  }
   
   
-  
- 
   
   $scope.types = TypesSvc.types;
+  $scope.updateTypes = TypesSvc.setTypes;
   
-  $scope.selectedTypes = {};
-  
-  $scope.checkAllTypes = function() {
-    for (var i = 0; i < $scope.types.all.length; i++) {
-      $scope.selectedTypes[$scope.types.all[i].value] = true;
-    }
-  }
-  
-  $scope.checkAllTypes();
-  
-  $scope.updateTypes = function() {
-    TypesSvc.setTypes($scope.selectedTypes);
-  }
-  
-  $scope.showTypes = false;
-  
-  $scope.toggleTypes = function() {
-    $scope.showTypes = !$scope.showTypes;
-  }
+  $scope.types.all.forEach(checkAll(true));;
   
   $scope.allTypes = function(){
-    $scope.checkAllTypes();
+    $scope.types.all.forEach(checkAll(true));
     $scope.updateTypes();
   }
   
-  $scope.noTypes = function(){
-    for (type in $scope.selectedTypes) {
-      $scope.selectedTypes[type] = false;
-    }
+  $scope.noTypes = function() {
+    $scope.types.all.forEach(checkAll(false));
     $scope.updateTypes();
   }
-  
-  
-  
-  
-  
+ 
   
   $scope.subtypes = SubtypesSvc.subtypes;
+  $scope.updateSubtypes = SubtypesSvc.setSubtypes;
   
-  $scope.selectedSubtypes = {};
-  
-  $scope.checkAllSubtypes = function(){
-    for (var i = 0; i < $scope.subtypes.all.length; i++) {
-      $scope.selectedSubtypes[$scope.subtypes.all[i].value] = true;
-    }
-  }
-  
-  $scope.checkAllSubtypes();
-  
-  $scope.updateSubtypes = function() {
-    SubtypesSvc.setSubtypes($scope.selectedSubtypes);
-  }
-  
-  $scope.showSubtypes = false;
-  
-  $scope.toggleSubtypes = function() {
-    $scope.showSubtypes = !$scope.showSubtypes;
-  }
+  $scope.subtypes.all.forEach(checkAll(true));;
   
   $scope.allSubtypes = function(){
-    $scope.checkAllSubtypes();
+    $scope.subtypes.all.forEach(checkAll(true));
     $scope.updateSubtypes();
   }
   
-  $scope.noSubtypes = function(){
-    for (subtype in $scope.selectedSubtypes) {
-      $scope.selectedSubtypes[subtype] = false;
-    }
+  $scope.noSubtypes = function() {
+    $scope.subtypes.all.forEach(checkAll(false));
     $scope.updateSubtypes();
   }
-  
-  
   
   
   $scope.factions = FactionsSvc.factions;
+  $scope.updateFactions = FactionsSvc.setFactions;
   
-  $scope.selectedFactions = {};
+  $scope.factions.all.forEach(checkAll(true));;
   
-  for (var i = 0; i < $scope.factions.all.length; i++) {
-    $scope.selectedFactions[$scope.factions.all[i].value] = true;
+  $scope.allFactions = function(){
+    $scope.factions.all.forEach(checkAll(true));
+    $scope.updateFactions();
   }
   
-  $scope.updateFactions = function(updates) {
-    FactionsSvc.setFactions(updates);
-  }
-  
-  $scope.showFactions = false;
-  
-  $scope.toggleFactions = function() {
-    $scope.showFactions = !$scope.showFactions;
+  $scope.noFactions = function() {
+    $scope.factions.all.forEach(checkAll(false));
+    $scope.updateFactions();
   }
   
   $scope.search = SearchSvc.search;

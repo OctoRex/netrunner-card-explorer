@@ -1,13 +1,7 @@
 app.filter('sets', function(){
-  return function (input, selected) {
-    var l = input.length;
-    var out = [];
-    for (var i = 0; i < l; i++) {
-      var card = input[i];
-      if (selected.indexOf(card.set_code) != -1) {
-        out.push(card);
-      }
-    }
-    return out;
+  return function (cards, selected) {
+    return cards.filter(function(card){
+      return selected.indexOf(card.set_code) != -1;
+    });
   }
 });

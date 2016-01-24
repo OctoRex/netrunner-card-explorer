@@ -1,32 +1,32 @@
 app.service('SubtypesSvc', function(){
   
-  var initSubtypes = function(input) {
-    var subtypeCodes = [];
-    var subtypes = {
-      all: [],
-      selected: []
-    };
-    
-    for (var i = 0; i < input.length; i++) {
-      var subtype = input[i];
-      if (subtypeCodes.indexOf(subtype.value) == -1) {
-        subtypeCodes.push(subtype.value);
-        subtypes.all.push(subtype);
-        subtypes.selected.push(subtype.value);
-      }
-    }
-    
-    return subtypes;
+  this.subtypes = {
+    all: window.data.subtypes,
+    selected: []
   }
   
-  this.subtypes = initSubtypes(window.data.subtypes);
+  this.subtypes.all.forEach(function(subtype){
+    subtype.selected = true;
+  });
   
-  this.setSubtypes = function(updates) {
+  this.subtypes.all.sort(function(a, b){
+    if (a.value == 'none') {
+      return -1;
+    } else if (b.value == 'none') {
+      return 1;
+    } else {
+      return a.label.localeCompare(b.label);
+    }
+  });
+  
+  this.setSubtypes = function() {
     this.subtypes.selected = [];
-    for(subtype in updates) {
-      if (updates[subtype]) {
-        this.subtypes.selected.push(subtype);
+    this.subtypes.all.forEach(function(subtype){
+      if (subtype.selected) {
+        this.subtypes.selected.push(subtype.value);
       }
-    }
+    }, this);
   }
+  
+  this.setSubtypes();
 });

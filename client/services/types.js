@@ -1,33 +1,31 @@
 app.service('TypesSvc', function(){
   
-  var initTypes = function(input) {
-    var typeCodes = [];
-    var types = {
-      all: [],
-      selected: []
-    };
+  var typeOrder = ['identity', 'program', 'hardware', 'resource', 
+    'event', 'agenda', 'ice', 'asset', 'upgrade', 'operation'];
     
-    for (var i = 0; i < input.length; i++) {
-      var type = input[i];
-      if (typeCodes.indexOf(type.value) == -1) {
-        typeCodes.push(type.value);
-        types.all.push(type);
-        types.selected.push(type.value);
-      }
-    }
-    
-    return types;
+  this.typeOrder = typeOrder;
+  
+  this.types = {
+    all: window.data.types,
+    selected: []
   }
   
-  this.types = initTypes(window.data.types);
+  this.types.all.forEach(function(type){
+    type.selected = true;
+  });
   
-  this.setTypes = function(updates) {
+  this.types.all.sort(function(a, b){
+    return typeOrder.indexOf(a.value) - typeOrder.indexOf(b.value)
+  });
+  
+  this.setTypes = function() {
     this.types.selected = [];
-    for(type in updates) {
-      if (updates[type]) {
-        this.types.selected.push(type);
+    this.types.all.forEach(function(type){
+      if (type.selected) {
+        this.types.selected.push(type.value);
       }
-    }
+    }, this);
   }
-
+  
+  this.setTypes();
 });

@@ -59,31 +59,36 @@ module.exports = {
 
   subtypes : function(cards) {
     var subtypeCodes = {
-      corp: [],
-      runner: []
+      corp: ['none'],
+      runner: ['none']
     };
-    var subtypes = {};
+    var subtypes = { 'none': {value: 'none', label: 'No subtype', side: 'corprunner', types:[]}};
     
-    for (var i = 0; i < cards.length; i++) {
-      var card = cards[i];
+    cards.forEach(function(card){
       var side = card.side_code;
       if (card.subtype_code) {
         var codes = card.subtype_code.split(' - ');
         var names = card.subtype.split(' - ');
-        for (var j = 0; j < codes.length; j++) {
-          var code = codes[j];
-          var name = names[j];
-          if (subtypeCodes[side].indexOf(code) == -1) {
-            subtypeCodes[side].push(code);
-            if (typeof subtypes[code] == 'undefined') {
-              subtypes[code] = {value: code, label: name, side: side};
-            } else {
+        codes.forEach(function(code, index) {
+          var name = names[index];
+          if (typeof subtypes[code] == 'undefined') {
+            subtypes[code] = {value: code, label: name, side: side, types: [card.type_code]};
+          } else {
+            if (subtypeCodes[side].indexOf(code) == -1) {
+              subtypeCodes[side].push(code);
               subtypes[code].side += side;
             }
+            if (subtypes[code].types.indexOf(card.type_code) == -1) {
+              subtypes[code].types.push(card.type_code);
+            }
           }
+        });
+      } else {
+        if (subtypes['none'].types.indexOf(card.type_code) == -1) {
+          subtypes['none'].types.push(card.type_code);
         }
       }
-    }
+    });
     
     var out = [];
     for (subtype in subtypes) {
