@@ -39,15 +39,14 @@ app.service('CardsSvc', function(TypesSvc, sideFilter){
   }
 
   this.sort.current = this.sort.methods.faction;
+  this.sort.currentShorthand = 'faction';
   
   this.changeSort = function(value){
     this.sort.current = this.sort.methods[value];
+    this.sort.currentShorthand = value;
   }
   
   this.setSide = function(side) {
     this.cards.display = this.cards[side];
   }
-  
-  // set the corp to show first
-  this.setSide('corp');
 });

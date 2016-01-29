@@ -1,4 +1,4 @@
-app.controller('ControlsCtrl', function($scope, CardsSvc, SetsSvc, TypesSvc, SubtypesSvc, FactionsSvc, SearchSvc){
+app.controller('ControlsCtrl', function($scope, CookiesSvc, CardsSvc, SetsSvc, TypesSvc, SubtypesSvc, FactionsSvc, SearchSvc){
   
   $scope.sortOptions = [
     {
@@ -53,11 +53,12 @@ app.controller('ControlsCtrl', function($scope, CardsSvc, SetsSvc, TypesSvc, Sub
     }
   ];
   
-  $scope.sortOption = 'faction';
-  $scope.currentSide = 'corp';
+  $scope.sortOption = CookiesSvc.getFilter('sort', 'faction');
+  $scope.currentSide = CookiesSvc.getFilter('side', 'corp');
   
   $scope.changeSort = function(){
     CardsSvc.changeSort($scope.sortOption);
+    CookiesSvc.saveFilter('sort', $scope.sortOption);
   }
   
   $scope.changeSide = function(side) {
@@ -71,7 +72,10 @@ app.controller('ControlsCtrl', function($scope, CardsSvc, SetsSvc, TypesSvc, Sub
       
       $scope.changeSort();
     }
+    CookiesSvc.saveFilter('side', side);
   }
+  
+  $scope.changeSide($scope.currentSide);
   
   
   var checkAll = function(selected) {
@@ -81,9 +85,17 @@ app.controller('ControlsCtrl', function($scope, CardsSvc, SetsSvc, TypesSvc, Sub
   }
   
   $scope.sets = SetsSvc.sets;
-  $scope.updateSets = SetsSvc.setSets;
+  $scope.updateSets = function() {
+    SetsSvc.setSets();
+    CookiesSvc.saveFilter('sets', $scope.sets.selected);
+  }
   
-  $scope.sets.all.forEach(checkAll(true));;
+  $scope.sets.selected = CookiesSvc.getFilter('sets', $scope.sets.selected);
+  
+  $scope.sets.all.forEach(function(set){
+    set.selected = $scope.sets.selected.indexOf(set.value) != -1;
+  });
+  SetsSvc.setSets();
   
   $scope.allSets = function(){
     $scope.sets.all.forEach(checkAll(true));
@@ -96,12 +108,18 @@ app.controller('ControlsCtrl', function($scope, CardsSvc, SetsSvc, TypesSvc, Sub
   }
   
   
-  
-  
   $scope.types = TypesSvc.types;
-  $scope.updateTypes = TypesSvc.setTypes;
+  $scope.updateTypes = function() {
+    TypesSvc.setTypes();
+    CookiesSvc.saveFilter('types', $scope.types.selected);
+  }
   
-  $scope.types.all.forEach(checkAll(true));;
+  $scope.types.selected = CookiesSvc.getFilter('types', $scope.types.selected);
+  
+  $scope.types.all.forEach(function(type){
+    type.selected = $scope.types.selected.indexOf(type.value) != -1;
+  });
+  TypesSvc.setTypes();
   
   $scope.allTypes = function(){
     $scope.types.all.forEach(checkAll(true));
@@ -115,9 +133,17 @@ app.controller('ControlsCtrl', function($scope, CardsSvc, SetsSvc, TypesSvc, Sub
  
   
   $scope.subtypes = SubtypesSvc.subtypes;
-  $scope.updateSubtypes = SubtypesSvc.setSubtypes;
+  $scope.updateSubtypes = function() {
+    SubtypesSvc.setSubtypes();
+    CookiesSvc.saveFilter('subtypes', $scope.subtypes.selected);
+  }
   
-  $scope.subtypes.all.forEach(checkAll(true));;
+  $scope.subtypes.selected = CookiesSvc.getFilter('subtypes', $scope.subtypes.selected);
+  
+  $scope.subtypes.all.forEach(function(subtype){
+    subtype.selected = $scope.subtypes.selected.indexOf(subtype.value) != -1;
+  });
+  SubtypesSvc.setSubtypes();
   
   $scope.allSubtypes = function(){
     $scope.subtypes.all.forEach(checkAll(true));
@@ -131,9 +157,17 @@ app.controller('ControlsCtrl', function($scope, CardsSvc, SetsSvc, TypesSvc, Sub
   
   
   $scope.factions = FactionsSvc.factions;
-  $scope.updateFactions = FactionsSvc.setFactions;
+  $scope.updateFactions = function() {
+    FactionsSvc.setFactions();
+    CookiesSvc.saveFilter('factions', $scope.factions.selected);
+  }
   
-  $scope.factions.all.forEach(checkAll(true));;
+  $scope.factions.selected = CookiesSvc.getFilter('factions', $scope.factions.selected);
+  
+  $scope.factions.all.forEach(function(faction){
+    faction.selected = $scope.factions.selected.indexOf(faction.value) != -1;
+  });
+  FactionsSvc.setFactions();
   
   $scope.allFactions = function(){
     $scope.factions.all.forEach(checkAll(true));
@@ -146,4 +180,16 @@ app.controller('ControlsCtrl', function($scope, CardsSvc, SetsSvc, TypesSvc, Sub
   }
   
   $scope.search = SearchSvc.search;
+  $scope.setSearch = function() {
+    CookiesSvc.saveFilter('search', $scope.search.term);
+  }
+  SearchSvc.search.term = CookiesSvc.getFilter('search', '');
+  
+  $scope.resetAll = function() {
+    $scope.search.term = '';
+    $scope.allSets();
+    $scope.allTypes();
+    $scope.allSubtypes();
+    $scope.allFactions();
+  }
 });

@@ -4,9 +4,15 @@ module.exports = {
     
     var out = [];
     
+    // var subs = /\\r\\n\[Subroutine\]/;
+    
     for (var i = 0; i < cards.length; i++) {
       var card = cards[i];
       if (card.imagesrc) {
+        
+        // if (card.type_code == 'ice') {
+            // card.
+        // }
         out.push(card);
       }
     }
@@ -22,7 +28,7 @@ module.exports = {
       var card = cards[i];
       if (setCodes.indexOf(card.set_code) == -1) {
         setCodes.push(card.set_code);
-        sets.push({value: card.set_code, label: card.setname});
+        sets.push({value: card.set_code, label: card.setname, cycle: card.cyclenumber});
       }
     }
     

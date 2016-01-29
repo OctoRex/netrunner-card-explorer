@@ -5,9 +5,13 @@ app.service('SetsSvc', function(){
     selected: []
   }
   
+  var s = this.sets;
+  
   this.sets.all.forEach(function(set){
     set.selected = true;
-  });
+    this.sets.selected.push(set.value);
+  }, this);
+  
   
   this.setSets = function() {
     this.sets.selected = [];
