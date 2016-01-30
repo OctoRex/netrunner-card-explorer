@@ -20,7 +20,7 @@
           <a href="javascript:void(0);" class="btn btn-link btn-lg" ng-click="changeSide('runner')"><h4 ng-class="{'text-muted': sides.current != 'runner', 'text-primary': sides.current == 'runner'}">Runner</h4></a>
         </div>
         <div id="sort" ng-controller="SortCtrl" class="form-group">
-          <select class="form-control" ng-model="sort.currentShorthand" ng-options="option.value as option.title for option in sort.options | filter:{side:currentSide}" ng-change="changeSort()"></select>
+          <select class="form-control" ng-model="sort.currentShorthand" ng-options="option.value as option.title for option in sort.options | filter:{side:sides.current}" ng-change="changeSort()"></select>
         </div>
         <div id="search" ng-controller="SearchCtrl" class="form-group">
           <input class="form-control" type="text" ng-model="search.term" ng-change="setSearch()" placeholder="search" />
