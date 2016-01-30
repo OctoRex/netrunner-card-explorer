@@ -81,7 +81,7 @@
               <span ng-click="allSubtypes()">All</span> | <span ng-click="noSubtypes()">None</span> 
             </div>
             <hr class="filter-divider" />
-            <div class="checkbox" ng-repeat="subtype in subtypes.all | filter:{side:sides.current} | subtypeOptions:types.selected track by subtype.value">
+            <div class="checkbox" ng-repeat="subtype in subtypes.all | filter:{side:sides.current} | subtypeOptions:types.selected:sides.current track by subtype.value">
               <label>
                 <input type="checkbox" ng-model="subtype.selected" ng-change="updateSubtypes()"/> {{subtype.label}}
               </label>
@@ -89,7 +89,7 @@
           </div>
         </div>
         <div id="reset" ng-controller="ResetCtrl">
-          <span ng-click="resetAll()">Reset Filters</span>
+          <a href="javascript:void(0);" ng-click="resetAll()"><span>Reset Filters</span></a>
         </div>
         <hr />
         <div id="small-print">
@@ -99,7 +99,6 @@
         </div>
         <hr />
         <h3>Bugs</h3>
-        <p>Subtypes overlapping - bioroid + clone are both runner and corp, but only runner ID, shows up in Corp ID list</p>
         <p>Caissa needs encoding properly, there's also a bad character in there too (ne line thing)</p>
         <hr />
         <h3>Todo</h3>
