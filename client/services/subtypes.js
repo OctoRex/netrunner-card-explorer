@@ -1,4 +1,6 @@
-app.service('SubtypesSvc', function(){
+app.service('SubtypesSvc', function(HelperSvc){
+  
+  this.helper = HelperSvc;
   
   this.subtypes = {
     all: window.data.subtypes,
@@ -26,6 +28,16 @@ app.service('SubtypesSvc', function(){
         this.subtypes.selected.push(subtype.value);
       }
     }, this);
+  }
+  
+  this.allSubtypes = function(){
+    this.subtypes.all.forEach(this.helper.checkAll(true));
+    this.setSubtypes();
+  }
+  
+  this.noSubtypes = function() {
+    this.subtypes.all.forEach(this.helper.checkAll(false));
+    this.setSubtypes();
   }
   
   this.setSubtypes();

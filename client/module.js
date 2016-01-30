@@ -1,1 +1,1 @@
-var app = angular.module('app', ['ngCookies']);
+var app = angular.module('blackat', ['blackat.controls']);

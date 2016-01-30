@@ -1,17 +1,16 @@
-app.service('SetsSvc', function(){
+app.service('SetsSvc', function(HelperSvc){
+  
+  this.helper = HelperSvc;
   
   this.sets = {
     all: window.data.sets,
     selected: []
   }
   
-  var s = this.sets;
-  
   this.sets.all.forEach(function(set){
     set.selected = true;
     this.sets.selected.push(set.value);
   }, this);
-  
   
   this.setSets = function() {
     this.sets.selected = [];
@@ -20,6 +19,16 @@ app.service('SetsSvc', function(){
         this.sets.selected.push(set.value);
       }
     }, this);
+  }
+  
+  this.allSets = function(){
+    this.sets.all.forEach(this.helper.checkAll(true));
+    this.setSets();
+  }
+  
+  this.noSets = function() {
+    this.sets.all.forEach(this.helper.checkAll(false));
+    this.setSets();
   }
   
   this.setSets();

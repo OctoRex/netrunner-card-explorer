@@ -1,4 +1,6 @@
-app.service('TypesSvc', function(){
+app.service('TypesSvc', function(HelperSvc){
+  
+  this.helper = HelperSvc;
   
   var typeOrder = ['identity', 'program', 'hardware', 'resource', 
     'event', 'agenda', 'ice', 'asset', 'upgrade', 'operation'];
@@ -25,6 +27,16 @@ app.service('TypesSvc', function(){
         this.types.selected.push(type.value);
       }
     }, this);
+  }
+  
+  this.allTypes = function(){
+    this.types.all.forEach(this.helper.checkAll(true));
+    this.setTypes();
+  }
+  
+  this.noTypes = function() {
+    this.types.all.forEach(this.helper.checkAll(false));
+    this.setTypes();
   }
   
   this.setTypes();

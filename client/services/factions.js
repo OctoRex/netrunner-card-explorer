@@ -1,4 +1,6 @@
-app.service('FactionsSvc', function(){
+app.service('FactionsSvc', function(HelperSvc){
+  
+  this.helper = HelperSvc;
 
   this.factions = {
     all: window.data.factions,
@@ -26,6 +28,16 @@ app.service('FactionsSvc', function(){
         this.factions.selected.push(faction.value);
       }
     }, this);
+  }
+  
+  this.allFactions = function(){
+    this.factions.all.forEach(this.helper.checkAll(true));
+    this.setFactions();
+  }
+  
+  this.noFactions = function() {
+    this.factions.all.forEach(this.helper.checkAll(false));
+    this.setFactions();
   }
     
   this.setFactions();
