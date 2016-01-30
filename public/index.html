@@ -1,11 +1,12 @@
 <!DOCTYPE>
 <html>
   <head>
+    <meta charset="utf-8">
     <title>BlacKat | Netrunner Card Explorer</title>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-cookies.js"></script>
     <script type="text/javascript" src="js/data.js"></script>
-    <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/app.js" charset="UTF-8" ></script>
     <link href='https://fonts.googleapis.com/css?family=Rajdhani' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="css/app.css" />
@@ -16,8 +17,8 @@
       <div id="controls">
         <h2 id="title">BlacKat</h2>
         <div id="sides" ng-controller="SidesCtrl">
-          <a href="javascript:void(0);" class="btn btn-link btn-lg" ng-click="changeSide('corp')"><h4 ng-class="{'text-muted': sides.current != 'corp', 'text-primary': sides.current == 'corp'}" >Corp</h4></a>
-          <a href="javascript:void(0);" class="btn btn-link btn-lg" ng-click="changeSide('runner')"><h4 ng-class="{'text-muted': sides.current != 'runner', 'text-primary': sides.current == 'runner'}">Runner</h4></a>
+          <h4 class="side-button" ng-click="changeSide('corp')" ng-class="{'text-primary': sides.current == 'corp'}" >Corp</h4>
+          <h4 class="side-button" ng-click="changeSide('runner')" ng-class="{'text-primary': sides.current == 'runner'}">Runner</h4>
         </div>
         <div id="sort" ng-controller="SortCtrl" class="form-group">
           <select class="form-control" ng-model="sort.currentShorthand" ng-options="option.value as option.title for option in sort.options | filter:{side:sides.current}" ng-change="changeSort()"></select>
@@ -89,7 +90,7 @@
           </div>
         </div>
         <div id="reset" ng-controller="ResetCtrl">
-          <a href="javascript:void(0);" ng-click="resetAll()"><span>Reset Filters</span></a>
+          <span ng-click="resetAll()">Reset Filters</span>
         </div>
         <hr />
         <div id="small-print">
@@ -97,26 +98,6 @@
           <p>Images &amp; universe are intellectual property of <a href="https://www.fantasyflightgames.com">Fantasy Flight Games</a> and/or <a href="http://company.wizards.com/">Wizards of the Coast</a></p>
           <p>Data graciously provided by <a href="http://netrunnerdb.com/">NetrunnerDB</a></p>
         </div>
-        <hr />
-        <h3>Bugs</h3>
-        <p>Caissa needs encoding properly, there's also a bad character in there too (ne line thing)</p>
-        <hr />
-        <h3>Todo</h3>
-        <p>Consider more normal font on checkboxes</p>
-        <p>Maybe space images a little more widely? Drop shadow?</p>
-        <p>Use NRDB icons https://github.com/MWDelaney/Netrunner-Icon-Font</p>
-        <p>Cat Logo</p>
-        <p>Favicon</p>
-        <p>Google Analytics</p>
-        <hr />
-        <h3>Maybes</h3>
-        <p>get direct link button</p>
-        <p>Consider adding worth (x) agenda points cards into agenda sort/filter</p>
-        <p>Number of subroutines</p>
-        <p>Zoomed-in card view</p>
-        <p>Divide up the cards somehow (during loop)</p>
-        <p>Special actions, e.g. only show ICE</p>
-        <p>Break it up into partials templates?</p>
       </div>
       
       <div id="cards" ng-controller="CardsCtrl">

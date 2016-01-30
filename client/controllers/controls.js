@@ -131,7 +131,7 @@ controls.controller('FactionCtrl', function($scope, CookiesSvc, FactionsSvc, Sid
   }
   
   $scope.allFactions = function(){
-    FactoinsSvc.allFactions();
+    FactionsSvc.allFactions();
     CookiesSvc.saveFilter('factions', $scope.factions.selected);
   }
   

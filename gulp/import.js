@@ -4,6 +4,7 @@ var rename = require('gulp-rename');
 var intercept = require('gulp-intercept');
 var remoteSrc = require('gulp-remote-src');
 var parser = require('../server/data-parser.js');
+var uglify = require('gulp-uglify');
 
 gulp.task('import', function(){
   
@@ -40,6 +41,7 @@ gulp.task('import', function(){
       
       return file;
     }))
+    .pipe(uglify())
     .pipe(rename('data.js'))
     .pipe(gulp.dest('public/js'));
 });

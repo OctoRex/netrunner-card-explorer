@@ -5,8 +5,8 @@
 
 body {
   font-size: 14px;
-  font-family: 'Rajdhani', sans-serif;
-  h1, h2, h3, h4  {
+  h1, h2, h3, h4, select, input  {
+    font-family: 'Rajdhani', sans-serif;
     font-weight: bold;
   }
 }
@@ -31,13 +31,16 @@ body {
     margin: 0.5em;
   }
   #sides {
-    margin: 0 1em;
-    a {
-      text-decoration: none;
-      border: 0;
+    text-align:center;
+    .side-button {
+      display: inline-block;
+      cursor: pointer;
+      width: 40%;
+      margin: 1em 0;
+      color: #999;
     }
-    span {
-      font-weight: bold;
+    .side-button.text-primary {
+        color: #337ab7;
     }
   }
   .checkbox {
@@ -74,6 +77,10 @@ body {
   }
 }
 
+#reset span {
+  cursor: pointer;
+}
+
 #small-print {
-  font-size: 90%;
+  font-size: 80%;
 }
