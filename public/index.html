@@ -23,8 +23,13 @@
         <div id="sort" ng-controller="SortCtrl" class="form-group">
           <select class="form-control" ng-model="sort.currentShorthand" ng-options="option.value as option.title for option in sort.options | filter:{side:sides.current}" ng-change="changeSort()"></select>
         </div>
-        <div id="search" ng-controller="SearchCtrl" class="form-group">
-          <input class="form-control" type="text" ng-model="search.term" ng-change="setSearch()" placeholder="search" />
+        <div id="search" ng-controller="SearchCtrl">
+          <div class="form-group">
+            <input class="form-control" type="text" ng-model="search.title" ng-change="searchTitle()" placeholder="search title" />
+          </div>
+          <div class="form-group">
+            <input class="form-control" type="text" ng-model="search.text" ng-change="searchText()" placeholder="search text" />
+          </div>
         </div>
         <div id="factions"  ng-controller="FactionCtrl">
           <h4 ng-click="showFactions = !showFactions;" ng-class="{active: showFactions}">Factions
@@ -101,7 +106,7 @@
       </div>
       
       <div id="cards" ng-controller="CardsCtrl">
-        <div class="card-tile" ng-repeat="card in cards.display | orderBy:sort.current | sets:sets.selected | types:types.selected | subtypes:subtypes.selected | factions:factions.selected | filter:{title:search.term} | specialSort:sort.currentShorthand track by card.code">
+        <div class="card-tile" ng-repeat="card in cards.display | orderBy:sort.current | sets:sets.selected | types:types.selected | subtypes:subtypes.selected | factions:factions.selected | filter:{title:search.title} | filter:{text:search.text} | specialSort:sort.currentShorthand track by card.code">
           <img ng-src="http://netrunnerdb.com{{card.imagesrc}}" />
         </div>
       </div>

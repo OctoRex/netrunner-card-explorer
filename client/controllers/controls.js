@@ -151,15 +151,20 @@ controls.controller('FactionCtrl', function($scope, CookiesSvc, FactionsSvc, Sid
 controls.controller('SearchCtrl', function($scope, CookiesSvc, SearchSvc){
   
   $scope.search = SearchSvc.search;
-  $scope.setSearch = function() {
-    CookiesSvc.saveFilter('search', $scope.search.term);
+  $scope.searchTitle = function() {
+    CookiesSvc.saveFilter('search-title', $scope.search.title);
   }
-  SearchSvc.search.term = CookiesSvc.getFilter('search', '');
+  $scope.searchText = function() {
+    CookiesSvc.saveFilter('search-text', $scope.search.text);
+  }
+  SearchSvc.search.title = CookiesSvc.getFilter('search-title', '');
+  SearchSvc.search.text = CookiesSvc.getFilter('search-text', '');
 });
 
 controls.controller('ResetCtrl', function($scope, CookiesSvc, SearchSvc, SetsSvc, FactionsSvc, TypesSvc, SubtypesSvc){
   $scope.resetAll = function() {
-    SearchSvc.search.term = '';
+    SearchSvc.search.title = '';
+    SearchSvc.search.text = '';
     SetsSvc.allSets();
     TypesSvc.allTypes();
     SubtypesSvc.allSubtypes();
