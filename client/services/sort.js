@@ -1,4 +1,7 @@
-app.service('SortSvc', function(TypesSvc){
+app.service('SortSvc', function(TypesSvc, HelperSvc, CardsSvc){
+  
+  this.helper = HelperSvc;
+  var cards = CardsSvc.cards;
  
   var typeSort = function(card) {
     return TypesSvc.typeOrder.indexOf(card.type_code);
@@ -25,7 +28,8 @@ app.service('SortSvc', function(TypesSvc){
       trash: [numericSort('trash'), typeSort, 'title'],
       agenda: [numericSort('agendapoints'), numericSort('advancementcost'), typeSort, 'title'],
       influence: [numericSort('factioncost'), factionSort, typeSort, 'title'],
-      illustrator: ['illustrator', 'title']
+      illustrator: ['illustrator', 'title'],
+      random: []
     },
     options: [
       {
@@ -77,6 +81,11 @@ app.service('SortSvc', function(TypesSvc){
         title: 'Sort by Illustrator', 
         value: 'illustrator',
         side: 'corprunner'
+      },
+      {
+        title: 'Randomize', 
+        value: 'random',
+        side: 'corprunner'
       }
     ]
   }
@@ -97,5 +106,9 @@ app.service('SortSvc', function(TypesSvc){
   this.changeSort = function(value){
     this.sort.current = this.sort.methods[value];
     this.sort.currentShorthand = value;
+    if (value == 'random') {
+      this.helper.shuffle(cards.corp);
+      this.helper.shuffle(cards.runner);
+    }
   }
 });

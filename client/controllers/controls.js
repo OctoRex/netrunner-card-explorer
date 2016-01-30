@@ -163,5 +163,11 @@ controls.controller('ResetCtrl', function($scope, CookiesSvc, SearchSvc, SetsSvc
     TypesSvc.allTypes();
     SubtypesSvc.allSubtypes();
     FactionsSvc.allFactions();
+    CookiesSvc.saveFilters({
+      factions: null,
+      sets: null,
+      types: null,
+      subtypes: null
+    });
   }
 });
