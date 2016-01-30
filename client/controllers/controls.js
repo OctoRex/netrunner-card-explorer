@@ -170,6 +170,8 @@ controls.controller('ResetCtrl', function($scope, CookiesSvc, SearchSvc, SetsSvc
     SubtypesSvc.allSubtypes();
     FactionsSvc.allFactions();
     CookiesSvc.saveFilters({
+      'search-text' : null,
+      'search-title' : null,
       factions: null,
       sets: null,
       types: null,
