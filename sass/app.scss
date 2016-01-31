@@ -20,8 +20,10 @@ body {
 
 #title {
   font-weight:800;
+  height: 40px;
   color: #fff;
   span {
+    
   }
 }
 
@@ -29,7 +31,6 @@ body {
   background-image: url('../img/blackat-trim-flip.png');
   background-size: 260px;
   background-repeat: no-repeat;
-  background-attachment: fixed;
   position:absolute;
   top: 0;
   left: 0;
