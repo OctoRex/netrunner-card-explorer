@@ -112,12 +112,19 @@ controls.controller('SetsCtrl', function($scope, CookiesSvc, SetsSvc){
     CookiesSvc.saveFilter('sets', $scope.sets.selected);
   }
   
+  $scope.setSpoilers = function() {
+    SetsSvc.setSpoilers($scope.sets.showSpoilers);
+    CookiesSvc.saveFilter('spoilers', $scope.sets.showSpoilers);
+  }
+  
   $scope.sets.selected = CookiesSvc.getFilter('sets', $scope.sets.selected);
+  $scope.sets.showSpoilers = CookiesSvc.getFilter('spoilers', $scope.sets.showSpoilers);
   
   $scope.sets.all.forEach(function(set){
     set.selected = $scope.sets.selected.indexOf(set.value) != -1;
   });
   SetsSvc.setSets();
+  SetsSvc.setSpoilers($scope.sets.showSpoilers);
 });
 
 controls.controller('FactionCtrl', function($scope, CookiesSvc, FactionsSvc, SidesSvc){
@@ -161,6 +168,24 @@ controls.controller('SearchCtrl', function($scope, CookiesSvc, SearchSvc){
   SearchSvc.search.text = CookiesSvc.getFilter('search-text', '');
 });
 
+controls.controller('SpecialCtrl', function($scope, CookiesSvc, SpecialsSvc){
+  
+  $scope.specials = SpecialsSvc.specials;
+  
+  $scope.updateSpecials = function()
+  {
+    SpecialsSvc.setSpecials();
+    CookiesSvc.saveFilter('specials', $scope.specials.selected);
+  }
+  
+  $scope.specials.selected = CookiesSvc.getFilter('specials', $scope.specials.selected);
+  
+  $scope.specials.all.forEach(function(special){
+    special.selected = $scope.specials.selected.indexOf(special.value) != -1;
+  });
+  SpecialsSvc.setSpecials();
+});
+
 controls.controller('ResetCtrl', function($scope, CookiesSvc, SearchSvc, SetsSvc, FactionsSvc, TypesSvc, SubtypesSvc){
   $scope.resetAll = function() {
     SearchSvc.search.title = '';
@@ -169,13 +194,16 @@ controls.controller('ResetCtrl', function($scope, CookiesSvc, SearchSvc, SetsSvc
     TypesSvc.allTypes();
     SubtypesSvc.allSubtypes();
     FactionsSvc.allFactions();
-    CookiesSvc.saveFilters({
-      'search-text' : null,
-      'search-title' : null,
-      factions: null,
-      sets: null,
-      types: null,
-      subtypes: null
-    });
+    // SpecialsSvc.noSpecials();
+    // CookiesSvc.saveFilters({
+      // 'search-text' : null,
+      // 'search-title' : null,
+      // factions: null,
+      // sets: null,
+      // types: null,
+      // subtypes: null,
+      // specials: null
+    // });
+    CookiesSvc.clear();
   }
 });

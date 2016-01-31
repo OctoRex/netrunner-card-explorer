@@ -1,38 +1,26 @@
 module.exports = {
   
   cards : function(cards) {
-    
-    var out = [];
-    
-    // var subs = /\\r\\n\[Subroutine\]/;
-    
-    for (var i = 0; i < cards.length; i++) {
-      var card = cards[i];
-      if (card.imagesrc) {
-        
-        // if (card.type_code == 'ice') {
-            // card.
-        // }
-        out.push(card);
-      }
-    }
-    
-    return out;
+    return cards.filter(function(card){
+      return card.imagesrc;
+    });
   },
   
-  sets : function(cards) {
+  sets : function(cards, sets) {
     var setCodes = ['draft'];
-    var sets = [];
+    var out = [];
     
-    for (var i = 0; i < cards.length; i++) {
-      var card = cards[i];
+    cards.forEach(function(card){
       if (setCodes.indexOf(card.set_code) == -1) {
+        var data = sets.find(function(set){
+          return set.code == card.set_code;
+        });
         setCodes.push(card.set_code);
-        sets.push({value: card.set_code, label: card.setname, cycle: card.cyclenumber});
+        out.push({value: card.set_code, label: card.setname, cycle: card.cyclenumber, available: data.available});
       }
-    }
+    });
     
-    return sets;
+    return out;
   },
 
   types : function(cards) {
@@ -42,8 +30,7 @@ module.exports = {
     };
     var types = {};
     
-    for (var i = 0; i < cards.length; i++) {
-      var card = cards[i];
+    cards.forEach(function(card){
       var side = card.side_code;
       if (typeCodes[side].indexOf(card.type_code) == -1) {
         typeCodes[side].push(card.type_code);
@@ -53,7 +40,7 @@ module.exports = {
           types[card.type_code].side += side;
         }
       }
-    }
+    });
     
     var out = [];
     for (type in types) {
@@ -133,8 +120,7 @@ module.exports = {
     };
     var factions = {};
     
-    for (var i = 0; i < cards.length; i++) {
-      var card = cards[i];
+    cards.forEach(function(card){
       var side = card.side_code;
       if (factionCodes[side].indexOf(card.faction_code) == -1) {
         factionCodes[side].push(card.faction_code);
@@ -144,7 +130,7 @@ module.exports = {
           factions[card.faction_code].side += side;
         }
       }
-    }
+    });
     
     var out = [];
     for (faction in factions) {

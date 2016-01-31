@@ -1,4 +1,4 @@
-app.controller('CardsCtrl', function($scope, CardsSvc, SortSvc, SetsSvc, TypesSvc, SubtypesSvc, FactionsSvc, SearchSvc){
+app.controller('CardsCtrl', function($scope, CardsSvc, SortSvc, SetsSvc, TypesSvc, SubtypesSvc, FactionsSvc, SearchSvc, SpecialsSvc){
 
   $scope.cards = CardsSvc.cards;
   
@@ -11,6 +11,8 @@ app.controller('CardsCtrl', function($scope, CardsSvc, SortSvc, SetsSvc, TypesSv
   $scope.subtypes = SubtypesSvc.subtypes;
   
   $scope.factions = FactionsSvc.factions;
+  
+  $scope.specials = SpecialsSvc.specials;
   
   $scope.search = SearchSvc.search;
 

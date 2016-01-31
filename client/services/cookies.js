@@ -34,4 +34,9 @@ app.service('CookiesSvc', function($cookies){
     return (typeof storedFilters[prop] != 'undefined' && storedFilters[prop] != null) ? storedFilters[prop] : def;
   }
   
+  // going to just get rid of the cookie here
+  this.clear = function() {
+    $cookies.remove('filters');
+  }
+  
 });
