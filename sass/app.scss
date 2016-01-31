@@ -5,10 +5,13 @@
 
 body {
   font-size: 14px;
-  h1, h2, h3, h4, select, input  {
+  h1, h2, h3, h4, h5, select, input  {
     font-family: 'Rajdhani', sans-serif;
     font-weight: bold;
   }
+  background-image: url('../img/blackat-background-thin.png');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 #display {
@@ -17,21 +20,29 @@ body {
 
 #title {
   font-weight:800;
+  color: #fff;
+  span {
+  }
 }
 
 #controls {
+  background-image: url('../img/blackat-trim-flip.png');
+  background-size: 260px;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   position:absolute;
   top: 0;
   left: 0;
-  margin-top: 1em;
-  margin-left: 2em;
-  margin-right: 3em;
-  width: 15em;
+  padding-top: 1em;
+  padding-left: 2em;
+  padding-right: 3em;
+  width: 20em;
   hr.filter-divider {
     margin: 0.5em;
   }
   #sides {
     text-align:center;
+    color: #fff;
     .side-button {
       display: inline-block;
       cursor: pointer;
@@ -40,8 +51,14 @@ body {
       color: #999;
     }
     .side-button.text-primary {
-        color: #337ab7;
+        /* color: #337ab7; */
+        color: #fff;
     }
+  }
+  #zzfilters {
+    background: #fff;
+    border-radius: 5px;
+    padding-left: 1em;
   }
   .checkbox {
     margin: 0px 0px;
@@ -54,8 +71,8 @@ body {
 #cards {
   position: absolute;
   top: 0;
-  left: 18em; 
-  padding: 5em 3em;
+  left: 20em; 
+  padding: 5em 1em;
   .card-tile {
     margin: 6px;
     @include card-dimensions(200);

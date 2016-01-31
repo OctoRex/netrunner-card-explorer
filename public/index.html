@@ -15,7 +15,7 @@
   <body ng-app="blackat">
     <div id+"display">
       <div id="controls">
-        <h2 id="title">BlacKat</h2>
+        <h2 id="title"><span>BlacKat</span></h2>
         <div id="sides" ng-controller="SidesCtrl">
           <h4 class="side-button" ng-click="changeSide('corp')" ng-class="{'text-primary': sides.current == 'corp'}" >Corp</h4>
           <h4 class="side-button" ng-click="changeSide('runner')" ng-class="{'text-primary': sides.current == 'runner'}">Runner</h4>
@@ -31,83 +31,86 @@
             <input class="form-control" type="text" ng-model="search.text" ng-change="searchText()" placeholder="search text" />
           </div>
         </div>
-        <div id="factions"  ng-controller="FactionCtrl">
-          <h4 ng-click="showFactions = !showFactions;" ng-class="{active: showFactions}">Factions
-            <span ng-if="factions.all.length != factions.selected.length"> &bull;</span></span></h4>
-          <div class="filters" ng-show="showFactions">
-            <div class="mass-selector">
-              <span ng-click="allFactions();">All</span> | <span ng-click="noFactions()">None</span> 
-            </div>
-            <hr class="filter-divider" />
-            <div class="checkbox" ng-repeat="faction in factions.all | filter:{side:sides.current}">
-              <label>
-                <input type="checkbox" ng-model="faction.selected" ng-change="updateFactions()"/> {{faction.label}}
-              </label>
-            </div>
-          </div>
-        </div>
-        <div id="sets" ng-controller="SetsCtrl">
-          <h4 ng-click="showSets = !showSets">Sets
-            <span ng-if="sets.all.length != sets.selected.length"> &bull;</span></h4>
-          <div class="filters" ng-show="showSets">
-            <div class="mass-selector">
-              <span ng-click="allSets();">All</span> | <span ng-click="noSets()">None</span> 
-            </div>
-            <hr class="filter-divider" />
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox" ng-model="sets.showSpoilers" ng-change="setSpoilers()"/> Show Spoilers
-                </label>
+        <div id="filters">
+          <div id="sets" class="filter-block" ng-controller="SetsCtrl">
+            <h4 ng-click="showSets = !showSets">Sets
+              <span ng-if="sets.display.length > sets.selected.length"> &bull;</span></h4>
+            <div class="filters" ng-show="showSets">
+              <div class="mass-selector">
+                <span ng-click="allSets();">All</span> | <span ng-click="noSets()">None</span> 
               </div>
-            <hr class="filter-divider" />
-            <div class="set" ng-repeat="set in sets.display">
-              <hr  class="filter-divider" ng-show="sets.display[$index - 1] && (set.cycle != sets.display[$index - 1].cycle)" />
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox" ng-model="set.selected" ng-change="updateSets()"/> {{set.label}}
-                </label>
+              <hr class="filter-divider" />
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" ng-model="sets.showSpoilers" ng-change="setSpoilers()"/> Show Spoilers
+                  </label>
+                </div>
+              <hr class="filter-divider" />
+              <div class="set" ng-repeat="set in sets.display">
+                <hr  class="filter-divider" ng-show="sets.display[$index - 1] && (set.cycle != sets.display[$index - 1].cycle)" />
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" ng-model="set.selected" ng-change="updateSets()"/> {{set.label}}
+                  </label>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div id="types" ng-controller="TypesCtrl">
-          <h4 ng-click="showTypes = !showTypes;">Types
-            <span ng-if="types.all.length != types.selected.length"> &bull;</span></h4>
-          <div class="filters" ng-show="showTypes">
-            <div class="mass-selector">
-              <span ng-click="allTypes()">All</span> | <span ng-click="noTypes()">None</span> 
-            </div>
-            <hr class="filter-divider" />
-            <div class="checkbox" ng-repeat="type in types.all | filter:{side:sides.current}">
-              <label>
-                <input type="checkbox" ng-model="type.selected" ng-change="updateTypes()"/> {{type.label}}
-              </label>
+          <div id="factions" class="filter-block" ng-controller="FactionCtrl">
+            <h4 ng-click="showFactions = !showFactions;" ng-class="{active: showFactions}">Factions
+              <span ng-if="factions.all.length != factions.selected.length"> &bull;</span></span></h4>
+            <div class="filters" ng-show="showFactions">
+              <div class="mass-selector">
+                <span ng-click="allFactions();">All</span> | <span ng-click="noFactions()">None</span> 
+              </div>
+              <hr class="filter-divider" />
+              <div class="checkbox" ng-repeat="faction in factions.all | filter:{side:sides.current}">
+                <label>
+                  <input type="checkbox" ng-model="faction.selected" ng-change="updateFactions()"/> {{faction.label}}
+                </label>
+              </div>
             </div>
           </div>
-        </div>
-        <div id="subtypes" ng-controller="SubtypesCtrl">
-          <h4 ng-click="showSubtypes = !showSubtypes;">Subtypes
-            <span ng-if="subtypes.all.length != subtypes.selected.length"> &bull;</span></h4>
-          <div class="filters" ng-show="showSubtypes">
-            <div class="mass-selector">
-              <span ng-click="allSubtypes()">All</span> | <span ng-click="noSubtypes()">None</span> 
+          <div id="types" class="filter-block" ng-controller="TypesCtrl">
+            <h4 ng-click="showTypes = !showTypes;">Types
+              <span ng-if="types.all.length != types.selected.length"> &bull;</span></h4>
+            <div class="filters" ng-show="showTypes">
+              <div class="mass-selector">
+                <span ng-click="allTypes()">All</span> | <span ng-click="noTypes()">None</span> 
+              </div>
+              <hr class="filter-divider" />
+              <div class="checkbox" ng-repeat="type in types.all | filter:{side:sides.current}">
+                <label>
+                  <input type="checkbox" ng-model="type.selected" ng-change="updateTypes()"/> {{type.label}}
+                </label>
+              </div>
             </div>
-            <hr class="filter-divider" />
-            <div class="checkbox" ng-repeat="subtype in subtypes.all | filter:{side:sides.current} | subtypeOptions:types.selected:sides.current track by subtype.value">
-              <label>
-                <input type="checkbox" ng-model="subtype.selected" ng-change="updateSubtypes()"/> {{subtype.label}}
-              </label>
+          </div>
+          <div id="subtypes" class="filter-block" ng-controller="SubtypesCtrl">
+            <h4 ng-click="showSubtypes = !showSubtypes;">Subtypes
+              <span ng-if="subtypes.all.length != subtypes.selected.length"> &bull;</span></h4>
+            <div class="filters" ng-show="showSubtypes">
+              <div class="mass-selector">
+                <span ng-click="allSubtypes()">All</span> | <span ng-click="noSubtypes()">None</span> 
+              </div>
+              <hr class="filter-divider" />
+              <div class="checkbox" ng-repeat="subtype in subtypes.all | filter:{side:sides.current} | subtypeOptions:types.selected:sides.current track by subtype.value">
+                <label>
+                  <input type="checkbox" ng-model="subtype.selected" ng-change="updateSubtypes()"/> {{subtype.label}}
+                </label>
+              </div>
             </div>
           </div>
         </div>
         <hr />
         <div id="reset" ng-controller="ResetCtrl">
-          <span ng-click="resetAll()">Reset Filters</span>
+          <h5 ng-click="resetAll()">Reset Filters</h5>
         </div>
         <hr />
         <div id="small-print">
           <p>Version 1.0.0</p>
           <p>Images &amp; universe are intellectual property of <a href="https://www.fantasyflightgames.com">Fantasy Flight Games</a> and/or <a href="http://company.wizards.com/">Wizards of the Coast</a></p>
+          <p>Original BlacKat image by <a href="http://howlseage.deviantart.com/">Seage</a></p>
           <p>Data graciously provided by <a href="http://netrunnerdb.com/">NetrunnerDB</a></p>
         </div>
       </div>
