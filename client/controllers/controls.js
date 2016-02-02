@@ -186,24 +186,16 @@ controls.controller('SpecialCtrl', function($scope, CookiesSvc, SpecialsSvc){
   SpecialsSvc.setSpecials();
 });
 
-controls.controller('ResetCtrl', function($scope, CookiesSvc, SearchSvc, SetsSvc, FactionsSvc, TypesSvc, SubtypesSvc){
+controls.controller('ResetCtrl', function($scope, CookiesSvc, SidesSvc, SortSvc, SearchSvc, SetsSvc, FactionsSvc, TypesSvc, SubtypesSvc){
   $scope.resetAll = function() {
+    SortSvc.changeSort('faction')    
     SearchSvc.search.title = '';
     SearchSvc.search.text = '';
     SetsSvc.allSets();
     TypesSvc.allTypes();
     SubtypesSvc.allSubtypes();
     FactionsSvc.allFactions();
-    // SpecialsSvc.noSpecials();
-    // CookiesSvc.saveFilters({
-      // 'search-text' : null,
-      // 'search-title' : null,
-      // factions: null,
-      // sets: null,
-      // types: null,
-      // subtypes: null,
-      // specials: null
-    // });
     CookiesSvc.clear();
+    CookiesSvc.saveFilter('side', 'current');
   }
 });

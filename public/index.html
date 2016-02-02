@@ -10,6 +10,7 @@
     <link href='https://fonts.googleapis.com/css?family=Rajdhani' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="css/app.css" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   </head>
   <body ng-app="blackat">
@@ -110,7 +111,7 @@
         <div id="small-print">
           <p>Version 1.0.0</p>
           <p>Images &amp; universe are intellectual property of <a href="https://www.fantasyflightgames.com">Fantasy Flight Games</a> and/or <a href="http://company.wizards.com/">Wizards of the Coast</a></p>
-          <p>Original BlacKat image by <a href="http://howlseage.deviantart.com/">Seage</a></p>
+          <p>BlacKat image by <a href="http://seageart.com/">Seage</a></p>
           <p>Data graciously provided by <a href="http://netrunnerdb.com/">NetrunnerDB</a></p>
         </div>
       </div>
@@ -119,7 +120,7 @@
         <div class="card-tile" ng-repeat="card in cards.display | orderBy:sort.current | sets:sets.selected | types:types.selected | subtypes:subtypes.selected | factions:factions.selected | filter:{title:search.title} | filter:{text:search.text} | specialSort:sort.currentShorthand as filteredCards track by card.code">
           <img ng-src="http://netrunnerdb.com{{card.imagesrc}}" />
         </div>
-        <h3 id="no-cards" ng-if="!filteredCards.length">No cards match that criteria</h3>
+        <h3 id="no-cards" ng-if="!filteredCards.length">I can't find any cards for you like that &hellip; meow!</h3>
       </div>
     </div>
   </body>
