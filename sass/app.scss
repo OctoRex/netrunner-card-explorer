@@ -47,6 +47,11 @@ body {
   hr.filter-divider {
     margin: 0.5em;
   }
+  .filter-block {
+    h4 {
+      cursor: pointer;
+    }
+  }
   #sides {
     text-align:center;
     color: #fff;
@@ -100,7 +105,7 @@ body {
   margin-top: 8em;
 }
 
-#reset span {
+#reset h5 {
   cursor: pointer;
   display:block;
 }
