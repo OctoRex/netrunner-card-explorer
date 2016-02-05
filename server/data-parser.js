@@ -2,6 +2,9 @@ module.exports = {
   
   cards : function(cards) {
     return cards.filter(function(card){
+      if (typeof card.text == 'undefined') {
+        card.text = '';
+      }
       return card.imagesrc;
     });
   },
