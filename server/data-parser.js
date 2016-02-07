@@ -5,7 +5,7 @@ module.exports = {
       if (typeof card.text == 'undefined') {
         card.text = '';
       }
-      return card.imagesrc;
+      return card.imagesrc && card.cycle_code != 'draft';
     });
   },
   

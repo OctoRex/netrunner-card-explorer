@@ -80,6 +80,15 @@ body {
   top: 0;
   left: 20em; 
   padding: 5em 1em;
+  
+  .card-divider {
+    text-align:right;
+    padding-bottom: 0.3em;
+    padding-right: 8em;
+    border-bottom: 2px solid #bbb;
+    margin-right: 1em;
+    margin-bottom: 0.5em;
+  }
   .card-tile {
     margin: 6px;
     @include card-dimensions(200);

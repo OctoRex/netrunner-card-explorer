@@ -168,6 +168,24 @@ controls.controller('SearchCtrl', function($scope, CookiesSvc, SearchSvc){
   SearchSvc.search.text = CookiesSvc.getFilter('search-text', '');
 });
 
+controls.controller('PrefsCtrl', function($scope, CookiesSvc, SpecialsSvc){
+  
+  $scope.specials = SpecialsSvc.specials;
+  
+  $scope.updateSpecials = function()
+  {
+    SpecialsSvc.setSpecials();
+    CookiesSvc.saveFilter('specials', $scope.specials.selected);
+  }
+  
+  $scope.specials.selected = CookiesSvc.getFilter('specials', $scope.specials.selected);
+  
+  $scope.specials.all.forEach(function(special){
+    special.selected = $scope.specials.selected.indexOf(special.value) != -1;
+  });
+  SpecialsSvc.setSpecials();
+});
+
 controls.controller('SpecialCtrl', function($scope, CookiesSvc, SpecialsSvc){
   
   $scope.specials = SpecialsSvc.specials;
@@ -186,6 +204,8 @@ controls.controller('SpecialCtrl', function($scope, CookiesSvc, SpecialsSvc){
   SpecialsSvc.setSpecials();
 });
 
+
+
 controls.controller('ResetCtrl', function($scope, CookiesSvc, SidesSvc, SortSvc, SearchSvc, SetsSvc, FactionsSvc, TypesSvc, SubtypesSvc){
   $scope.resetAll = function() {
     SortSvc.changeSort('faction')    
@@ -195,7 +215,17 @@ controls.controller('ResetCtrl', function($scope, CookiesSvc, SidesSvc, SortSvc,
     TypesSvc.allTypes();
     SubtypesSvc.allSubtypes();
     FactionsSvc.allFactions();
+    CookiesSvc.saveFilters({
+      'search-title': '',
+      'search-text': '',
+      'sets': SetsSvc.sets.selected,
+      'types': TypesSvc.types.selected,
+      'subtypes': SubtypesSvc.subtypes.selected,
+      'factions': FactionsSvc.factions.selected
+    });
+  }
+  
+  $scope.clearCookie = function() {
     CookiesSvc.clear();
-    CookiesSvc.saveFilter('side', 'current');
   }
 });
