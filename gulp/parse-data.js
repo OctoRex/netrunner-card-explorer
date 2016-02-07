@@ -25,7 +25,7 @@ var parseFile = function(file){
 
 gulp.task('parse-data', function(cb){
   
-  var cardsTime, setsTime, dataTime;
+  var cardsTime = 0, setsTime = 0, dataTime = 0;
   
   try {
     var stat = fs.statSync('import/cards.json');
