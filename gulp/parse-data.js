@@ -8,19 +8,19 @@ var insert = require('gulp-insert');
 
 var parseFile = function(file){
       
-      var contents = file.contents.toString();
-      var bits = contents.split('####');
-      
-      var cards = JSON.parse(bits[0]);
-      var sets = JSON.parse(bits[1]);
-      contents = 'var data = data || {}; data.cards = ' + JSON.stringify(parser.cards(cards)) + ";\n";
-      contents += 'data.sets = ' + JSON.stringify(parser.sets(cards, sets)) + ";\n";
-      contents += 'data.types = ' + JSON.stringify(parser.types(cards)) + ";\n";
-      contents += 'data.subtypes = ' + JSON.stringify(parser.subtypes(cards)) + ";\n";
-      contents += 'data.factions = ' + JSON.stringify(parser.factions(cards)) + ";\n";
-      file.contents = new Buffer(contents);
-      
-      return file;
+  var contents = file.contents.toString();
+  var bits = contents.split('####');
+  
+  var cards = JSON.parse(bits[0]);
+  var sets = JSON.parse(bits[1]);
+  contents = 'var data = data || {}; data.cards = ' + JSON.stringify(parser.cards(cards)) + ";\n";
+  contents += 'data.sets = ' + JSON.stringify(parser.sets(cards, sets)) + ";\n";
+  contents += 'data.types = ' + JSON.stringify(parser.types(cards)) + ";\n";
+  contents += 'data.subtypes = ' + JSON.stringify(parser.subtypes(cards)) + ";\n";
+  contents += 'data.factions = ' + JSON.stringify(parser.factions(cards)) + ";\n";
+  file.contents = new Buffer(contents);
+  
+  return file;
 }
 
 gulp.task('parse-data', function(cb){

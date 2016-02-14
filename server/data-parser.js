@@ -2,9 +2,13 @@ module.exports = {
   
   cards : function(cards) {
     return cards.filter(function(card){
+      // sunny lebeau has no card text, so for this and others
+      // it's simplist to just add the card text field as it's
+      // not empty, it's just missing
       if (typeof card.text == 'undefined') {
         card.text = '';
       }
+      // might as well remove unneeded fields
       delete card['last-modified'];
       delete card.faction_letter;
       delete card.flavor;
