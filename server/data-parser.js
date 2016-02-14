@@ -5,6 +5,17 @@ module.exports = {
       if (typeof card.text == 'undefined') {
         card.text = '';
       }
+      delete card['last-modified'];
+      delete card.faction_letter;
+      delete card.flavor;
+      delete card.minimumdecksize;
+      delete card.quantity;
+      delete card.ancurLink
+      delete card.url;
+      delete card.baselink;
+      delete card.influencelimit;
+      delete card.quantity;
+
       return card.imagesrc && card.cycle_code != 'draft';
     });
   },
