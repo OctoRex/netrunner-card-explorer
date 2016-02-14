@@ -84,6 +84,15 @@ app.filter('groupBy', function (CardMemoize) {
             groups[str].cards.push(card);
             break;
             
+          case 'subroutines':
+            if (!groups[card.subroutines]) {
+              var title = card.subroutines + ' subroutine' + (card.subroutines != 1 ? 's' : '');
+              groups[card.subroutines] = createGroup(card.subroutines, title);
+              out.push(groups[card.subroutines]);
+            }
+            groups[card.subroutines].cards.push(card);
+            break;
+            
           case 'trash':
             var trs = (card.trash > 5) ? '6+' : card.trash;
             if (!groups[trs]) {

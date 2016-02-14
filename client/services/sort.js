@@ -17,6 +17,10 @@ app.service('SortSvc', function(TypesSvc, HelperSvc, CardsSvc){
     return (card.faction_code == 'neutral') ? 'ZZZ' : card.faction;
   }
   
+  var subroutineSort = function(card) {
+    return (card.subroutines == 'X') ? -100 : card.subroutines * -1;
+  }
+  
   this.sort = {
     methods : {
       title: 'title',
@@ -24,7 +28,8 @@ app.service('SortSvc', function(TypesSvc, HelperSvc, CardsSvc){
       faction: [factionSort, typeSort, 'title'],
       cost: [numericSort('cost'), factionSort, typeSort, 'title'],
       sets: 'code',
-      strength: [numericSort('strength'), typeSort, 'title'] ,
+      strength: [numericSort('strength'), typeSort, 'title'],
+      subroutines: [subroutineSort, typeSort, 'title'],
       trash: [numericSort('trash'), typeSort, 'title'],
       agenda: [numericSort('agendapoints'), numericSort('advancementcost'), typeSort, 'title'],
       influence: [numericSort('factioncost'), factionSort, typeSort, 'title'],
@@ -61,6 +66,11 @@ app.service('SortSvc', function(TypesSvc, HelperSvc, CardsSvc){
         title: 'Sort by Strength', 
         value: 'strength',
         side: 'corprunner'
+      },
+      {
+        title: 'Sort by Subroutines', 
+        value: 'subroutines',
+        side: 'corp'
       },
       {
         title: 'Sort by Trash Cost', 

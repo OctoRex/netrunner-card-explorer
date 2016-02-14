@@ -19,6 +19,30 @@ module.exports = {
       delete card.baselink;
       delete card.influencelimit;
       delete card.quantity;
+      
+      if (card.hasOwnProperty('strength') && card.side_code == 'corp') {
+        
+        // let's count the subroutines
+        var subsMatch = card.text.match(/\[Subroutine\]/g);
+        
+        var addSubsMatch = card.text.match(/("|“)\[Subroutine\]/g);
+        
+        var subs = 0;
+        
+        if (subsMatch) {
+          subs = subsMatch.length;
+          
+          if (addSubsMatch) {
+            if (addSubsMatch.length == subs) {
+              subs = 'X';
+            } else {
+              subs -= addSubsMatch.length;
+            }
+          }
+        }
+        
+        card.subroutines = subs;
+      }
 
       return card.imagesrc && card.cycle_code != 'draft';
     });

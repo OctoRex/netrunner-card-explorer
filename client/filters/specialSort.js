@@ -8,6 +8,7 @@ app.filter('specialSort', function(CardMemoize){
             return card.hasOwnProperty('agendapoints');
           case 'influence':
             return card.hasOwnProperty('factioncost');
+          case 'subroutines':
           case 'strength':
             return card.hasOwnProperty('strength');
           case 'cost':
