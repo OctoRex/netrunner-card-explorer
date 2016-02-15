@@ -57,7 +57,12 @@ app.filter('groupBy', function (CardMemoize) {
             break;
             
           case 'agenda':
-            var pts = (card.agendapoints > 3) ? '4+' : card.agendapoints;
+            var pts = '';
+            if (card.hasOwnProperty('agendapoints')) {  
+              pts = (card.agendapoints > 3) ? '4+' : card.agendapoints;
+            } else {
+              pts = 'non-agenda';
+            }
             if (!groups[pts]) {
               groups[pts] = createGroup(pts, pluralString(pts, 'point'));
               out.push(groups[pts]);

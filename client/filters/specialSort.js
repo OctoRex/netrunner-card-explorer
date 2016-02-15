@@ -5,7 +5,7 @@ app.filter('specialSort', function(CardMemoize){
       return cards.filter(function(card){
         switch (type) {
           case 'agenda':
-            return card.hasOwnProperty('agendapoints');
+            return card.hasOwnProperty('agendapoints') || card.text.match(/as an agenda/);
           case 'influence':
             return card.hasOwnProperty('factioncost');
           case 'subroutines':
