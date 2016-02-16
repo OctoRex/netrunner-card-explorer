@@ -1,5 +1,8 @@
 # BlacKat Card Explorer
 
+### 1.2.1
+* Fixed CSS width issue
+
 ### 1.2.0
 * Added new sort method - subroutines
 * Added cards that say "as an agenda" to the agenda points sort filter
