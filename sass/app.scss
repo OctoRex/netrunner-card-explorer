@@ -80,13 +80,10 @@ body {
 }
 
 #cards {
-  position: absolute;
-  top: 0;
-  left: 20em; 
+  margin-left:20em;
   padding: 5em 1em;
   
   .card-divider {
-    width: 100%;
     text-align:right;
     padding-bottom: 0.3em;
     padding-right: 8em;
