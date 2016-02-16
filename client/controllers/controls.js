@@ -28,7 +28,10 @@ controls.controller('SidesCtrl', function($scope, CookiesSvc, SidesSvc, SortSvc)
   $scope.changeSide = function(side) {
     
     SidesSvc.setSide(side);
-    SortSvc.checkSideFilter(side);
+    var sort = SortSvc.checkSideFilter(side);
+    if (sort) {
+      CookiesSvc.saveFilter('sort', sort);
+    }
 
     CookiesSvc.saveFilter('side', side);
   }

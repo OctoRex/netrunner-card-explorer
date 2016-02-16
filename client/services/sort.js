@@ -110,6 +110,7 @@ app.service('SortSvc', function(TypesSvc, HelperSvc, CardsSvc){
     }, this);
     if (current.side.search(side) == -1) {
       this.changeSort('faction');
+      return 'faction';
     }
   }
   
