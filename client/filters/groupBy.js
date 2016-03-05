@@ -10,6 +10,10 @@ app.filter('groupBy', function (CardMemoize) {
       }
     }
     
+    var icon = function (code) {
+      return '<span class="icon icon-' + code + '"></span>';
+    }
+    
     var pluralString = function(num, item) {
       return num + ' ' + item + (num == 1 ? '' : 's');
     }
@@ -24,7 +28,8 @@ app.filter('groupBy', function (CardMemoize) {
           
           case 'faction':
             if (!groups[card.faction_code]) {
-              groups[card.faction_code] = createGroup(card.faction_code, card.faction);
+              groups[card.faction_code] = createGroup(card.faction_code, 
+                icon(card.faction_code) + ' ' + card.faction);
               out.push(groups[card.faction_code]);
             }
             groups[card.faction_code].cards.push(card);
@@ -73,7 +78,7 @@ app.filter('groupBy', function (CardMemoize) {
           case 'cost':
             var cst = (card.cost > 9) ? '10+' : card.cost;
             if (!groups[cst]) {
-              groups[cst] = createGroup(cst, pluralString(cst, 'credits'));
+              groups[cst] = createGroup(cst, cst + ' ' + icon('credit'));
               out.push(groups[cst]);
             }
             groups[cst].cards.push(card);
@@ -91,7 +96,7 @@ app.filter('groupBy', function (CardMemoize) {
             
           case 'subroutines':
             if (!groups[card.subroutines]) {
-              var title = card.subroutines + ' subroutine' + (card.subroutines != 1 ? 's' : '');
+              var title = card.subroutines + ' ' + icon('subroutine');
               groups[card.subroutines] = createGroup(card.subroutines, title);
               out.push(groups[card.subroutines]);
             }
@@ -101,7 +106,7 @@ app.filter('groupBy', function (CardMemoize) {
           case 'trash':
             var trs = (card.trash > 5) ? '6+' : card.trash;
             if (!groups[trs]) {
-              groups[trs] = createGroup(trs, pluralString(trs, 'credits'));
+              groups[trs] = createGroup(trs, trs + ' ' + icon('trash'));
               out.push(groups[trs]);
             }
             groups[trs].cards.push(card);

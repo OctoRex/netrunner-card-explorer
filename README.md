@@ -1,5 +1,10 @@
 # BlacKat Card Explorer
 
+### 1.3.0
+* Added Netrunner DB icons
+* Fixed issue with some titles
+* Small CSS adjustments
+
 ### 1.2.1
 * Fixed CSS width issue
 

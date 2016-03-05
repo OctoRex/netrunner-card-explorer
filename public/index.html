@@ -4,12 +4,14 @@
     <meta charset="utf-8">
     <title>BlacKat | Netrunner Card Explorer</title>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-cookies.js"></script>
-    <script type="text/javascript" src="js/data.js?v1.2.0"></script>
-    <script type="text/javascript" src="js/app.js?v1.2.0"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-cookies.min.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-sanitize.min.js"></script>
+    <script type="text/javascript" src="js/data.js?v1.3.0"></script>
+    <script type="text/javascript" src="js/app.js?v1.3.0"></script>
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Rajdhani' type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/app.css?v1.2.1" />
+    <link rel="stylesheet" href="css/app.css?v1.3.0" />
+    <link rel="stylesheet" href="css/icons/style.css?v1.3.0" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     
     <meta name="description" content="Card Explorer for Android:Netrunner">
@@ -71,7 +73,7 @@
               <hr class="filter-divider" />
               <div class="checkbox" ng-repeat="faction in factions.all | filter:{side:sides.current}">
                 <label>
-                  <input type="checkbox" ng-model="faction.selected" ng-change="updateFactions()"/> {{faction.label}}
+                  <input type="checkbox" ng-model="faction.selected" ng-change="updateFactions()"/> <span class="icon icon-{{faction.value}}"></span> {{faction.label}}
                 </label>
               </div>
             </div>
@@ -114,16 +116,16 @@
         </div>
         <hr />
         <div id="small-print">
-          <p>Version 1.2.0</p>
+          <p>Version 1.3.0</p>
           <p>Images &amp; universe are intellectual property of <a href="https://www.fantasyflightgames.com">Fantasy Flight Games</a> and/or <a href="http://company.wizards.com/">Wizards of the Coast</a></p>
           <p>BlacKat image by <a href="http://seageart.com/">Seage</a> who can be found on <a href="http://youtube.com/seagespeaks">YouTube</a></p>
-          <p>Data graciously provided by <a href="http://netrunnerdb.com/">NetrunnerDB</a></p>
+          <p>Data &amp; icons graciously provided by <a href="http://netrunnerdb.com/">NetrunnerDB</a></p>
         </div>
       </div>
       
       <div id="cards" ng-controller="CardsCtrl">
         <div class="card-group" ng-repeat="group in cards.display | factions:factions.selected | filter:{title:search.title} | filter:{text:search.text} | sets:sets.selected | types:types.selected | subtypes:subtypes.selected | specialSort:sort.currentShorthand | orderBy:sort.current | groupBy:sort.currentShorthand as filteredCards">
-          <h3 ng-if="group.title" class="card-divider">{{ group.title }}</h3>
+          <h3 ng-if="group.title" class="card-divider"><span ng-bind-html="group.title"></span></h3>
           <br style="clear:both" />
           <div class="card-tile" ng-repeat="card in group.cards">
             <img ng-src="http://netrunnerdb.com{{card.imagesrc}}" />

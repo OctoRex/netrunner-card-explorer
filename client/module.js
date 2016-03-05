@@ -1,1 +1,1 @@
-var app = angular.module('blackat', ['blackat.controls']);
+var app = angular.module('blackat', ['blackat.controls', 'ngSanitize']);
