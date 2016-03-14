@@ -180,7 +180,5 @@ module.exports = {
     }
     
     return out;
-    
-    return factions;
   }
 }
