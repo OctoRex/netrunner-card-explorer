@@ -23,7 +23,7 @@ function parse() {
       
     var result = uglify.minify(contents, {fromString: true});
     
-    fs.writeFile("../public/js/data.js", contents, 'utf8', function(err) {
+    fs.writeFile(__dirname + "/../public/js/data.js", contents, 'utf8', function(err) {
       if (err) throw err;
       console.log('Data successfully parsed');
     });
@@ -65,5 +65,5 @@ function checkAndFetch(path, url, obj) {
   }); 
 }
 
-checkAndFetch('../import/cards.json', 'http://netrunnerdb.com/api/cards/', cards);
-checkAndFetch('../import/sets.json', 'http://netrunnerdb.com/api/sets/', sets);
+checkAndFetch(__dirname + '/../import/cards.json', 'http://netrunnerdb.com/api/cards/', cards);
+checkAndFetch(__dirname + '/../import/sets.json', 'http://netrunnerdb.com/api/sets/', sets);
