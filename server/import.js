@@ -18,12 +18,10 @@ function parse() {
     contents += 'data.types = ' + JSON.stringify(parser.types(cardData)) + ";\n";
     contents += 'data.subtypes = ' + JSON.stringify(parser.subtypes(cardData)) + ";\n";
     contents += 'data.factions = ' + JSON.stringify(parser.factions(cardData)) + ";\n";
-    
-    contents = unescape(encodeURIComponent(contents));
-      
+          
     var result = uglify.minify(contents, {fromString: true});
     
-    fs.writeFile(__dirname + "/../public/js/data.js", contents, 'utf8', function(err) {
+    fs.writeFile(__dirname + "/../public/js/data.js", result.code, 'utf8', function(err) {
       if (err) throw err;
       console.log('Data successfully parsed');
     });
