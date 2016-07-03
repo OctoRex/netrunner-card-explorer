@@ -1,5 +1,8 @@
 # BlacKat Card Explorer
 
+### 1.3.1
+* Fixed bug with images - NRDB started using full url for imagesrc instead of relative
+
 ### 1.3.0
 * Added Netrunner DB icons
 * Fixed issue with some titles

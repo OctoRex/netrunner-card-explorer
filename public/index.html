@@ -138,7 +138,7 @@
           <h3 ng-if="group.title" class="card-divider"><span ng-bind-html="group.title"></span></h3>
           <br style="clear:both" />
           <div class="card-tile" ng-repeat="card in group.cards">
-            <img ng-src="http://netrunnerdb.com{{card.imagesrc}}" />
+            <img ng-src="{{card.imagesrc}}" />
           </div>
           <br style="clear:both" />
         </div>
