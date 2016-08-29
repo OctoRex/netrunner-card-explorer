@@ -6,3 +6,5 @@ import/*.json
 todos.txt
 assets/*
 data/*
+.vagrant/*
+Vagrantfile
