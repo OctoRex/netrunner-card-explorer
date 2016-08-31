@@ -16,12 +16,14 @@
   },
   "homepage": "https://github.com/OctoRex/netrunner-card-explorer#readme",
   "dependencies": {
+    "express": "^4.14.0",
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
     "gulp-ng-annotate": "^1.1.0",
     "gulp-sass": "^2.1.1",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify": "^1.5.1",
+    "mongojs": "^2.4.0",
     "request": "^2.69.0",
     "uglify-js": "^2.6.2"
   }
