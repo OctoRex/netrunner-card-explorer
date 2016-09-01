@@ -1,120 +1,71 @@
-var fs = require('fs');
-var db = require('./db');
 var parser = require('./data-parser');
-var request = require('request');
+var importer = require('./data-importer');
 
-// pull the data from NRDB, using modified time if present
-function nrdb(url, modified) {
-
-  var headers = {}
- 
-  // if we provide this header then NRDB will let us know when there's
-  // no new data so we don't have to bother processing them
-  if (modified) {
-    headers['If-Modified-Since'] = new Date(modified).toUTCString();
-  }
-  
-  var options = {
-    url: 'https://netrunnerdb.com/api/2.0/public' + url,
-    headers: headers
-  }
-  
-  return new Promise((resolve, reject) => {
-    request(options, function (error, response, body) {
-      if (!error && response.statusCode == 200 && body) {
-        console.log('New data from NRDB!');
-        resolve(body);
-      } else {
-        console.log('NRDB had no new data: ' + options.url + ' - ' + response.statusCode);
-        reject('No new data');
-      }
-    }); 
-  });
-}
-
-// abstract away the saving
-var save = function(items, dataType) {
-  console.log('Adding ' + dataType);
-  var collection = db.collection(dataType);
-  collection.drop();
-  items.forEach((element, index) => {
-    collection.save(element);
-  });
-  return true;
-}
-
-// this needs to be separate as the cards run needs to only mark cards
-// as done once all 3 bits have been sorted
-var markAsModified = function(dataType) {
-  var modified = db.collection('modified');
-  return modified.save({'collection': dataType, 'modified': Date.now()});
-}
-
-var modified = function(dataType) {
-  var collection = db.collection('modified');
-  return new Promise((resolve, reject) => {
-    collection.findOne({collection: dataType}, function(err, doc) {
-      if (doc && typeof doc.modified != 'undefined') {
-        resolve(doc.modified);
-      } else {
-        resolve(null);
-      }
-    });
-  });
-}
-
-var cards = modified('cards').then(function(result) {
-  return nrdb('/cards', result);
+// cards and subtypes (which needs to be parsed from cards)
+// get the modified time
+var cards = importer.modifiedTime('cards').then(function(result) {
+  return importer.nrdb('/cards', result);
+// then parse and save the JSON
 }).then(function(json){
   var data = JSON.parse(json);
+  // allow the parser to filter out bits and bobs
   var cards = parser.cards(data.data, data.imageUrlTemplate);
-  save(cards, 'cards');
+  // save 'em
+  importer.save(cards, 'cards');
   return data.data;
+// then parse/save the subtypes data
 }).then(function(data) {
   var subtypes = parser.subtypes(data);
-  save(subtypes, 'subtypes');
+  importer.save(subtypes, 'subtypes');
   return data;
+// after both we can marks cards as modified (don't need to bother
+// with marking subtypes as cards is the same thing
 }).then(function(data) {
-  markAsModified('cards');
+  importer.markModified('cards');
+// we want to return true on the error regarless so we 
+// can trigger our Promise.all and wrap up (close the db)
 }).catch(err => {
   console.log('Error with cards and subtypes ' + err);
   return true;
 });
 
-var types = modified('types').then(function(result) {
-  return nrdb('/types', result);
+// types is a direct API call
+var types = importer.modifiedTime('types').then(function(result) {
+  return importer.nrdb('/types', result);
 }).then(function(json){
   var data = JSON.parse(json);
   var items = parser.types(data.data);
-  return save(items, 'types');
+  return importer.save(items, 'types');
 }).then(function(data) {
-  return markAsModified('types');
+  return importer.markModified('types');
 }).catch(err => {
   console.log('Error with types ' + err);
   return true;
 });
 
-var sets = modified('sets').then(function(result) {
-  return nrdb('/packs', result);
+// sets is a direct API call
+var sets = importer.modifiedTime('sets').then(function(result) {
+  return importer.nrdb('/packs', result);
 }).then(function(json){
   var data = JSON.parse(json);
   var items = parser.sets(data.data);
-  return save(items, 'sets');
+  return importer.save(items, 'sets');
 }).then(function(data) {
-  return markAsModified('sets');
+  return importer.markModified('sets');
 }).catch(err => {
   console.log('Error with sets ' + err);
   return true;
 });
 
-var factions = modified('factions').then(function(result) {
-  return nrdb('/factions', result);
+// factions is a direct API call
+var factions = importer.modifiedTime('factions').then(function(result) {
+  return importer.nrdb('/factions', result);
 }).then(function(json){
   var data = JSON.parse(json);
   var items = parser.factions(data.data);
-  return save(items, 'factions');
+  return importer.save(items, 'factions');
 }).then(function(data) {
-  return markAsModified('factions');
+  return importer.markModified('factions');
 }).catch(err => {
   console.log('Error with factions ' + err);
   return true;
@@ -122,5 +73,5 @@ var factions = modified('factions').then(function(result) {
 
 
 Promise.all([cards, sets, factions]).then(function(){
-  db.close();
+  importer.wrapUp();
 });
