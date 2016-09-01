@@ -1,6 +1,6 @@
 module.exports = {
   
-  cards : function(cards) {
+  cards : function(cards, img) {
     return cards.filter(function(card){
       // sunny lebeau has no card text, so for this and others
       // it's simplist to just add the card text field as it's
@@ -43,52 +43,47 @@ module.exports = {
         
         card.subroutines = subs;
       }
+      
+      card.imagesrc = img.replace('{code}', card.code);
 
-      return card.imagesrc && card.cycle_code != 'draft';
+      return card.imagesrc && card.pack_code != 'draft';
     });
   },
   
-  sets : function(cards, sets) {
-    var setCodes = ['draft'];
+  sets : function(sets) {
     var out = [];
     
-    cards.forEach(function(card){
-      if (setCodes.indexOf(card.set_code) == -1) {
-        var data = sets.find(function(set){
-          return set.code == card.set_code;
+    sets.forEach(function(set){
+      // all we're doing here is skipping draft as we don't want that 
+      // in our lists
+      if (set.code != 'draft') {
+        // we're going to re-label a few properties for legacy reasons
+        out.push({
+          value: set.code, 
+          label: set.name, 
+          cycle: set.cycle_code,
+          available: set.date_release
         });
-        setCodes.push(card.set_code);
-        out.push({value: card.set_code, label: card.setname, cycle: card.cyclenumber, available: data.available});
       }
     });
     
     return out;
   },
 
-  types : function(cards) {
-    var typeCodes = {
-      corp: [],
-      runner: []
-    };
-    var types = {};
-    
-    cards.forEach(function(card){
-      var side = card.side_code;
-      if (typeCodes[side].indexOf(card.type_code) == -1) {
-        typeCodes[side].push(card.type_code);
-        if (typeof types[card.type_code] == 'undefined') {
-          types[card.type_code] = {value: card.type_code, label: card.type, side: side};
-        } else {
-          types[card.type_code].side += side;
-        }
-      }
-    });
+  types : function(types) {
     
     var out = [];
-    for (type in types) {
-      out.push(types[type]);
-    }
     
+    types.forEach(function(type){
+      if (!type.is_subtype) {
+        out.push({
+          value: type.code, 
+          label: type.name, 
+          side: type.side_code
+        });
+      }
+    });
+
     return out;
   },
 
@@ -104,21 +99,17 @@ module.exports = {
       // get the side of the card, we'll need it later
       var side = card.side_code;
       // if the card has subtypes ...
-      if (card.subtype_code) {
+      if (card.keywords) {
         // get an array of the codes
-        var codes = card.subtype_code.split(' - ');
-        // get an array of the display names
-        var names = card.subtype.split(' - ');
+        var codes = card.keywords.split(' - ');
         // handle each code separately
         codes.forEach(function(code, index) {
-          // get the display name from the other array
-          var name = names[index];
           // if this subtype is not defined in our list yet, we need to initialise it
           // and populate it with the data for this code
           if (typeof subtypes[code] == 'undefined') {
             // note that the types apply to each side separately
             // otherwise it looks weird on the filter list
-            var subtype = {value: code, label: name, side: side, types: {corp:[], runner:[]}};
+            var subtype = {value: code, label: code, side: side, types: {corp:[], runner:[]}};
             subtype.types[side].push(card.type_code);
             // after we've created the subtype, add it to the list, keying by the codename
             subtypes[code] = subtype;
@@ -155,29 +146,17 @@ module.exports = {
     return out;
   },
 
-  factions : function(cards) {
-    var factionCodes = {
-      corp: [],
-      runner: []
-    };
-    var factions = {};
-    
-    cards.forEach(function(card){
-      var side = card.side_code;
-      if (factionCodes[side].indexOf(card.faction_code) == -1) {
-        factionCodes[side].push(card.faction_code);
-        if (typeof factions[card.faction_code] == 'undefined') {
-          factions[card.faction_code] = {value: card.faction_code, label: card.faction, side: side};
-        } else {
-          factions[card.faction_code].side += side;
-        }
-      }
-    });
+  factions : function(factions) {
     
     var out = [];
-    for (faction in factions) {
-      out.push(factions[faction]);
-    }
+    
+    factions.forEach(function(faction){
+      out.push({
+        value: faction.code, 
+        label: faction.name, 
+        side: faction.side_code
+      });
+    });
     
     return out;
   }
