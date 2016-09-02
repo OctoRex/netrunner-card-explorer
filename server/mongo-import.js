@@ -1,5 +1,5 @@
-var parser = require('./data-parser');
-var importer = require('./data-importer');
+var parser = require('./modules/data-parser');
+var importer = require('./modules/data-importer');
 
 // cards and subtypes (which needs to be parsed from cards)
 // get the modified time

@@ -1,6 +1,6 @@
 var request = require('request');
 var fs = require('fs');
-var parser = require('./data-parser');
+var parser = require('./modules/data-parser');
 var uglify = require('uglify-js');
 
 var cards = {data: false, fresh: false};
