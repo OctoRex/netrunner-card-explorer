@@ -1,11 +1,25 @@
-app.service('CardsSvc', function(sideFilter){
-  
-  var cards = window.data.cards;
+app.service('CardsSvc', function($http, sideFilter){
   
   this.cards = {
-    all: cards,
-    corp: sideFilter(cards, 'corp'),
-    runner: sideFilter(cards, 'runner'),
+    all: [],
+    corp: [],
+    runner: [],
     display: []
   }
+    
+  $http.get('/api/cards').then(response => {
+    
+    let cards = response.data;
+    
+    this.cards = {
+      all: cards,
+      corp: sideFilter(cards, 'corp'),
+      runner: sideFilter(cards, 'runner'),
+      display: []
+    }
+    
+  }).catch(err => {
+    console.log(err)
+  });
+ 
 });

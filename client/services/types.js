@@ -1,4 +1,4 @@
-app.service('TypesSvc', function(HelperSvc){
+app.service('TypesSvc', function($http, HelperSvc){
   
   this.helper = HelperSvc;
   
@@ -8,17 +8,9 @@ app.service('TypesSvc', function(HelperSvc){
   this.typeOrder = typeOrder;
   
   this.types = {
-    all: window.data.types,
+    all: [],
     selected: []
   }
-  
-  this.types.all.forEach(function(type){
-    type.selected = true;
-  });
-  
-  this.types.all.sort(function(a, b){
-    return typeOrder.indexOf(a.value) - typeOrder.indexOf(b.value)
-  });
   
   this.setTypes = function() {
     this.types.selected = [];
@@ -39,5 +31,23 @@ app.service('TypesSvc', function(HelperSvc){
     this.setTypes();
   }
   
-  this.setTypes();
+  $http.get('/api/types').then(response => {
+    
+    let types = response.data;
+    
+    this.types.all = types;
+  
+    this.types.all.forEach(function(type){
+      type.selected = true;
+    });
+    
+    this.types.all.sort(function(a, b){
+      return typeOrder.indexOf(a.value) - typeOrder.indexOf(b.value)
+    });
+  
+    this.setTypes();
+    
+  }).catch(err => {
+    console.log(err)
+  });
 });

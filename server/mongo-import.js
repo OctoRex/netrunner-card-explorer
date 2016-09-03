@@ -18,10 +18,10 @@ var cards = importer.modifiedTime('cards').then(function(result) {
   var subtypes = parser.subtypes(data);
   importer.save(subtypes, 'subtypes');
   return data;
-// after both we can marks cards as modified (don't need to bother
-// with marking subtypes as cards is the same thing
+// after both we can mark these as modified
 }).then(function(data) {
   importer.markModified('cards');
+  importer.markModified('subtypes');
 // we want to return true on the error regarless so we 
 // can trigger our Promise.all and wrap up (close the db)
 }).catch(err => {

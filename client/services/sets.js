@@ -1,29 +1,15 @@
-app.service('SetsSvc', function(HelperSvc){
+app.service('SetsSvc', function($http, HelperSvc){
   
   this.helper = HelperSvc;
   
   this.sets = {
-    all: window.data.sets,
+    all: [],
     selected: [],
     available: [],
     spoilers: [],
     display: [],
     showSpoilers: false
   }
-  
-  var now = new Date();
-  
-  this.sets.all.forEach(function(set){
-    set.selected = true;
-    this.sets.selected.push(set.value);
-    if (set.available && now >= new Date(set.available)) {
-      this.sets.available.push(set);
-    } else {
-      this.sets.spoilers.push(set);
-    }
-  }, this);
-  
-  this.sets.display = this.sets.all;
   
   this.setSets = function() {
     this.sets.selected = [];
@@ -57,5 +43,30 @@ app.service('SetsSvc', function(HelperSvc){
     this.setSets();
   }
   
-  this.setSets();
+  $http.get('/api/sets').then(response => {
+    
+    let sets = response.data;
+    
+    this.sets.all = sets;
+
+    let now = new Date();
+    
+    this.sets.all.forEach(function(set){
+      set.selected = true;
+      this.sets.selected.push(set.value);
+      if (set.available && now >= new Date(set.available)) {
+        this.sets.available.push(set);
+      } else {
+        this.sets.spoilers.push(set);
+      }
+    }, this);
+    
+    this.sets.display = this.sets.all;
+  
+    this.setSets();
+    
+  }).catch(err => {
+    console.log(err)
+  });
+
 });

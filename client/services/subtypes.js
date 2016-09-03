@@ -1,25 +1,11 @@
-app.service('SubtypesSvc', function(HelperSvc){
+app.service('SubtypesSvc', function($http, HelperSvc){
   
   this.helper = HelperSvc;
   
   this.subtypes = {
-    all: window.data.subtypes,
+    all: [],
     selected: []
   }
-  
-  this.subtypes.all.forEach(function(subtype){
-    subtype.selected = true;
-  });
-  
-  this.subtypes.all.sort(function(a, b){
-    if (a.value == 'none') {
-      return -1;
-    } else if (b.value == 'none') {
-      return 1;
-    } else {
-      return a.label.localeCompare(b.label);
-    }
-  });
   
   this.setSubtypes = function() {
     this.subtypes.selected = [];
@@ -40,5 +26,30 @@ app.service('SubtypesSvc', function(HelperSvc){
     this.setSubtypes();
   }
   
-  this.setSubtypes();
+  $http.get('/api/subtypes').then(response => {
+    
+    let subtypes = response.data;
+    
+    this.subtypes.all = subtypes;
+  
+    this.subtypes.all.forEach(function(subtype){
+      subtype.selected = true;
+    });
+    
+    this.subtypes.all.sort(function(a, b){
+      if (a.value == 'none') {
+        return -1;
+      } else if (b.value == 'none') {
+        return 1;
+      } else {
+        return a.label.localeCompare(b.label);
+      }
+    });
+  
+    this.setSubtypes();
+    
+  }).catch(err => {
+    console.log(err)
+  });
+  
 });

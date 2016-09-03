@@ -66,7 +66,7 @@ function apiCall(router, endpoint, collection) {
       responses.notModified(res);
     // if that fails or some reason, or the data is new then
     // show the data
-    }).catch(reason => { 
+    }).catch(reason => {      
       return getData(collection).then(docs => {
         // add the last modified header
         res.set('Last-Modified', new Date(reason.modified).toUTCString());
