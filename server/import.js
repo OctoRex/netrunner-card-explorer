@@ -1,5 +1,5 @@
-var parser = require('./modules/data-parser');
-var importer = require('./modules/data-importer');
+var cleaner = require('./modules/cleaner');
+var importer = require('./modules/importer');
 
 // cards and subtypes (which needs to be parsed from cards)
 // get the modified time
@@ -8,14 +8,14 @@ var cards = importer.modifiedTime('cards').then(function(result) {
 // then parse and save the JSON
 }).then(function(json){
   var data = JSON.parse(json);
-  // allow the parser to filter out bits and bobs
-  var cards = parser.cards(data.data, data.imageUrlTemplate);
+  // allow the cleaner to filter out bits and bobs
+  var cards = cleaner.cards(data.data, data.imageUrlTemplate);
   // save 'em
   importer.save(cards, 'cards');
   return data.data;
 // then parse/save the subtypes data
 }).then(function(data) {
-  var subtypes = parser.subtypes(data);
+  var subtypes = cleaner.subtypes(data);
   importer.save(subtypes, 'subtypes');
   return data;
 // after both we can mark these as modified
@@ -34,7 +34,7 @@ var types = importer.modifiedTime('types').then(function(result) {
   return importer.nrdb('/types', result);
 }).then(function(json){
   var data = JSON.parse(json);
-  var items = parser.types(data.data);
+  var items = cleaner.types(data.data);
   return importer.save(items, 'types');
 }).then(function(data) {
   return importer.markModified('types');
@@ -48,7 +48,7 @@ var sets = importer.modifiedTime('sets').then(function(result) {
   return importer.nrdb('/packs', result);
 }).then(function(json){
   var data = JSON.parse(json);
-  var items = parser.sets(data.data);
+  var items = cleaner.sets(data.data);
   return importer.save(items, 'sets');
 }).then(function(data) {
   return importer.markModified('sets');
@@ -62,7 +62,7 @@ var factions = importer.modifiedTime('factions').then(function(result) {
   return importer.nrdb('/factions', result);
 }).then(function(json){
   var data = JSON.parse(json);
-  var items = parser.factions(data.data);
+  var items = cleaner.factions(data.data);
   return importer.save(items, 'factions');
 }).then(function(data) {
   return importer.markModified('factions');
