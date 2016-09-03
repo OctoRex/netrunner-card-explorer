@@ -4,7 +4,7 @@ module.exports = {
     res.status(200).type('json').json(content);
   },
 
-  notModified: function(res, result) {
+  notModified: function(res) {
     res.status(304).send();
   },
   

@@ -1,7 +1,7 @@
 var express = require('express')
   , router = express.Router()
   , db = require('../modules/db')
-  , response = require('../modules/responses')
+  , responses = require('../modules/responses')
   
 /**
  *  Just return the modified time from the request to kick
@@ -13,7 +13,7 @@ function getModifiedTime(req) {
       // change it to unix timestamp
       resolve(new Date(req.get('If-Modified-Since')).getTime());
     } else {
-      reject('Requires new data');
+      resolve(0);
     }
   });
 }
@@ -35,10 +35,10 @@ function compareToModifiedtime(cacheTime, collection) {
   // makes that a bit tricky
   }).then(function(modified) {
     if (modified > cacheTime) {
-      throw 'Cached copy out of date';
+      throw {'modified': modified, 'message': 'Cached copy out of date'};
     }
-    return modified;
-  });;
+    return {'modified': modified, 'message': 'Data not changed'};
+  });
 }
 
 /**
@@ -58,19 +58,20 @@ function getData(collectionName) {
  *  A wrapper for adding it to the router as they're all the same really
  */
 function apiCall(router, endpoint, collection) {
-  router.get(endpoint, function(req, res) {
-       
-    getModifiedTime(req).then(result => { 
+  router.get(endpoint, function(req, res) {   
+    getModifiedTime(req).then(result => {
       return compareToModifiedtime(result, collection);
     // if no new results then show the cache
     }).then(result => {
-      responses.notModified(res, result);
+      responses.notModified(res);
     // if that fails or some reason, or the data is new then
     // show the data
     }).catch(reason => { 
       return getData(collection).then(docs => {
+        // add the last modified header
+        res.set('Last-Modified', new Date(reason.modified).toUTCString());
         responses.ok(res, docs);
-      })
+      });
     }).catch(reason => {
       responses.error(res, reason);
     });
