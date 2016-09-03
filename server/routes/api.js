@@ -47,7 +47,7 @@ function compareToModifiedtime(cacheTime, collection) {
  */
 function getData(collectionName) {
   return new Promise((resolve, reject) => {
-    db.collection(collectionName).find((err, docs) => {
+    db.collection(collectionName).find({}, {"_id": 0}).toArray((err, docs) => {
       if (err) reject(err);
       resolve(docs);
     })
