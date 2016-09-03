@@ -3,7 +3,7 @@ app.filter('sets', function(CardMemoize){
     
     var cls = function() {
       return cards.filter(function(card){
-        return selected.indexOf(card.set_code) != -1;
+        return selected.indexOf(card.pack_code) != -1;
       });
     }
     

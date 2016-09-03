@@ -24,15 +24,15 @@ app.service('SortSvc', function(TypesSvc, HelperSvc, CardsSvc){
   this.sort = {
     methods : {
       title: 'title',
-      type: [typeSort, 'subtype_code', 'title'],
+      type: [typeSort, 'keywords', 'title'],
       faction: [factionSort, typeSort, 'title'],
       cost: [numericSort('cost'), factionSort, typeSort, 'title'],
       sets: 'code',
       strength: [numericSort('strength'), subroutineSort, typeSort, 'title'],
       subroutines: [subroutineSort, numericSort('strength'), typeSort, 'title'],
-      trash: [numericSort('trash'), typeSort, 'title'],
-      agenda: [numericSort('agendapoints'), factionSort, numericSort('advancementcost'), typeSort, 'title'],
-      influence: [numericSort('factioncost'), factionSort, typeSort, 'title'],
+      trash: [numericSort('trash_cost'), typeSort, 'title'],
+      agenda: [numericSort('agenda_points'), factionSort, numericSort('advancementcost'), typeSort, 'title'],
+      influence: [numericSort('faction_cost'), factionSort, typeSort, 'title'],
       illustrator: ['illustrator', 'title'],
       random: []
     },

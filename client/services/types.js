@@ -31,6 +31,12 @@ app.service('TypesSvc', function($http, HelperSvc){
     this.setTypes();
   }
   
+  this.find = function(code) {
+    return this.types.all.find((type, index, array) => {
+      return type.value == code;
+    });
+  }
+  
   $http.get('/api/types').then(response => {
     
     let types = response.data;

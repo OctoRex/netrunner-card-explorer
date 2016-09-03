@@ -1,4 +1,4 @@
-app.filter('groupBy', function (CardMemoize) {
+app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
   
   return function (cards, groupBy) {
     
@@ -27,44 +27,50 @@ app.filter('groupBy', function (CardMemoize) {
         switch (groupBy) {
           
           case 'faction':
-            if (!groups[card.faction_code]) {
-              groups[card.faction_code] = createGroup(card.faction_code, 
-                icon(card.faction_code) + ' ' + card.faction);
-              out.push(groups[card.faction_code]);
+            let factionCode = card.faction_code;
+            if (!groups[factionCode]) {
+              let faction = FactionsSvc.find(factionCode);
+              groups[factionCode] = createGroup(factionCode, 
+                icon(factionCode) + ' ' + faction.label);
+              out.push(groups[factionCode]);
             }
-            groups[card.faction_code].cards.push(card);
+            groups[factionCode].cards.push(card);
             break;
             
           case 'sets':
-            if (!groups[card.set_code]) {
-              groups[card.set_code] = createGroup(card.set_code, card.setname);
-              out.push(groups[card.set_code]);
+            let packCode = card.pack_code; 
+            if (!groups[packCode]) {
+              let pack = SetsSvc.find(packCode);
+              groups[packCode] = createGroup(packCode, pack.label);
+              out.push(groups[packCode]);
             }
-            groups[card.set_code].cards.push(card);
+            groups[packCode].cards.push(card);
             break;
             
           case 'type':
-            if (!groups[card.type_code]) {
-              groups[card.type_code] = createGroup(card.type_code, card.type);
-              out.push(groups[card.type_code]);
+            let typeCode = card.type_code
+            if (!groups[typeCode]) {
+              let type = TypesSvc.find(typeCode);
+              groups[typeCode] = createGroup(typeCode, type.label);
+              out.push(groups[typeCode]);
             }
-            groups[card.type_code].cards.push(card);
+            groups[typeCode].cards.push(card);
             break;
             
           case 'influence':
-            if (!groups[card.factioncost]) {
+            if (!groups[card.faction_cost]) {
               var title = '';
-              for (var i = 0; i < 5; i++) title += (i < card.factioncost ? "\u25CF" : "\u25CB") + ' ';
-              groups[card.factioncost] = createGroup(card.factioncost, title);
-              out.push(groups[card.factioncost]);
+              for (var i = 0; i < 5; i++) title += (i < card.faction_cost ? "\u25CF" : "\u25CB") + ' ';
+              groups[card.faction_cost] = createGroup(card.faction_cost, title);
+              out.push(groups[card.faction_cost]);
             }
-            groups[card.factioncost].cards.push(card);
+            groups[card.faction_cost].cards.push(card);
             break;
             
           case 'agenda':
             var pts = '';
-            if (card.hasOwnProperty('agendapoints')) {  
-              pts = (card.agendapoints > 3) ? '4+' : card.agendapoints;
+            if (card.hasOwnProperty('agenda_points')) {  
+              pts = (card.agenda_points > 3) ? '4+' : card.agenda_points;
             } else {
               pts = 'non-agenda';
             }
@@ -76,7 +82,7 @@ app.filter('groupBy', function (CardMemoize) {
             break;
             
           case 'cost':
-            var cst = (card.cost > 9) ? '10+' : card.cost;
+            var cst = (card.cost > 9) ? '10+' : (card.cost === null ? 'X' : card.cost);
             if (!groups[cst]) {
               groups[cst] = createGroup(cst, cst + ' ' + icon('credit'));
               out.push(groups[cst]);
@@ -85,7 +91,7 @@ app.filter('groupBy', function (CardMemoize) {
             break;
             
           case 'strength':
-            var str = (card.strength > 7) ? '8+' : card.strength;
+            var str = (card.strength > 7) ? '8+' : (card.strength === null ? 'X' : card.strength);
             if (!groups[str]) {
               var title = str + ' strength';
               groups[str] = createGroup(card.strength, title);
@@ -104,7 +110,7 @@ app.filter('groupBy', function (CardMemoize) {
             break;
             
           case 'trash':
-            var trs = (card.trash > 5) ? '6+' : card.trash;
+            var trs = (card.trash_cost > 5) ? '6+' : card.trash_cost;
             if (!groups[trs]) {
               groups[trs] = createGroup(trs, trs + ' ' + icon('trash'));
               out.push(groups[trs]);

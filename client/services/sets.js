@@ -31,6 +31,12 @@ app.service('SetsSvc', function($http, HelperSvc){
     this.setSets();
   }
   
+  this.find = function(code) {
+    return this.sets.all.find((set, index, array) => {
+      return set.value == code;
+    });
+  }
+  
   this.setSpoilers = function(spoilers) {
     if (spoilers) {
       this.sets.display = this.sets.all;

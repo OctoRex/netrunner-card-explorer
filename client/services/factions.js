@@ -26,6 +26,12 @@ app.service('FactionsSvc', function($http, HelperSvc){
     this.setFactions();
   }
   
+  this.find = function(code) {
+    return this.factions.all.find((faction, index, array) => {
+      return faction.value == code;
+    });
+  }
+  
   $http.get('/api/factions').then(response => {
     
     let factions = response.data;
@@ -47,8 +53,6 @@ app.service('FactionsSvc', function($http, HelperSvc){
     });
   
     this.setFactions();
-    
-    console.log(this);
     
   }).catch(err => {
     console.log(err)

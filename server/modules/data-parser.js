@@ -8,6 +8,9 @@ module.exports = {
       if (typeof card.text == 'undefined') {
         card.text = '';
       }
+      if (typeof card.keywords == 'undefined') {
+        card.keywords = '';
+      }
       // might as well remove unneeded fields
       delete card['last-modified'];
       delete card.faction_letter;

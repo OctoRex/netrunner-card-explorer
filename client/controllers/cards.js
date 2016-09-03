@@ -1,7 +1,7 @@
 app.controller('CardsCtrl', function($scope, CardsSvc, SortSvc, SetsSvc, TypesSvc, SubtypesSvc, FactionsSvc, SearchSvc, SpecialsSvc){
 
   $scope.cards = CardsSvc.cards;
-  
+    
   $scope.sort = SortSvc.sort;
   
   $scope.sets = SetsSvc.sets;
@@ -37,21 +37,4 @@ app.controller('CardsCtrl', function($scope, CardsSvc, SortSvc, SetsSvc, TypesSv
     }
   }
   
-  $scope.getDividerHeader = function(card) {
-    return card.index;
-    return card.title;
-  }
-  
-  $scope.checkHeaderDiff = function(card, prev) {
-    console.log(card, prev);
-    return true;
-    var i = $scope.cards.display.indexOf(card);
-    console.log(index, i);
-    return false;
-    // console.log(card, )
-    // if (!prev || (prev && card.type_code != prev.type_code)) {
-      // if (prev) console.log(card.type_code, prev.type_code);
-      // return true;
-    // }
-  }
 });
