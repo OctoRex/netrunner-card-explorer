@@ -10,6 +10,7 @@
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Rajdhani' type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="css/app.css?v1.3.0" />
+    <link rel="stylesheet" href="css/loader.css?v1.3.0" />
     <link rel="stylesheet" href="css/icons/style.css?v1.3.0" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     
@@ -133,15 +134,24 @@
       </div>
       
       <div id="cards" ng-controller="CardsCtrl">
-        <div class="card-group" ng-repeat="group in cards.display | factions:factions.selected | filter:{title:search.title} | filter:{text:search.text} | sets:sets.selected | types:types.selected | subtypes:subtypes.selected | specialSort:sort.currentShorthand | orderBy:sort.current | groupBy:sort.currentShorthand as filteredCards">
-          <h3 ng-if="group.title" class="card-divider"><span ng-bind-html="group.title"></span></h3>
-          <br style="clear:both" />
-          <div class="card-tile" ng-repeat="card in group.cards">
-            <img ng-src="{{card.imagesrc}}" />
+        <div class="loader" ng-hide="cards.loaded">
+          <div class="spinner">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
           </div>
-          <br style="clear:both" />
         </div>
-        <h3 id="no-cards" ng-if="!filteredCards.length">I can't find any cards for you like that &hellip; meow!</h3>
+        <div ng-cloak ng-show="cards.loaded">
+          <div class="card-group" ng-repeat="group in cards.display | factions:factions.selected | filter:{title:search.title} | filter:{text:search.text} | sets:sets.selected | types:types.selected | subtypes:subtypes.selected | specialSort:sort.currentShorthand | orderBy:sort.current | groupBy:sort.currentShorthand as filteredCards">
+            <h3 ng-if="group.title" class="card-divider"><span ng-bind-html="group.title"></span></h3>
+            <br style="clear:both" />
+            <div class="card-tile" ng-repeat="card in group.cards">
+              <img ng-src="{{card.imagesrc}}" />
+            </div>
+            <br style="clear:both" />
+          </div>
+          <h3 id="no-cards" ng-if="!filteredCards.length">I can't find any cards for you like that &hellip; meow!</h3>
+        </div>
       </div>
     </div>
     
