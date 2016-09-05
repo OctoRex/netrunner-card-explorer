@@ -6,6 +6,11 @@ controls.checkAll = function(selected) {
   }
 }
 
+controls.controller('ControlsCtrl', function($scope){
+  
+  $scope.loaded = 0;
+});
+
 controls.controller('SortCtrl', function($scope, CookiesSvc, SortSvc, SidesSvc){
   
   $scope.sort = SortSvc.sort;

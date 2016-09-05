@@ -4,7 +4,8 @@ app.service('FactionsSvc', function($http, HelperSvc){
 
   this.factions = {
     all: [],
-    selected: []
+    selected: [],
+    loaded: false
   };
   
   this.setFactions = function() {
@@ -53,6 +54,8 @@ app.service('FactionsSvc', function($http, HelperSvc){
     });
   
     this.setFactions();
+    
+    this.factions.loaded = true;
     
   }).catch(err => {
     console.log(err)

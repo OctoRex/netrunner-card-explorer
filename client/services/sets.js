@@ -8,7 +8,8 @@ app.service('SetsSvc', function($http, HelperSvc){
     available: [],
     spoilers: [],
     display: [],
-    showSpoilers: false
+    showSpoilers: false,
+    loaded: false
   }
   
   this.setSets = function() {
@@ -70,6 +71,8 @@ app.service('SetsSvc', function($http, HelperSvc){
     this.sets.display = this.sets.all;
   
     this.setSets();
+    
+    this.sets.loaded = true;
     
   }).catch(err => {
     console.log(err)

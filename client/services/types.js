@@ -9,7 +9,8 @@ app.service('TypesSvc', function($http, HelperSvc){
   
   this.types = {
     all: [],
-    selected: []
+    selected: [],
+    loaded: false
   }
   
   this.setTypes = function() {
@@ -52,6 +53,8 @@ app.service('TypesSvc', function($http, HelperSvc){
     });
   
     this.setTypes();
+    
+    this.types.loaded = true;
     
   }).catch(err => {
     console.log(err)

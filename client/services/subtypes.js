@@ -4,7 +4,8 @@ app.service('SubtypesSvc', function($http, HelperSvc){
   
   this.subtypes = {
     all: [],
-    selected: []
+    selected: [],
+    loaded: false
   }
   
   this.setSubtypes = function() {
@@ -47,6 +48,8 @@ app.service('SubtypesSvc', function($http, HelperSvc){
     });
   
     this.setSubtypes();
+    
+    this.subtypes.loaded = true;
     
   }).catch(err => {
     console.log(err)
