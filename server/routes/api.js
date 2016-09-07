@@ -68,9 +68,11 @@ function apiCall(router, endpoint, collection) {
     // show the data
     }).catch(reason => {      
       return getData(collection).then(docs => {
+        
         // add the last modified header
         res.set('Last-Modified', new Date(reason.modified).toUTCString());
         responses.ok(res, docs);
+
       });
     }).catch(reason => {
       responses.error(res, reason);

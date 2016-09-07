@@ -8,7 +8,9 @@ controls.checkAll = function(selected) {
 
 controls.controller('ControlsCtrl', function($scope){
   
-  $scope.loaded = 0;
+  $scope.loaded = {
+    loaded : 0
+  };
 });
 
 controls.controller('SortCtrl', function($scope, CookiesSvc, SortSvc, SidesSvc){
@@ -24,6 +26,8 @@ controls.controller('SortCtrl', function($scope, CookiesSvc, SortSvc, SidesSvc){
   $scope.sort.currentShorthand = CookiesSvc.getFilter('sort', 'faction');
   
   $scope.changeSort();
+  
+  $scope.loaded.loaded++;
 });
 
 controls.controller('SidesCtrl', function($scope, CookiesSvc, SidesSvc, SortSvc){
@@ -42,6 +46,8 @@ controls.controller('SidesCtrl', function($scope, CookiesSvc, SidesSvc, SortSvc)
   }
   
   $scope.changeSide(CookiesSvc.getFilter('side', 'corp'));
+  
+  $scope.loaded.loaded++;
 });
 
 controls.controller('TypesCtrl', function($scope, CookiesSvc, TypesSvc, SidesSvc){
@@ -70,6 +76,10 @@ controls.controller('TypesCtrl', function($scope, CookiesSvc, TypesSvc, SidesSvc
     type.selected = $scope.types.selected.indexOf(type.value) != -1;
   });
   TypesSvc.setTypes();
+  
+  $scope.$watch('types.loaded', function(newValue) {
+    if (newValue) $scope.loaded.loaded++;
+  });
 });
 
 controls.controller('SubtypesCtrl', function($scope, CookiesSvc, SubtypesSvc, TypesSvc, SidesSvc){
@@ -99,6 +109,10 @@ controls.controller('SubtypesCtrl', function($scope, CookiesSvc, SubtypesSvc, Ty
     subtype.selected = $scope.subtypes.selected.indexOf(subtype.value) != -1;
   });
   SubtypesSvc.setSubtypes();
+  
+  $scope.$watch('subtypes.loaded', function(newValue) {
+    if (newValue) $scope.loaded.loaded++;
+  });
 });
 
 controls.controller('SetsCtrl', function($scope, CookiesSvc, SetsSvc){
@@ -133,6 +147,10 @@ controls.controller('SetsCtrl', function($scope, CookiesSvc, SetsSvc){
   });
   SetsSvc.setSets();
   SetsSvc.setSpoilers($scope.sets.showSpoilers);
+  
+  $scope.$watch('sets.loaded', function(newValue) {
+    if (newValue) $scope.loaded.loaded++;
+  });
 });
 
 controls.controller('FactionCtrl', function($scope, CookiesSvc, FactionsSvc, SidesSvc){
@@ -161,6 +179,10 @@ controls.controller('FactionCtrl', function($scope, CookiesSvc, FactionsSvc, Sid
     faction.selected = $scope.factions.selected.indexOf(faction.value) != -1;
   });
   FactionsSvc.setFactions();
+  
+  $scope.$watch('factions.loaded', function(newValue) {
+    if (newValue) $scope.loaded.loaded++;
+  });
 });
 
 controls.controller('SearchCtrl', function($scope, CookiesSvc, SearchSvc){

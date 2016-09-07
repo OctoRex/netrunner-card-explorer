@@ -48,6 +48,7 @@ body {
   padding-left: 2em;
   padding-right: 3em;
   width: 20em;
+  min-height: 454px;
   hr.filter-divider {
     margin: 0.5em;
   }
@@ -123,4 +124,9 @@ body {
 
 #small-print {
   font-size: 1.1rem;
+}
+
+/* angular cloaking */
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
 }
