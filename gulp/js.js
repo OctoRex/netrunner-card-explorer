@@ -7,7 +7,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var babel = require('gulp-babel');
 
 gulp.task('js', function(){
-  return gulp.src(['client/module.js', 'client/**/*.js'])
+  return gulp.src(['client/module.js', 'client/controls.js', 'client/**/*.js'])
     .pipe(sourcemaps.init())
     .pipe(concat('app.js'))
     .pipe(ngAnnotate())
