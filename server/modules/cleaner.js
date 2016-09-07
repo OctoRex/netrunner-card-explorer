@@ -13,13 +13,15 @@ module.exports = {
       }
       // might as well remove unneeded fields
       delete card['last-modified'];
-      delete card.faction_letter;
+      delete card.deck_limit;
+      delete card.influence_limit;
+      delete card.minimum_deck_size;
       delete card.flavor;
       delete card.minimumdecksize;
+      delete card.position;
       delete card.quantity;
-      delete card.ancurLink
-      delete card.url;
-      delete card.baselink;
+      delete card.uniqueness
+      delete card.base_link;
       delete card.influencelimit;
       delete card.quantity;
       
