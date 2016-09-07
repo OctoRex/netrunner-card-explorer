@@ -28,9 +28,9 @@ module.exports = {
       if (card.hasOwnProperty('strength') && card.side_code == 'corp') {
         
         // let's count the subroutines
-        var subsMatch = card.text.match(/\[Subroutine\]/g);
+        var subsMatch = card.text.match(/\[subroutine\]/g);
         
-        var addSubsMatch = card.text.match(/("|“)\[Subroutine\]/g);
+        var addSubsMatch = card.text.match(/("|“)\[subroutine\]/g);
         
         var subs = 0;
         
