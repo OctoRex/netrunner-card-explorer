@@ -1,4 +1,4 @@
-app.service('SetsSvc', function($http, HelperSvc){
+app.service('SetsSvc', function(ApiSvc, HelperSvc){
   
   this.helper = HelperSvc;
   
@@ -50,7 +50,7 @@ app.service('SetsSvc', function($http, HelperSvc){
     this.setSets();
   }
   
-  $http.get('/api/sets').then(response => {
+  ApiSvc.sets().then(response => {
     
     let sets = response.data;
     

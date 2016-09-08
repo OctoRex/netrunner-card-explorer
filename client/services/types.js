@@ -1,4 +1,4 @@
-app.service('TypesSvc', function($http, HelperSvc){
+app.service('TypesSvc', function(ApiSvc, HelperSvc){
   
   this.helper = HelperSvc;
   
@@ -38,7 +38,7 @@ app.service('TypesSvc', function($http, HelperSvc){
     });
   }
   
-  $http.get('/api/types').then(response => {
+  ApiSvc.types().then(response => {
     
     let types = response.data;
     

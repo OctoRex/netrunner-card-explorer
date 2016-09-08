@@ -1,4 +1,4 @@
-app.service('CardsSvc', function($http, sideFilter){
+app.service('CardsSvc', function(ApiSvc, sideFilter){
   
   this.cards = {
     all: [],
@@ -8,7 +8,7 @@ app.service('CardsSvc', function($http, sideFilter){
     loaded: false
   }
     
-  $http.get('/api/cards').then(response => {
+  ApiSvc.cards().then(response => {
     
     let cards = response.data;
     

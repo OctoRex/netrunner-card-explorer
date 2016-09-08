@@ -1,4 +1,4 @@
-app.service('SubtypesSvc', function($http, HelperSvc){
+app.service('SubtypesSvc', function(ApiSvc, HelperSvc){
   
   this.helper = HelperSvc;
   
@@ -27,7 +27,7 @@ app.service('SubtypesSvc', function($http, HelperSvc){
     this.setSubtypes();
   }
   
-  $http.get('/api/subtypes').then(response => {
+  ApiSvc.subtypes().then(response => {
     
     let subtypes = response.data;
     

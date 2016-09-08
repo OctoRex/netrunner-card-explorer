@@ -1,4 +1,4 @@
-app.service('FactionsSvc', function($http, HelperSvc){
+app.service('FactionsSvc', function(ApiSvc, HelperSvc){
   
   this.helper = HelperSvc;
 
@@ -33,7 +33,7 @@ app.service('FactionsSvc', function($http, HelperSvc){
     });
   }
   
-  $http.get('/api/factions').then(response => {
+  ApiSvc.factions().then(response => {
     
     let factions = response.data;
     

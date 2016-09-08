@@ -14,7 +14,7 @@ app.service('SortSvc', function(TypesSvc, HelperSvc, CardsSvc){
   }
   
   var factionSort = function(card) {
-    return (card.faction_code == 'neutral') ? 'ZZZ' : card.faction;
+    return card.faction_code.match('neutral') ? 'ZZZ' : card.faction_code;
   }
   
   var subroutineSort = function(card) {
