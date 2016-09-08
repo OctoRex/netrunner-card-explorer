@@ -13,26 +13,5 @@ app.controller('CardsCtrl', function($scope, CardsSvc, SortSvc, SetsSvc, TypesSv
   $scope.factions = FactionsSvc.factions;
   
   $scope.search = SearchSvc.search;
-
-  $scope.cardHeader = function(card, previous, sort) {
-    
-    var column = '';
-    switch (sort) {
-      case 'type':
-        column = 'type';
-        break;
-      default:
-        return false;
-    }
-    
-    if (typeof previous == 'undefined') {
-      return card[column];
-    }
-    
-    if (card[column] != previous[column]) {
-      console.log(card[column], previous[column]);
-      return card[column];
-    }
-  }
   
 });
