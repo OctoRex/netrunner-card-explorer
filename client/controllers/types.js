@@ -19,14 +19,12 @@ app.controller('TypesCtrl', function($scope, CookiesSvc, TypesSvc, SidesSvc){
     CookiesSvc.saveFilter('types', $scope.types.selected);
   }
   
-  $scope.types.selected = CookiesSvc.getFilter('types', $scope.types.selected);
-  
-  $scope.types.all.forEach(function(type){
-    type.selected = $scope.types.selected.indexOf(type.value) != -1;
-  });
-  TypesSvc.setTypes();
-  
   $scope.$watch('types.loaded', function(newValue) {
+    $scope.types.selected = CookiesSvc.getFilter('types', $scope.types.selected);
+    $scope.types.all.forEach(function(type){
+      type.selected = $scope.types.selected.indexOf(type.value) != -1;
+    });
+    
     if (newValue) $scope.loaded.loaded++;
   });
 });

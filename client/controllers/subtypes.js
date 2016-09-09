@@ -20,14 +20,11 @@ app.controller('SubtypesCtrl', function($scope, CookiesSvc, SubtypesSvc, TypesSv
     CookiesSvc.saveFilter('subtypes', $scope.subtypes.selected);
   }
   
-  $scope.subtypes.selected = CookiesSvc.getFilter('subtypes', $scope.subtypes.selected);
-  
-  $scope.subtypes.all.forEach(function(subtype){
-    subtype.selected = $scope.subtypes.selected.indexOf(subtype.value) != -1;
-  });
-  SubtypesSvc.setSubtypes();
-  
   $scope.$watch('subtypes.loaded', function(newValue) {
+    $scope.subtypes.selected = CookiesSvc.getFilter('subtypes', $scope.subtypes.selected);
+    $scope.subtypes.all.forEach(function(subtype){
+      subtype.selected = $scope.subtypes.selected.indexOf(subtype.value) != -1;
+    });
     if (newValue) $scope.loaded.loaded++;
   });
 });

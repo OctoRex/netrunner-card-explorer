@@ -19,14 +19,12 @@ app.controller('FactionCtrl', function($scope, CookiesSvc, FactionsSvc, SidesSvc
     CookiesSvc.saveFilter('factions', $scope.factions.selected);
   }
   
-  $scope.factions.selected = CookiesSvc.getFilter('factions', $scope.factions.selected);
-  
-  $scope.factions.all.forEach(function(faction){
-    faction.selected = $scope.factions.selected.indexOf(faction.value) != -1;
-  });
-  FactionsSvc.setFactions();
-  
   $scope.$watch('factions.loaded', function(newValue) {
+  
+    $scope.factions.selected = CookiesSvc.getFilter('factions', $scope.factions.selected);
+    $scope.factions.all.forEach(function(faction){
+      faction.selected = $scope.factions.selected.indexOf(faction.value) != -1;
+    });
     if (newValue) $scope.loaded.loaded++;
   });
 });
