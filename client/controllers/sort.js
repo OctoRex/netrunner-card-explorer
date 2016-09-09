@@ -1,5 +1,5 @@
 
-controls.controller('SortCtrl', function($scope, CookiesSvc, SortSvc, SidesSvc){
+app.controller('SortCtrl', function($scope, CookiesSvc, SortSvc, SidesSvc){
   
   $scope.sort = SortSvc.sort;
   $scope.sides = SidesSvc.sides;

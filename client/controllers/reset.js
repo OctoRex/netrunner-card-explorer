@@ -1,5 +1,5 @@
 
-controls.controller('ResetCtrl', function($scope, CookiesSvc, SidesSvc, SortSvc, SearchSvc, SetsSvc, FactionsSvc, TypesSvc, SubtypesSvc){
+app.controller('ResetCtrl', function($scope, CookiesSvc, SidesSvc, SortSvc, SearchSvc, SetsSvc, FactionsSvc, TypesSvc, SubtypesSvc){
   $scope.resetAll = function() {
     SortSvc.changeSort('faction')    
     SearchSvc.search.title = '';

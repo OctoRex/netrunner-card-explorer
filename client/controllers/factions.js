@@ -1,5 +1,5 @@
 
-controls.controller('FactionCtrl', function($scope, CookiesSvc, FactionsSvc, SidesSvc){
+app.controller('FactionCtrl', function($scope, CookiesSvc, FactionsSvc, SidesSvc){
   
   $scope.sides = SidesSvc.sides;
   $scope.factions = FactionsSvc.factions;

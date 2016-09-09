@@ -1,5 +1,5 @@
 
-controls.controller('SetsCtrl', function($scope, CookiesSvc, SetsSvc){
+app.controller('SetsCtrl', function($scope, CookiesSvc, SetsSvc){
   
   $scope.sets = SetsSvc.sets;
   

@@ -1,5 +1,5 @@
 
-controls.controller('SearchCtrl', function($scope, CookiesSvc, SearchSvc){
+app.controller('SearchCtrl', function($scope, CookiesSvc, SearchSvc){
   
   $scope.search = SearchSvc.search;
   $scope.searchTitle = function() {

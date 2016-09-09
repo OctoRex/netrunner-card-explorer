@@ -1,5 +1,5 @@
 
-controls.controller('SidesCtrl', function($scope, CookiesSvc, SidesSvc, SortSvc){
+app.controller('SidesCtrl', function($scope, CookiesSvc, SidesSvc, SortSvc){
   
   $scope.sides = SidesSvc.sides;
   

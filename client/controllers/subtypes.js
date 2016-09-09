@@ -1,5 +1,5 @@
 
-controls.controller('SubtypesCtrl', function($scope, CookiesSvc, SubtypesSvc, TypesSvc, SidesSvc){
+app.controller('SubtypesCtrl', function($scope, CookiesSvc, SubtypesSvc, TypesSvc, SidesSvc){
  
   $scope.subtypes = SubtypesSvc.subtypes;
   $scope.types = TypesSvc.types;
