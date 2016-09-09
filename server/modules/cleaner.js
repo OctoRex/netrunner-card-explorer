@@ -84,7 +84,7 @@ module.exports = {
         out.push({
           value: type.code, 
           label: type.name, 
-          side: type.side_code
+          side: (type.side_code ? type.side_code : 'corprunner')
         });
       }
     });
