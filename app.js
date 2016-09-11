@@ -4,10 +4,7 @@ var compression = require('compression')
 var app = express();
 
 // compress all requests
-app.use(compression())
-
-// set up static handlers
-app.use(express.static('public'));
+app.use(compression());
 
 // main route
 app.get('/', function(req, res) {
@@ -17,4 +14,4 @@ app.get('/', function(req, res) {
 // add the API endpoints
 app.use('/api', require('./server/routes/api'));
 
-app.listen(8888);
+app.listen(8888, '127.0.0.1');

@@ -7,3 +7,4 @@ todos.txt
 assets/*
 data/*
 .vagrant/*
+.nginx/*
