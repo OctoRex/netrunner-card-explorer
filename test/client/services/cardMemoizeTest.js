@@ -13,7 +13,7 @@ describe('Service: CardMemoize', function() {
 
 			var a = 1, b = 2;
 
-			var results = CardMemoize.memo('test', [a,b], function() { return a + b });
+			var results = CardMemoize.memo('test', [a,b], function() { return a + b; });
 			expect(results).to.equal(3);
 		});
 
@@ -21,7 +21,7 @@ describe('Service: CardMemoize', function() {
 
 			var a = 1, b = 2;
 
-			CardMemoize.memo('test', [a,b], function() { return a + b });
+			CardMemoize.memo('test', [a,b], function() { return a + b; });
 			var results = CardMemoize.memo('test', [a,b]);
 			
 			expect(results).to.equal(3);
@@ -31,8 +31,8 @@ describe('Service: CardMemoize', function() {
 
 			var a = 1, b = 2, c = 3;
 
-			CardMemoize.memo('test', [a,b], function() { return a + b });
-			CardMemoize.memo('test', [b,c], function() { return b + c });
+			CardMemoize.memo('test', [a,b], function() { return a + b; });
+			CardMemoize.memo('test', [b,c], function() { return b + c; });
 			var first = CardMemoize.memo('test', [a,b]);
 			var second = CardMemoize.memo('test', [b,c]);
 			

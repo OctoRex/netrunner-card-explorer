@@ -8,7 +8,7 @@ describe('Filter: factions', function(){
 			memo: function(filter, args, closure) {
 				return closure();
 			}
-		}
+		};
 
 	beforeEach(function() {
 		module(function($provide) {
