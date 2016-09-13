@@ -7,17 +7,17 @@ app.controller('FactionCtrl', function($scope, CookiesSvc, FactionsSvc, SidesSvc
   $scope.updateFactions = function() {
     FactionsSvc.setFactions();
     CookiesSvc.saveFilter('factions', $scope.factions.selected);
-  }
+  };
   
   $scope.allFactions = function(){
     FactionsSvc.allFactions();
     CookiesSvc.saveFilter('factions', $scope.factions.selected);
-  }
+  };
   
   $scope.noFactions = function() {
     FactionsSvc.noFactions();
     CookiesSvc.saveFilter('factions', $scope.factions.selected);
-  }
+  };
   
   $scope.$watch('factions.loaded', function(newValue) {
   

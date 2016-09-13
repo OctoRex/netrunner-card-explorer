@@ -1,7 +1,7 @@
 
 app.controller('ResetCtrl', function($scope, CookiesSvc, SidesSvc, SortSvc, SearchSvc, SetsSvc, FactionsSvc, TypesSvc, SubtypesSvc){
   $scope.resetAll = function() {
-    SortSvc.changeSort('faction')    
+    SortSvc.changeSort('faction');
     SearchSvc.search.title = '';
     SearchSvc.search.text = '';
     SetsSvc.allSets();
@@ -16,9 +16,9 @@ app.controller('ResetCtrl', function($scope, CookiesSvc, SidesSvc, SortSvc, Sear
       'subtypes': SubtypesSvc.subtypes.selected,
       'factions': FactionsSvc.factions.selected
     });
-  }
+  };
   
   $scope.clearCookie = function() {
     CookiesSvc.clear();
-  }
+  };
 });

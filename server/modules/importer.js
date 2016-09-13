@@ -7,7 +7,7 @@ module.exports = {
 // pull the data from NRDB, using modified time if present
   nrdb : function(url, modified) {
 
-    var headers = {}
+    var headers = {};
    
     // if we provide this header then NRDB will let us know when there's
     // no new data so we don't have to bother processing them
@@ -18,7 +18,7 @@ module.exports = {
     var options = {
       url: 'https://netrunnerdb.com/api/2.0/public' + url,
       headers: headers
-    }
+    };
     
     // return the request as a promise
     return new Promise((resolve, reject) => {
@@ -70,6 +70,6 @@ module.exports = {
   },
   
   wrapUp : function() {
-    db.close()
+    db.close();
   }
-}
+};

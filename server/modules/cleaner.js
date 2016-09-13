@@ -20,7 +20,7 @@ module.exports = {
       delete card.minimumdecksize;
       delete card.position;
       delete card.quantity;
-      delete card.uniqueness
+      delete card.uniqueness;
       delete card.base_link;
       delete card.influencelimit;
       delete card.quantity;
@@ -137,14 +137,14 @@ module.exports = {
       } else {
         // ... but if it doesn't then we need to add it to the 'none' subtype
         // note that 'none' is already in the subtypes-per-side list so we don't have to add it
-        if (subtypes['none'].types[side].indexOf(card.type_code) == -1) {
-          subtypes['none'].types[side].push(card.type_code);
+        if (subtypes.none.types[side].indexOf(card.type_code) == -1) {
+          subtypes.none.types[side].push(card.type_code);
         }
       }
     });
     
     var out = [];
-    for (subtype in subtypes) {
+    for (var subtype in subtypes) {
       out.push(subtypes[subtype]);
     }
     
@@ -165,4 +165,4 @@ module.exports = {
     
     return out;
   }
-}
+};

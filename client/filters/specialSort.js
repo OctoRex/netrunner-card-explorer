@@ -19,8 +19,8 @@ app.filter('specialSort', function(CardMemoize){
             return true;
         }
       });
-    }
+    };
     
     return CardMemoize.memo('specialSort', [cards,type], cls);
-  }
+  };
 });

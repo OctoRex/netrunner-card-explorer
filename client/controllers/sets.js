@@ -6,22 +6,22 @@ app.controller('SetsCtrl', function($scope, CookiesSvc, SetsSvc){
   $scope.updateSets = function() {
     SetsSvc.setSets();
     CookiesSvc.saveFilter('sets', $scope.sets.selected);
-  }
+  };
   
   $scope.allSets = function(){
     SetsSvc.allSets();
     CookiesSvc.saveFilter('sets', $scope.sets.selected);
-  }
+  };
   
   $scope.noSets = function() {
     SetsSvc.noSets();
     CookiesSvc.saveFilter('sets', $scope.sets.selected);
-  }
+  };
   
   $scope.setSpoilers = function() {
     SetsSvc.setSpoilers($scope.sets.showSpoilers);
     CookiesSvc.saveFilter('spoilers', $scope.sets.showSpoilers);
-  }
+  };
   
   $scope.$watch('sets.loaded', function(newValue) {
   

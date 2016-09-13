@@ -3,5 +3,5 @@ app.filter('side', function(){
     return cards.filter(function(card){
       return card.side_code == side;
     });
-  }
+  };
 });

@@ -1,7 +1,7 @@
-var express = require('express')
-  , router = express.Router()
-  , db = require('../modules/db')
-  , responses = require('../modules/responses')
+var express = require('express'),
+  router = express.Router(),
+  db = require('../modules/db'),
+  responses = require('../modules/responses');
   
 /**
  *  Just return the modified time from the request to kick
@@ -50,7 +50,7 @@ function getData(collectionName) {
     db.collection(collectionName).find({}, {"_id": 0}).toArray((err, docs) => {
       if (err) reject(err);
       resolve(docs);
-    })
+    });
   });
 }
 

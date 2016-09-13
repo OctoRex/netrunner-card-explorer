@@ -12,4 +12,4 @@ module.exports = {
     console.log(reason);
     res.status(500).type('json').send({"message": "Problem with the server"});
   }
-}
+};

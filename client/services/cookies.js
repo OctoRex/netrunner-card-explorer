@@ -14,29 +14,29 @@ app.service('CookiesSvc', function($cookies){
     
     // get a date 30 days from now
     var month = new Date();
-    month.setDate(month.getDate() + 30)
+    month.setDate(month.getDate() + 30);
     // save them all to the cookies
     $cookies.putObject('filters', storedFilters, {'expires': month});
-  }
+  };
   
   // saving one filter just utilises the main save function handling
   // the formatting for us
   this.saveFilter = function(filter, value) {
-    var filters = {}
+    var filters = {};
     filters[filter] = value;
     this.saveFilters(filters);
-  }
+  };
   
   this.getFilter = function(prop, def) {
     // small workaround for non-optional args in JS
     def = (typeof def != 'undefined') ? def : null;
     // only return the value if it's a valid value, otherwise use the default
-    return (typeof storedFilters[prop] != 'undefined' && storedFilters[prop] != null) ? storedFilters[prop] : def;
-  }
+    return (typeof storedFilters[prop] != 'undefined' && storedFilters[prop] !== null) ? storedFilters[prop] : def;
+  };
   
   // going to just get rid of the cookie here
   this.clear = function() {
     $cookies.remove('filters');
-  }
+  };
   
 });

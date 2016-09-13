@@ -12,7 +12,7 @@ app.controller('SidesCtrl', function($scope, CookiesSvc, SidesSvc, SortSvc){
     }
 
     CookiesSvc.saveFilter('side', side);
-  }
+  };
   
   $scope.changeSide(CookiesSvc.getFilter('side', 'corp'));
   

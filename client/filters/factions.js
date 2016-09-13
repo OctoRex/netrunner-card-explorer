@@ -4,8 +4,8 @@ app.filter('factions', function(CardMemoize){
       return cards.filter(function(card){
         return selected.indexOf(card.faction_code) != -1;
       });
-    }
+    };
     
     return CardMemoize.memo('factions', [cards,selected], cls);
-  }
+  };
 });

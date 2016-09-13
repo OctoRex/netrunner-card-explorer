@@ -7,16 +7,16 @@ app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
         title: title,
         cards: [],
         code: code
-      }
-    }
+      };
+    };
     
     var icon = function (code) {
       return '<span class="icon icon-' + code + '"></span>';
-    }
+    };
     
     var pluralString = function(num, item) {
       return num + ' ' + item + (num == 1 ? '' : 's');
-    }
+    };
 
     var cls = function() {
       
@@ -24,6 +24,7 @@ app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
       var out = [];
       
       cards.forEach(function(card){
+        var title = '';
         switch (groupBy) {
           
           case 'faction':
@@ -48,7 +49,7 @@ app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
             break;
             
           case 'type':
-            let typeCode = card.type_code
+            let typeCode = card.type_code;
             if (!groups[typeCode]) {
               let type = TypesSvc.find(typeCode);
               groups[typeCode] = createGroup(typeCode, type.label);
@@ -59,7 +60,6 @@ app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
             
           case 'influence':
             if (!groups[card.faction_cost]) {
-              var title = '';
               for (var i = 0; i < 5; i++) title += (i < card.faction_cost ? "\u25CF" : "\u25CB") + ' ';
               groups[card.faction_cost] = createGroup(card.faction_cost, title);
               out.push(groups[card.faction_cost]);
@@ -93,7 +93,7 @@ app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
           case 'strength':
             var str = (card.strength > 7) ? '8+' : (card.strength === null ? 'X' : card.strength);
             if (!groups[str]) {
-              var title = str + ' strength';
+              title = str + ' strength';
               groups[str] = createGroup(card.strength, title);
               out.push(groups[str]);
             }
@@ -102,7 +102,7 @@ app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
             
           case 'subroutines':
             if (!groups[card.subroutines]) {
-              var title = card.subroutines + ' ' + icon('subroutine');
+              title = card.subroutines + ' ' + icon('subroutine');
               groups[card.subroutines] = createGroup(card.subroutines, title);
               out.push(groups[card.subroutines]);
             }
@@ -138,7 +138,7 @@ app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
       });
       
       return out;
-    }
+    };
     
     return CardMemoize.memo('types', [cards,groupBy], cls);
   };

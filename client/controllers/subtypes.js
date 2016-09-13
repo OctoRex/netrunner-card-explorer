@@ -8,17 +8,17 @@ app.controller('SubtypesCtrl', function($scope, CookiesSvc, SubtypesSvc, TypesSv
   $scope.updateSubtypes = function() {
     SubtypesSvc.setSubtypes();
     CookiesSvc.saveFilter('subtypes', $scope.subtypes.selected);
-  }
+  };
   
   $scope.allSubtypes = function(){
     SubtypesSvc.allSubtypes();
     CookiesSvc.saveFilter('subtypes', $scope.subtypes.selected);
-  }
+  };
   
   $scope.noSubtypes = function() {
     SubtypesSvc.noSubtypes();
     CookiesSvc.saveFilter('subtypes', $scope.subtypes.selected);
-  }
+  };
   
   $scope.$watch('subtypes.loaded', function(newValue) {
     $scope.subtypes.selected = CookiesSvc.getFilter('subtypes', $scope.subtypes.selected);

@@ -7,17 +7,17 @@ app.controller('TypesCtrl', function($scope, CookiesSvc, TypesSvc, SidesSvc){
   $scope.updateTypes = function() {
     TypesSvc.setTypes();
     CookiesSvc.saveFilter('types', $scope.types.selected);
-  }
+  };
   
   $scope.allTypes = function(){
     TypesSvc.allTypes();
     CookiesSvc.saveFilter('types', $scope.types.selected);
-  }
+  };
   
   $scope.noTypes = function() {
     TypesSvc.noTypes();
     CookiesSvc.saveFilter('types', $scope.types.selected);
-  }
+  };
   
   $scope.$watch('types.loaded', function(newValue) {
     $scope.types.selected = CookiesSvc.getFilter('types', $scope.types.selected);

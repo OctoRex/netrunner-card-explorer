@@ -2,7 +2,7 @@ app.filter('subtypes', function(CardMemoize){
   return function (cards, selected) {
     var cls = function() {
       return cards.filter(function(card){
-        if (card.keywords == "") {
+        if (card.keywords === "") {
           return selected.indexOf('none') != -1;
         } else {
           var subtypes = card.keywords.split(' - ');
@@ -11,8 +11,8 @@ app.filter('subtypes', function(CardMemoize){
           }).length;
         }
       });
-    }
+    };
     
     return CardMemoize.memo('subtypes', [cards,selected], cls);
-  }
+  };
 });

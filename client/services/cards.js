@@ -6,7 +6,7 @@ app.service('CardsSvc', function(ApiSvc, sideFilter){
     runner: [],
     display: [],
     loaded: false
-  }
+  };
     
   ApiSvc.cards().then(response => {
     
@@ -23,7 +23,7 @@ app.service('CardsSvc', function(ApiSvc, sideFilter){
     this.cards.loaded = true;
     
   }).catch(err => {
-    console.log(err)
+    console.log(err);
   });
  
 });

@@ -29,7 +29,7 @@ if (!Array.prototype.forEach) {
 
     var T, k;
 
-    if (this == null) {
+    if (this === null) {
       throw new TypeError(' this is null or not defined');
     }
     var O = Object(this);

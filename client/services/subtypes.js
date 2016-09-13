@@ -6,7 +6,7 @@ app.service('SubtypesSvc', function(ApiSvc, HelperSvc){
     all: [],
     selected: [],
     loaded: false
-  }
+  };
   
   this.setSubtypes = function() {
     this.subtypes.selected = [];
@@ -15,17 +15,17 @@ app.service('SubtypesSvc', function(ApiSvc, HelperSvc){
         this.subtypes.selected.push(subtype.value);
       }
     }, this);
-  }
+  };
   
   this.allSubtypes = function(){
     this.subtypes.all.forEach(this.helper.checkAll(true));
     this.setSubtypes();
-  }
+  };
   
   this.noSubtypes = function() {
     this.subtypes.all.forEach(this.helper.checkAll(false));
     this.setSubtypes();
-  }
+  };
   
   ApiSvc.subtypes().then(response => {
     
@@ -52,7 +52,7 @@ app.service('SubtypesSvc', function(ApiSvc, HelperSvc){
     this.subtypes.loaded = true;
     
   }).catch(err => {
-    console.log(err)
+    console.log(err);
   });
   
 });

@@ -5,21 +5,21 @@ app.service('SortSvc', function(TypesSvc, HelperSvc, CardsSvc){
  
   var typeSort = function(card) {
     return TypesSvc.typeOrder.indexOf(card.type_code);
-  }
+  };
   
   var numericSort = function (property) {
     return function(card) {
       return (typeof card[property] == 'undefined') ? 1 : card[property] * -1;
-    }
-  }
+    };
+  };
   
   var factionSort = function(card) {
     return card.faction_code.match('neutral') ? 'ZZZ' : card.faction_code;
-  }
+  };
   
   var subroutineSort = function(card) {
     return (card.subroutines == 'X') ? -100 : card.subroutines * -1;
-  }
+  };
   
   this.sort = {
     methods : {
@@ -98,7 +98,7 @@ app.service('SortSvc', function(TypesSvc, HelperSvc, CardsSvc){
         side: 'corprunner'
       }
     ]
-  }
+  };
 
   this.sort.current = this.sort.methods.faction;
   this.sort.currentShorthand = 'faction';
@@ -112,7 +112,7 @@ app.service('SortSvc', function(TypesSvc, HelperSvc, CardsSvc){
       this.changeSort('faction');
       return 'faction';
     }
-  }
+  };
   
   this.changeSort = function(value){
     this.sort.current = this.sort.methods[value];
@@ -121,5 +121,5 @@ app.service('SortSvc', function(TypesSvc, HelperSvc, CardsSvc){
       this.helper.shuffle(cards.corp);
       this.helper.shuffle(cards.runner);
     }
-  }
+  };
 });

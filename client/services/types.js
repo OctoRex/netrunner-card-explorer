@@ -11,7 +11,7 @@ app.service('TypesSvc', function(ApiSvc, HelperSvc){
     all: [],
     selected: [],
     loaded: false
-  }
+  };
   
   this.setTypes = function() {
     this.types.selected = [];
@@ -20,23 +20,23 @@ app.service('TypesSvc', function(ApiSvc, HelperSvc){
         this.types.selected.push(type.value);
       }
     }, this);
-  }
+  };
   
   this.allTypes = function(){
     this.types.all.forEach(this.helper.checkAll(true));
     this.setTypes();
-  }
+  };
   
   this.noTypes = function() {
     this.types.all.forEach(this.helper.checkAll(false));
     this.setTypes();
-  }
+  };
   
   this.find = function(code) {
     return this.types.all.find((type, index, array) => {
       return type.value == code;
     });
-  }
+  };
   
   ApiSvc.types().then(response => {
     
@@ -49,7 +49,7 @@ app.service('TypesSvc', function(ApiSvc, HelperSvc){
     });
     
     this.types.all.sort(function(a, b){
-      return typeOrder.indexOf(a.value) - typeOrder.indexOf(b.value)
+      return typeOrder.indexOf(a.value) - typeOrder.indexOf(b.value);
     });
   
     this.setTypes();
@@ -57,6 +57,6 @@ app.service('TypesSvc', function(ApiSvc, HelperSvc){
     this.types.loaded = true;
     
   }).catch(err => {
-    console.log(err)
+    console.log(err);
   });
 });

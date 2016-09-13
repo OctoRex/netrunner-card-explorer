@@ -10,8 +10,8 @@ app.service('SetsSvc', function(ApiSvc, HelperSvc){
     display: [],
     showSpoilers: false,
     loaded: false
-  }
-  
+  };
+
   this.setSets = function() {
     this.sets.selected = [];
     this.sets.display.forEach(function(set){
@@ -20,23 +20,23 @@ app.service('SetsSvc', function(ApiSvc, HelperSvc){
         this.sets.selected.push(set.value);
       }
     }, this);
-  }
+  };
   
   this.allSets = function(){
     this.sets.display.forEach(this.helper.checkAll(true));
     this.setSets();
-  }
+  };
   
   this.noSets = function() {
     this.sets.display.forEach(this.helper.checkAll(false));
     this.setSets();
-  }
+  };
   
   this.find = function(code) {
     return this.sets.all.find((set, index, array) => {
       return set.value == code;
     });
-  }
+  };
   
   this.setSpoilers = function(spoilers) {
     if (spoilers) {
@@ -48,7 +48,7 @@ app.service('SetsSvc', function(ApiSvc, HelperSvc){
       set.selected = spoilers;
     });
     this.setSets();
-  }
+  };
   
   ApiSvc.sets().then(response => {
     
@@ -75,7 +75,7 @@ app.service('SetsSvc', function(ApiSvc, HelperSvc){
     this.sets.loaded = true;
     
   }).catch(err => {
-    console.log(err)
+    console.log(err);
   });
 
 });

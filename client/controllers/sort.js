@@ -7,7 +7,7 @@ app.controller('SortCtrl', function($scope, CookiesSvc, SortSvc, SidesSvc){
   $scope.changeSort = function(){
     SortSvc.changeSort($scope.sort.currentShorthand);
     CookiesSvc.saveFilter('sort', $scope.sort.currentShorthand);
-  }
+  };
   
   $scope.sort.currentShorthand = CookiesSvc.getFilter('sort', 'faction');
   

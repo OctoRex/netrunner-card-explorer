@@ -15,23 +15,23 @@ app.service('FactionsSvc', function(ApiSvc, HelperSvc){
         this.factions.selected.push(faction.value);
       }
     }, this);
-  }
+  };
   
   this.allFactions = function(){
     this.factions.all.forEach(this.helper.checkAll(true));
     this.setFactions();
-  }
+  };
   
   this.noFactions = function() {
     this.factions.all.forEach(this.helper.checkAll(false));
     this.setFactions();
-  }
+  };
   
   this.find = function(code) {
     return this.factions.all.find((faction, index, array) => {
       return faction.value == code;
     });
-  }
+  };
   
   ApiSvc.factions().then(response => {
     
@@ -58,6 +58,6 @@ app.service('FactionsSvc', function(ApiSvc, HelperSvc){
     this.factions.loaded = true;
     
   }).catch(err => {
-    console.log(err)
+    console.log(err);
   });
 });

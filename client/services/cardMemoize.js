@@ -1,6 +1,6 @@
 app.service('CardMemoize', function(){
   
-  var $$cache = {}
+  var $$cache = {};
   
   function getHash(filter, args) {
     var str = JSON.stringify(args, function(key, value) {
@@ -23,6 +23,6 @@ app.service('CardMemoize', function(){
     }
     
     return $$cache[hash];
-  }
+  };
   
 });

@@ -5,5 +5,5 @@ app.filter('subtypeOptions', function(){
         return types.indexOf(type) != -1;
       }).length;
     });
-  }
+  };
 });
