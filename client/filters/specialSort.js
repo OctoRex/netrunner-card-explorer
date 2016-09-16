@@ -16,8 +16,8 @@ app.filter('specialSort', function(CardMemoize){
 					case 'influence':
 						return card.hasOwnProperty('faction_cost');
 					case 'subroutines':
+						return card.hasOwnProperty('subroutines');
 					case 'strength':
-						// only ICE has subroutines, so we can filter by strength here too
 						return card.hasOwnProperty('strength');
 					case 'cost':
 						return card.hasOwnProperty('cost');

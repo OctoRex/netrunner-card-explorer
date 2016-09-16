@@ -6,6 +6,8 @@ var app = express();
 // compress all requests
 app.use(compression());
 
+app.use(express.static('public'))
+
 // main route
 app.get('/', function(req, res) {
   res.status(200).sendFile('client/templates/index.html', { root: __dirname });
@@ -14,4 +16,4 @@ app.get('/', function(req, res) {
 // add the API endpoints
 app.use('/api', require('./server/routes/api'));
 
-app.listen(8888, '127.0.0.1');
+app.listen(8888);
