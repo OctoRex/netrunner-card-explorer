@@ -1,5 +1,13 @@
 # BlacKat Card Explorer
 
+### 1.5.0
+* Updated importer to use NRDB 2.0 API
+* Moved to node.js as server
+* Moved data to Mongo DB storage
+* Changed data loading to async http calls
+* Moved most content to page bottom to speed loading
+* Moved up two increments because what the hell it was a massive change!
+
 ### 1.3.1
 * Fixed bug with images - NRDB started using full url for imagesrc instead of relative
 
