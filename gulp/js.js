@@ -8,14 +8,14 @@ var babel = require('gulp-babel');
 
 gulp.task('js', function(){
   return gulp.src(['client/app.js', 'client/**/*.js'])
-    // .pipe(sourcemaps.init())
+    .pipe(sourcemaps.init())
     .pipe(concat('app.js'))
-    // .pipe(ngAnnotate())
-    // .pipe(babel({
-    //     presets: ['es2015']
-    // }))
-    // .pipe(uglify())
-    // .pipe(sourcemaps.write())
+    .pipe(ngAnnotate())
+    .pipe(babel({
+        presets: ['es2015']
+    }))
+    .pipe(uglify())
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest('public/js'));
 });
 
