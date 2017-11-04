@@ -1,5 +1,16 @@
 # BlacKat Card Explorer
 
+### Install
+
+This is setup to be developed on using vagrant. Get that gubbinz installed and then run 'vagrant up'
+in the root of the project. The DB will get imported each time and the server run, so you might find
+you have to manually kill the server if you're making changes to that (pkill node).
+
+Import DB: `node /var/www/server/import.js`
+Run server: `node /var/www/app.js`
+Build production: `gulp build`
+Build development: `gulp dev`
+
 ### 1.5.0
 * Updated importer to use NRDB 2.0 API
 * Moved to node.js as server

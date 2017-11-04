@@ -4,3 +4,7 @@ apt-get update
 apt-get install -y mongodb-org nginx
 
 service apache2 stop
+service nginx start
+
+node /var/www/server/import.js
+node /var/www/app.js &
