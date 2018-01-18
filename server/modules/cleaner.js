@@ -49,7 +49,7 @@ module.exports = {
         card.subroutines = subs;
       }
       
-      card.imagesrc = img.replace('{code}', card.code);
+      card.imagesrc = card.image_url || img.replace('{code}', card.code);
 
       return card.imagesrc && card.pack_code != 'draft';
     });
