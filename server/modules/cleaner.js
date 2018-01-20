@@ -1,7 +1,33 @@
 module.exports = {
   
   cards : function(cards, img) {
-    return cards.filter(function(card){
+
+    var cleanedCards = {};
+
+    function countSubroutines(card) {
+      // let's count the subroutines
+      var subsMatch = card.text.match(/\[subroutine\]/g);
+      
+      var addSubsMatch = card.text.match(/("|“)\[subroutine\]/g);
+      
+      var subs = 0;
+      
+      if (subsMatch) {
+        subs = subsMatch.length;
+        
+        if (addSubsMatch) {
+          if (addSubsMatch.length == subs) {
+            subs = 'X';
+          } else {
+            subs -= addSubsMatch.length;
+          }
+        }
+      }
+
+      return subs;
+    }
+
+    cards.filter(function(card){
       // sunny lebeau has no card text, so for this and others
       // it's simplist to just add the card text field as it's
       // not empty, it's just missing
@@ -26,33 +52,22 @@ module.exports = {
       delete card.quantity;
       
       if (card.hasOwnProperty('strength') && card.side_code == 'corp') {
-        
-        // let's count the subroutines
-        var subsMatch = card.text.match(/\[subroutine\]/g);
-        
-        var addSubsMatch = card.text.match(/("|“)\[subroutine\]/g);
-        
-        var subs = 0;
-        
-        if (subsMatch) {
-          subs = subsMatch.length;
-          
-          if (addSubsMatch) {
-            if (addSubsMatch.length == subs) {
-              subs = 'X';
-            } else {
-              subs -= addSubsMatch.length;
-            }
-          }
-        }
-        
-        card.subroutines = subs;
+        card.subroutines = countSubroutines(card);
       }
       
       card.imagesrc = card.image_url || img.replace('{code}', card.code);
 
+      card.pack_code = [card.pack_code];
+
       return card.imagesrc && card.pack_code != 'draft';
+    }).forEach(function(card){
+      if (!cleanedCards[card.title]) {
+        card.pack_code = card.pack_code.concat(cleanedCards[card.title]);
+      }
+      cleanedCards[card.title] = card;
     });
+
+    return Object.keys(cleanedCards).map(k => cleanedCards[k]);
   },
   
   sets : function(sets) {
