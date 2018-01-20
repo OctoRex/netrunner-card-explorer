@@ -1,6 +1,10 @@
 var db = require('./db');
 var fs = require('fs');
 var request = require('request');
+var url = require('url');
+var Promise = require('bluebird');
+var http = require('http');
+var https = require('https');
 
 module.exports = {
 
@@ -31,6 +35,50 @@ module.exports = {
           reject('No new data');
         }
       }); 
+    });
+  },
+
+  images: function(cards) {
+
+    var cardDir = __dirname + '/../../public/img/cards/';
+
+    function localImgPath(card) {
+      return cardDir + card.code + '.png';
+    }
+
+    function getProtocol(target_url) {
+      var target_url = url.parse(target_url);
+      return target_url.protocol === 'https:' ? https : http;
+    }
+    
+    function hasImg(card) {
+      return fs.existsSync(localImgPath(card));
+    }
+
+    function saveImg(card) {
+      var file = fs.createWriteStream(localImgPath(card));
+      var protocol = getProtocol(card.image_url);
+
+      return new Promise(function(resolve, reject) {
+        protocol.get(card.image_url, function(response) {
+          response.pipe(file);
+          resolve();
+        }).on('error', function(err) {
+          reject(err);
+        })
+      }).catch(function(err) {
+        console.error(err);
+      });;
+    }
+
+    return Promise.resolve(cards).each(function(card) {
+      if (!hasImg(card)) {
+        return saveImg(card);
+      } else {
+        return Promise.resolve();
+      }
+    }).then(function(){
+      return cards;
     });
   },
 

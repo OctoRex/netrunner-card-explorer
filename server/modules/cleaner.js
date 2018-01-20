@@ -1,27 +1,13 @@
-var http = require('http');
-var https = require('https');
-var fs = require('fs');
-var url = require('url');
-
 module.exports = {
   
   cards : function(cards, img) {
 
-    var cardDir = __dirname + '/../../public/img/cards/';
-
-    function saveImg(card) {
-      var localImg = cardDir + card.code + '.png';
-      if (!fs.existsSync(localImg)) {
-        var file = fs.createWriteStream(localImg);
-        var imgUrl = url.parse(card.image_url);
-        var protocol = imgUrl.protocol === 'https:' ? https : http;
-        var request = protocol.get(card.image_url, function(response) {
-          response.pipe(file);
-        });
-      }
-    }
-
     return cards.filter(function(card){
+
+      if (card.pack_code == 'draft') {
+        return false;
+      }
+
       // sunny lebeau has no card text, so for this and others
       // it's simplist to just add the card text field as it's
       // not empty, it's just missing
@@ -72,10 +58,7 @@ module.exports = {
       card.image_url = card.image_url || img.replace('{code}', card.code);
       card.imagesrc = '/img/cards/' + card.code + '.png';
 
-      if (card.imagesrc && card.pack_code != 'draft') {
-        saveImg(card);
-        return true;
-      }
+      return true;
     });
   },
   
