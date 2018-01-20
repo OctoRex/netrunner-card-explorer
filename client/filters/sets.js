@@ -9,7 +9,7 @@ app.filter('sets', function(CardMemoize){
       });
     };
     
-    // memoize it so we do'nt do it over and over again and slow the
+    // memoize it so we don't do it over and over again and slow the
     // app down
     return CardMemoize.memo('sets', [cards,selected], cls);
   };

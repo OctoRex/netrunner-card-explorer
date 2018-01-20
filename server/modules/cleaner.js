@@ -2,8 +2,30 @@ module.exports = {
   
   cards : function(cards, img) {
 
-    return cards.filter(function(card){
+    var cleanedCards = {};
 
+    function countSubroutines(card) {
+      // let's count the subroutines
+      var subsMatch = card.text.match(/\[subroutine\]/g);
+      var addSubsMatch = card.text.match(/("|“)\[subroutine\]/g);
+      var subs = 0;
+      
+      if (subsMatch) {
+        subs = subsMatch.length;
+        
+        if (addSubsMatch) {
+          if (addSubsMatch.length == subs) {
+            subs = 'X';
+          } else {
+            subs -= addSubsMatch.length;
+          }
+        }
+      }
+
+      return subs;
+    }
+
+    return cards.filter(function(card){
       if (card.pack_code == 'draft') {
         return false;
       }
@@ -32,31 +54,17 @@ module.exports = {
       delete card.quantity;
       
       if (card.hasOwnProperty('strength') && card.side_code == 'corp') {
-        
-        // let's count the subroutines
-        var subsMatch = card.text.match(/\[subroutine\]/g);
-        
-        var addSubsMatch = card.text.match(/("|“)\[subroutine\]/g);
-        
-        var subs = 0;
-        
-        if (subsMatch) {
-          subs = subsMatch.length;
-          
-          if (addSubsMatch) {
-            if (addSubsMatch.length == subs) {
-              subs = 'X';
-            } else {
-              subs -= addSubsMatch.length;
-            }
-          }
-        }
-        
-        card.subroutines = subs;
+        card.subroutines = countSubroutines(card);
       }
       
       card.image_url = card.image_url || img.replace('{code}', card.code);
       card.imagesrc = '/img/cards/' + card.code + '.png';
+
+      if (cleanedCards[card.title]) {
+        cleanedCards[card.title].hasBeenRevised = true;
+      }
+      card.hasBeenRevised = false;
+      cleanedCards[card.title] = card;
 
       return true;
     });
