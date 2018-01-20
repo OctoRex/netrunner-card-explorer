@@ -7,9 +7,7 @@ module.exports = {
     function countSubroutines(card) {
       // let's count the subroutines
       var subsMatch = card.text.match(/\[subroutine\]/g);
-      
       var addSubsMatch = card.text.match(/("|“)\[subroutine\]/g);
-      
       var subs = 0;
       
       if (subsMatch) {
@@ -27,7 +25,11 @@ module.exports = {
       return subs;
     }
 
-    cards.filter(function(card){
+    return cards.filter(function(card){
+      if (card.pack_code == 'draft') {
+        return false;
+      }
+
       // sunny lebeau has no card text, so for this and others
       // it's simplist to just add the card text field as it's
       // not empty, it's just missing
@@ -55,19 +57,17 @@ module.exports = {
         card.subroutines = countSubroutines(card);
       }
       
-      card.imagesrc = card.image_url || img.replace('{code}', card.code);
+      card.image_url = card.image_url || img.replace('{code}', card.code);
+      card.imagesrc = '/img/cards/' + card.code + '.png';
 
-      card.pack_code = [card.pack_code];
-
-      return card.imagesrc && card.pack_code != 'draft';
-    }).forEach(function(card){
-      if (!cleanedCards[card.title]) {
-        card.pack_code = card.pack_code.concat(cleanedCards[card.title]);
+      if (cleanedCards[card.title]) {
+        cleanedCards[card.title].hasBeenRevised = true;
       }
+      card.hasBeenRevised = false;
       cleanedCards[card.title] = card;
-    });
 
-    return Object.keys(cleanedCards).map(k => cleanedCards[k]);
+      return true;
+    });
   },
   
   sets : function(sets) {

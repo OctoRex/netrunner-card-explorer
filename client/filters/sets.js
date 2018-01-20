@@ -5,9 +5,7 @@ app.filter('sets', function(CardMemoize){
     // this is in the list (originally called set_code in the 1.0 NRDB API)
     var cls = function() {
       return cards.filter(function(card){
-        return card.pack_code.filter(function(pack_code) {
-          return selected.indexOf(pack_code) != -1;
-        }).length;
+        return selected.indexOf(card.pack_code) != -1;
       });
     };
     
