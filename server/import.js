@@ -12,7 +12,10 @@ var cards = importer.modifiedTime('cards').then(function(result) {
   var cards = cleaner.cards(data.data, data.imageUrlTemplate);
   // save 'em
   importer.save(cards, 'cards');
-  return data.data;
+  return importer.images(cards)
+    .then(function() {
+      return data.data;
+    });
 // then parse/save the subtypes data
 }).then(function(data) {
   var subtypes = cleaner.subtypes(data);
