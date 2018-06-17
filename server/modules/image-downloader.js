@@ -83,7 +83,7 @@ module.exports = (db, v) => {
                         failures = true;
                         console.error(e)
                     })
-            }, {concurrency: 1});
+            }, {concurrency: 3});
         })
         .then(() => {
             if (failures) {
