@@ -17,11 +17,14 @@ connection.open()
     if (args.datatype && args.datatype.length) {
       if (args.datatype === 'images') {
         return flusher.flushImages(db);
+      } else if (args.datatype === 'dataonly') {
+        return flusher.flushAllDataTypes(db)
       } else {
         return flusher.flushDataType(db, args.datatype);
       }
     } else {
-      return flusher.flushAllDataTypes(db);
+      return flusher.flushAllDataTypes(db)
+        .then(() => flusher.flushImages(db));
     }
   })
   .catch((err) => console.error(err.message))

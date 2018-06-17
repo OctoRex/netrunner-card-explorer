@@ -3,7 +3,12 @@ var fs = require('fs');
 
 module.exports.flushAllDataTypes = (db) => {
     return db.collection('modified')
-        .drop();
+        .drop()
+        .catch((err) => {
+            if (err.message !== 'ns not found') {
+                throw err; 
+            }
+        })
 }
 
 module.exports.flushDataType = (db, type) => {
@@ -13,7 +18,7 @@ module.exports.flushDataType = (db, type) => {
 
 module.exports.flushImages = (db) => {
     return new Promise((resolve, reject) => {
-        var cardDir = __dirname + '/../public/img/cards';
+        var cardDir = __dirname + '/../../public/img/cards';
         rimraf(cardDir, (err) => {
             if (err) {
                 reject(err);

@@ -1,6 +1,6 @@
 {
   "name": "netrunner-card-explorer",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "A convenient way to browser Netrunner Cards",
   "scripts": {
     "test": "node ./node_modules/mocha/bin/mocha"
