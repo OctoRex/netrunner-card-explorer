@@ -25,7 +25,7 @@ module.exports.cards = (db) => {
                 // we want to return true on the error regarless so we 
                 .catch(err => console.error(`Error with cards and subtypes ${err.message}`));
         })
-        .catch(console.log);
+        .catch(console.error);
 }
 
 module.exports.types = (db) => {
@@ -43,7 +43,7 @@ module.exports.types = (db) => {
                 .then(() => queries.markModified(db, 'types'))
                 .catch(err => console.error(`Error with types ${err.message}`));
         })
-        .catch(console.log);
+        .catch(console.error);
 }
 
 module.exports.sets = (db) => {
@@ -61,7 +61,7 @@ module.exports.sets = (db) => {
                 .then(() => queries.markModified(db, 'sets'))
                 .catch(err => console.error(`Error with sets ${err.message}`));
         })
-        .catch(console.log);
+        .catch(console.error);
 }
 
 module.exports.factions = (db) => {
@@ -79,5 +79,5 @@ module.exports.factions = (db) => {
             .then(() => queries.markModified(db, 'factions'))
             .catch(err => console.error(`Error with factions ${err.message}`));
         })
-        .catch(console.log);
+        .catch(console.error);
 }

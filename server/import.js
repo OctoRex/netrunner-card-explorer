@@ -23,11 +23,21 @@ connection.open()
       }
     } else {
       return Promise.all([
-        importer.cards(db), 
+        importer.cards(db),
+        importer.types(db),  
         importer.sets(db), 
         importer.factions(db)
-      ]);
+      ])
+      .then(() => {
+        return images(db);
+      });
     }
   })
-  .catch((err) => console.error(err.message))
-  .then(connection.close);
+  .catch((err) => {
+    console.error(err);
+    process.exit(1);
+  })
+  .then(() => {
+    connection.close();
+    process.exit(0);
+  });
