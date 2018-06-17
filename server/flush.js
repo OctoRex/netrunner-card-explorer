@@ -1,17 +1,32 @@
-var db = require('./modules/db');
-var rimraf = require('rimraf');
-var fs = require('fs');
+var connection = require('./modules/connection');
+var flusher = require('./modules/flusher');
+var argv = require('argv');
 
-var cardDir = __dirname + '/../public/img/cards';
-var images = process.argv.slice(2);
-
-db.collection('modified').drop((err, res) => {
-  db.close();
-  if (images != 'skipimages') {
-    rimraf(cardDir, function() {
-      if (!fs.existsSync(cardDir)){
-        fs.mkdirSync(cardDir);
-      }
-    });
+argv.option([
+  {
+      name: 'datatype',
+      short: 'd',
+      type: 'string'
   }
-});
+]);
+
+var args = argv.run().options;
+
+connection.open()
+  .then((db) => {
+    if (args.datatype && args.datatype.length) {
+      if (args.datatype === 'images') {
+        return flusher.flushImages(db);
+      } else if (args.datatype === 'dataonly') {
+        return flusher.flushAllDataTypes(db)
+      } else {
+        return flusher.flushDataType(db, args.datatype);
+      }
+    } else {
+      return flusher.flushAllDataTypes(db)
+        .then(() => flusher.flushImages(db));
+    }
+  })
+  .catch((err) => console.error(err.message))
+  .then(connection.close);
+

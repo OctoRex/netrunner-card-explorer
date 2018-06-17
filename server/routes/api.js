@@ -1,6 +1,6 @@
 var express = require('express'),
   router = express.Router(),
-  db = require('../modules/db'),
+  connection = require('../modules/connection'),
   responses = require('../modules/responses');
   
 /**
@@ -23,7 +23,7 @@ function getModifiedTime(req) {
  *  provided in the request (if there isn't one it will have be
  *  caught elsewhere
  */
-function compareToModifiedtime(cacheTime, collection) {
+function compareToModifiedtime(db, cacheTime, collection) {
   return new Promise((resolve, reject) => {
     // pull out the record from the DB
     db.collection('modified').findOne({'collection': collection}, (err, doc) => {
@@ -45,7 +45,7 @@ function compareToModifiedtime(cacheTime, collection) {
  *  name the collection name you want and this will get it
  *  for you, simple, just wrapping it in a promise
  */
-function getData(collectionName) {
+function getData(db, collectionName) {
   return new Promise((resolve, reject) => {
     db.collection(collectionName).find({}, {"_id": 0}).toArray((err, docs) => {
       if (err) reject(err);
@@ -57,17 +57,17 @@ function getData(collectionName) {
 /**
  *  A wrapper for adding it to the router as they're all the same really
  */
-function apiCall(router, endpoint, collection) {
+function apiCall(router, db, endpoint, collection) {
   router.get(endpoint, function(req, res) {   
     getModifiedTime(req).then(result => {
-      return compareToModifiedtime(result, collection);
+      return compareToModifiedtime(db, result, collection);
     // if no new results then show the cache
     }).then(result => {
       responses.notModified(res);
     // if that fails or some reason, or the data is new then
     // show the data
     }).catch(reason => {      
-      return getData(collection).then(docs => {
+      return getData(db, collection).then(docs => {
         
         // add the last modified header
         res.set('Last-Modified', new Date(reason.modified).toUTCString());
@@ -80,10 +80,14 @@ function apiCall(router, endpoint, collection) {
   });
 }
 
-apiCall(router, '/cards', 'cards');
-apiCall(router, '/factions', 'factions');
-apiCall(router, '/types', 'types');
-apiCall(router, '/subtypes', 'subtypes');
-apiCall(router, '/sets', 'sets');
+connection.open()
+  .then((db) => {
+    apiCall(router, db, '/cards', 'cards');
+    apiCall(router, db, '/factions', 'factions');
+    apiCall(router, db, '/types', 'types');
+    apiCall(router, db, '/subtypes', 'subtypes');
+    apiCall(router, db, '/sets', 'sets');    
+  })
+  .catch((err) => console.error(err.message))
 
 module.exports = router;

@@ -1,123 +1,130 @@
-var db = require('./db');
-var fs = require('fs');
-var request = require('request');
-var url = require('url');
-var Promise = require('bluebird');
-var http = require('http');
-var https = require('https');
+var nrdb = require('./nrdb');
+var queries = require('./import-queries');
+var cleaner = require('./cleaner');
 
-module.exports = {
-
-// pull the data from NRDB, using modified time if present
-  nrdb : function(url, modified) {
-
-    var headers = {};
-   
-    // if we provide this header then NRDB will let us know when there's
-    // no new data so we don't have to bother processing them
-    if (modified) {
-      headers['If-Modified-Since'] = new Date(modified).toUTCString();
-    }
-    
-    var options = {
-      url: 'https://netrunnerdb.com/api/2.0/public' + url,
-      headers: headers
-    };
-    
-    // return the request as a promise
-    return new Promise((resolve, reject) => {
-      request(options, function (error, response, body) {
-        if (!error && response.statusCode == 200 && body) {
-          console.log('New data from NRDB!');
-          resolve(body);
-        } else {
-          console.log('NRDB had no new data: ' + options.url + ' - ' + response.statusCode);
-          reject('No new data');
-        }
-      }); 
-    });
-  },
-
-  images: function(cards) {
-
-    var cardDir = __dirname + '/../../public/img/cards/';
-
-    function localImgPath(card) {
-      return cardDir + card.code + '.png';
-    }
-
-    function getProtocol(target_url) {
-      var target_url = url.parse(target_url);
-      return target_url.protocol === 'https:' ? https : http;
-    }
-    
-    function hasImg(card) {
-      return fs.existsSync(localImgPath(card));
-    }
-
-    function saveImg(card) {
-      var file = fs.createWriteStream(localImgPath(card));
-      var protocol = getProtocol(card.image_url);
-
-      return new Promise(function(resolve, reject) {
-        protocol.get(card.image_url, function(response) {
-          response.pipe(file);
-          resolve();
-        }).on('error', function(err) {
-          reject(err);
+module.exports.cards = (db, verbose) => {
+    // cards and subtypes (which needs to be parsed from cards)
+    // get the modified time
+    return queries.modifiedTime(db, 'cards')
+        .then((result) => {
+            if (verbose) {
+                console.log('Importing cards');
+            }
+            return nrdb('/cards', result);
         })
-      }).catch(function(err) {
-        console.error(err);
-      });;
-    }
+        .then((data) => {
+            return Promise.resolve(data)
+                // then parse and save the JSON
+                .then(JSON.parse)
+                .then((data) => {
+                    if (verbose) {
+                        console.log('Cleaning cards');
+                    }
+                    // allow the cleaner to filter out bits and bobs
+                    var cards = cleaner.cards(data.data, data.imageUrlTemplate);
+                    if (verbose) {
+                        console.log('Getting subtypes');
+                    }
+                    // then parse/save the subtypes data
+                    var subtypes = cleaner.subtypes(data.data);
+                    if (verbose) {
+                        console.log('Saving cards and subtypes');
+                    }
+                    return queries.save(db, cards, 'cards')
+                        .then(() =>  queries.save(db, subtypes, 'subtypes'));
+                })
+                // after both we can mark these as modified
+                .then(() => queries.markModified(db, 'cards'))
+                .then(() => queries.markModified(db, 'subtypes'))
+                // we want to return true on the error regarless so we 
+                .catch(err => console.error(`Error with cards and subtypes ${err.message}`));
+        })
+        .catch(console.error);
+}
 
-    return Promise.resolve(cards).each(function(card) {
-      if (!hasImg(card)) {
-        return saveImg(card);
-      } else {
-        return Promise.resolve();
-      }
-    }).then(function(){
-      return cards;
-    });
-  },
+module.exports.types = (db, verbose) => {
+    // types is a direct API call
+    return queries.modifiedTime(db, 'types')
+        .then((result) => {
+            if (verbose) {
+                console.log('Importing types');
+            }
+            return nrdb('/types', result);
+        })
+        .then((data) => {
+            return Promise.resolve(data)
+                // then parse and save the JSON
+                .then(JSON.parse)
+                .then((data) => {
+                    if (verbose) {
+                        console.log('Cleaning items');
+                    }
+                    var items = cleaner.types(data.data);
+                    if (verbose) {
+                        console.log('Saving items');
+                    }
+                    return queries.save(db, items, 'types');
+                })
+                .then(() => queries.markModified(db, 'types'))
+                .catch(err => console.error(`Error with types ${err.message}`));
+        })
+        .catch(console.error);
+}
 
-  // abstract away the saving
-  save : function(items, dataType) {
-    console.log('Adding ' + dataType);
-    var collection = db.collection(dataType);
-    // drop the collection first, so we don't end up with duplicates
-    collection.drop();
-    items.forEach((element, index) => {
-      collection.save(element);
-    });
-    return true;
-  },
+module.exports.sets = (db, verbose) => {
+    // types is a direct API call
+    return queries.modifiedTime(db, 'sets')
+        .then((result) => {
+            if (verbose) {
+                console.log('Importing packs');
+            }
+            return nrdb('/packs', result);
+        })
+        .then((data) => {
+            return Promise.resolve(data)
+                // then parse and save the JSON
+                .then(JSON.parse)
+                .then((data) => {
+                    if (verbose) {
+                        console.log('Cleaning sets');
+                    }
+                    var items = cleaner.sets(data.data);
+                    if (verbose) {
+                        console.log('Saving sets');
+                    }
+                    return queries.save(db, items, 'sets');
+                })
+                .then(() => queries.markModified(db, 'sets'))
+                .catch(err => console.error(`Error with sets ${err.message}`));
+        })
+        .catch(console.error);
+}
 
-  // this needs to be separate as the cards run needs to only mark cards
-  // as done once all 3 bits have been sorted
-  markModified : function(dataType) {
-    var modified = db.collection('modified');
-    return modified.save({'collection': dataType, 'modified': Date.now()});
-  },
-
-  // get the last time they were modified (null if none) so that we can
-  // save ourselves in import from NRDB
-  modifiedTime : function(dataType) {
-    var collection = db.collection('modified');
-    return new Promise((resolve, reject) => {
-      collection.findOne({collection: dataType}, function(err, doc) {
-        // either way it resolves because neither is a fail
-        if (doc && typeof doc.modified != 'undefined') {
-          resolve(doc.modified);
-        } else {
-          resolve(null);
-        }
-      });
-    });
-  },
-  
-  wrapUp : function() {
-    db.close();
-  }
-};
+module.exports.factions = (db, verbose) => {
+    // types is a direct API call
+    return queries.modifiedTime(db, 'factions')
+        .then((result) => {
+            if (verbose) {
+                console.log('Importing factions');
+            }
+            return nrdb('/factions', result);
+        })
+        .then((data) => {
+            return Promise.resolve(data)
+            // then parse and save the JSON
+            .then(JSON.parse)
+            .then((data) => {
+                if (verbose) {
+                    console.log('Cleaning factions');
+                }
+                var items = cleaner.factions(data.data);
+                if (verbose) {
+                    console.log('Saving factions');
+                }
+                return queries.save(db, items, 'factions');
+            })
+            .then(() => queries.markModified(db, 'factions'))
+            .catch(err => console.error(`Error with factions ${err.message}`));
+        })
+        .catch(console.error);
+}
