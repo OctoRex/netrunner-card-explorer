@@ -11,6 +11,9 @@ Run server: `node /var/www/app.js`
 Build production: `gulp build`
 Build development: `gulp dev`
 
+### 1.7.0
+* Improved importer and added verbose options
+
 ### 1.6.0
 * Blackat now downloads images upon import for self-serving
 * Duplicate cards from revised core no longer appear twice
