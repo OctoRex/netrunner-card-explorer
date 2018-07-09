@@ -1,0 +1,4 @@
+RewriteEngine on
+
+RewriteCond %{HTTP_HOST} !^blackat.co.uk$ [NC]
+RewriteRule .? http://blackat.co.uk%{REQUEST_URI} [R=301,L]
