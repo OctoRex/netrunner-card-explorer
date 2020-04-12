@@ -35,9 +35,7 @@ app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
                 icon(factionCode) + ' ' + faction.label);
               out.push(groups[factionCode]);
             }
-            if (!card.hasBeenRevised) {
-              groups[factionCode].cards.push(card);
-            }
+            groups[factionCode].cards.push(card);
             break;
             
           case 'sets':
@@ -57,9 +55,7 @@ app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
               groups[typeCode] = createGroup(typeCode, type.label);
               out.push(groups[typeCode]);
             }
-            if (!card.hasBeenRevised) {
-              groups[typeCode].cards.push(card);
-            }
+            groups[typeCode].cards.push(card);
             break;
             
           case 'influence':
@@ -70,9 +66,7 @@ app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
               groups[card.faction_cost] = createGroup(card.faction_cost, title);
               out.push(groups[card.faction_cost]);
             }
-            if (!card.hasBeenRevised) {
-              groups[card.faction_cost].cards.push(card);
-            }
+            groups[card.faction_cost].cards.push(card);
             break;
             
           case 'agenda':
@@ -86,9 +80,7 @@ app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
               groups[pts] = createGroup(pts, pluralString(pts, 'point'));
               out.push(groups[pts]);
             }
-            if (!card.hasBeenRevised) {
-              groups[pts].cards.push(card);
-            }
+            groups[pts].cards.push(card);
             break;
             
           case 'cost':
@@ -97,9 +89,7 @@ app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
               groups[cst] = createGroup(cst, cst + ' ' + icon('credit'));
               out.push(groups[cst]);
             }
-            if (!card.hasBeenRevised) {
-              groups[cst].cards.push(card);
-            }
+            groups[cst].cards.push(card);
             break;
             
           case 'strength':
@@ -109,9 +99,7 @@ app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
               groups[str] = createGroup(card.strength, title);
               out.push(groups[str]);
             }
-            if (!card.hasBeenRevised) {
-              groups[str].cards.push(card);
-            }
+            groups[str].cards.push(card);
             break;
             
           case 'subroutines':
@@ -120,9 +108,7 @@ app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
               groups[card.subroutines] = createGroup(card.subroutines, title);
               out.push(groups[card.subroutines]);
             }
-            if (!card.hasBeenRevised) {
-              groups[card.subroutines].cards.push(card);
-            }
+            groups[card.subroutines].cards.push(card);
             break;
             
           case 'trash':
@@ -131,9 +117,7 @@ app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
               groups[trs] = createGroup(trs, trs + ' ' + icon('trash'));
               out.push(groups[trs]);
             }
-            if (!card.hasBeenRevised) {
-              groups[trs].cards.push(card);
-            }
+            groups[trs].cards.push(card);
             break;
             
           case 'illustrator':
@@ -142,9 +126,7 @@ app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
               groups[ill] = createGroup(ill, ill);
               out.push(groups[ill]);
             }
-            if (!card.hasBeenRevised) {
-              groups[ill].cards.push(card);
-            }
+            groups[ill].cards.push(card);
             break;
             
           default:
@@ -152,9 +134,7 @@ app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
               groups.all = createGroup('default', '');
               out.push(groups.all);
             }
-            if (!card.hasBeenRevised) {
-              groups.all.cards.push(card);
-            }
+             groups.all.cards.push(card);
             break;
         }
       });

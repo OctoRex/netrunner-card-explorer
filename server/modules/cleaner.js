@@ -2,8 +2,6 @@ module.exports = {
   
   cards : function(cards, img) {
 
-    var cleanedCards = {};
-
     function countSubroutines(card) {
       // let's count the subroutines
       var subsMatch = card.text.match(/\[subroutine\]/g);
@@ -59,12 +57,6 @@ module.exports = {
       
       card.image_url = card.image_url || img.replace('{code}', card.code);
       card.imagesrc = '/img/cards/' + card.code + '.png';
-
-      if (cleanedCards[card.title]) {
-        cleanedCards[card.title].hasBeenRevised = true;
-      }
-      card.hasBeenRevised = false;
-      cleanedCards[card.title] = card;
 
       return true;
     });
