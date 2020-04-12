@@ -61,7 +61,8 @@ app.service('SetsSvc', function(ApiSvc, HelperSvc){
     this.sets.all.forEach(function(set){
       set.selected = true;
       this.sets.selected.push(set.value);
-      if (set.ffg_id) {
+      // one day after reign and reverie
+      if (new Date(set.available) < new Date("2018-06-29")) {
         this.sets.official.push(set);
       } else {
         this.sets.fanmade.push(set);
