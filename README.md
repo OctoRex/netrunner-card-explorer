@@ -11,6 +11,12 @@ Run server: `node /var/www/app.js`
 Build production: `gulp build`
 Build development: `gulp dev`
 
+### 1.8.0 
+* Replaced 'Show Spoilers' with 'Show Nisei Sets'
+
+### 1.7.1
+* Fixed bug with multiple versions of the same card
+
 ### 1.7.0
 * Improved importer and added verbose options
 

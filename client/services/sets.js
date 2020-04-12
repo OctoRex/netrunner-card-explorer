@@ -5,10 +5,10 @@ app.service('SetsSvc', function(ApiSvc, HelperSvc){
   this.sets = {
     all: [],
     selected: [],
-    available: [],
-    spoilers: [],
+    official: [],
+    fanmade: [],
     display: [],
-    showSpoilers: false,
+    showFanmade: false,
     loaded: false
   };
 
@@ -38,14 +38,14 @@ app.service('SetsSvc', function(ApiSvc, HelperSvc){
     });
   };
   
-  this.setSpoilers = function(spoilers) {
-    if (spoilers) {
+  this.setFanmade = function(fanmade) {
+    if (fanmade) {
       this.sets.display = this.sets.all;
     } else {
-      this.sets.display = this.sets.available;
+      this.sets.display = this.sets.official;
     }
-    this.sets.spoilers.forEach(function(set){
-      set.selected = spoilers;
+    this.sets.fanmade.forEach(function(set){
+      set.selected = fanmade;
     });
     this.setSets();
   };
@@ -61,10 +61,10 @@ app.service('SetsSvc', function(ApiSvc, HelperSvc){
     this.sets.all.forEach(function(set){
       set.selected = true;
       this.sets.selected.push(set.value);
-      if (set.available && now >= new Date(set.available)) {
-        this.sets.available.push(set);
+      if (set.ffg_id) {
+        this.sets.official.push(set);
       } else {
-        this.sets.spoilers.push(set);
+        this.sets.fanmade.push(set);
       }
     }, this);
     
