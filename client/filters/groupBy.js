@@ -22,7 +22,7 @@ app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
       var i = cards.findIndex(function(card) {
         return card.title == candidate.title
       });
-      if (i) {
+      if (i !== -1) {
         cards.splice(i, 1, candidate);
       } else {
         cards.push(candidate);
