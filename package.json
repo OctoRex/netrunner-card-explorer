@@ -3,7 +3,9 @@
   "version": "1.7.0",
   "description": "A convenient way to browser Netrunner Cards",
   "scripts": {
-    "test": "node ./node_modules/mocha/bin/mocha"
+    "test": "node ./node_modules/mocha/bin/mocha",
+    "build": "gulp build",
+    "build:dev": "gulp dev"
   },
   "repository": {
     "type": "git",
