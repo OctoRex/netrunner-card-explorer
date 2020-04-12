@@ -68,7 +68,7 @@ app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
               groups[typeCode] = createGroup(typeCode, type.label);
               out.push(groups[typeCode]);
             }
-            addOrReplaceCard(groups[typeCode], card);
+            addOrReplaceCard(groups[typeCode].cards, card);
             break;
             
           case 'influence':
@@ -79,7 +79,7 @@ app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
               groups[card.faction_cost] = createGroup(card.faction_cost, title);
               out.push(groups[card.faction_cost]);
             }
-            addOrReplaceCard(groups[card.faction_cost], card);
+            addOrReplaceCard(groups[card.faction_cost].cards, card);
             break;
             
           case 'agenda':
@@ -93,7 +93,7 @@ app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
               groups[pts] = createGroup(pts, pluralString(pts, 'point'));
               out.push(groups[pts]);
             }
-            addOrReplaceCard(groups[pts], card);
+            addOrReplaceCard(groups[pts].cards, card);
             break;
             
           case 'cost':
@@ -102,7 +102,7 @@ app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
               groups[cst] = createGroup(cst, cst + ' ' + icon('credit'));
               out.push(groups[cst]);
             }
-            addOrReplaceCard(groups[cst], card);
+            addOrReplaceCard(groups[cst].cards, card);
             break;
             
           case 'strength':
@@ -112,7 +112,7 @@ app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
               groups[str] = createGroup(card.strength, title);
               out.push(groups[str]);
             }
-            addOrReplaceCard(groups[str], card);
+            addOrReplaceCard(groups[str].cards, card);
             break;
             
           case 'subroutines':
@@ -121,7 +121,7 @@ app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
               groups[card.subroutines] = createGroup(card.subroutines, title);
               out.push(groups[card.subroutines]);
             }
-            addOrReplaceCard(groups[card.subroutines], card);
+            addOrReplaceCard(groups[card.subroutines].cards, card);
             break;
             
           case 'trash':
@@ -130,7 +130,7 @@ app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
               groups[trs] = createGroup(trs, trs + ' ' + icon('trash'));
               out.push(groups[trs]);
             }
-            addOrReplaceCard(groups[trs], card);
+            addOrReplaceCard(groups[trs].cards, card);
             break;
             
           case 'illustrator':
@@ -139,7 +139,7 @@ app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
               groups[ill] = createGroup(ill, ill);
               out.push(groups[ill]);
             }
-            addOrReplaceCard(groups[ill], card);
+            addOrReplaceCard(groups[ill].cards, card);
             break;
             
           default:
@@ -147,7 +147,7 @@ app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
               groups.all = createGroup('default', '');
               out.push(groups.all);
             }
-            addOrReplaceCard(groups.all, card);
+            addOrReplaceCard(groups.all.cards, card);
             break;
         }
       });
