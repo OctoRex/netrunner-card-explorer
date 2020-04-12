@@ -18,6 +18,19 @@ app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
       return num + ' ' + item + (num == 1 ? '' : 's');
     };
 
+    var addOrReplaceCard = function(cards, candidate) {
+      var i = cards.findIndex(function(card) {
+        return card.title == candidate.title
+      });
+      if (i) {
+        cards.splice(i, 1, candidate);
+      } else {
+        cards.push(candidate);
+      }
+
+      return cards;
+    }
+
     var cls = function() {
       
       var groups = {};
@@ -35,7 +48,7 @@ app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
                 icon(factionCode) + ' ' + faction.label);
               out.push(groups[factionCode]);
             }
-            groups[factionCode].cards.push(card);
+            addOrReplaceCard(groups[factionCode].cards, card);
             break;
             
           case 'sets':
@@ -55,7 +68,7 @@ app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
               groups[typeCode] = createGroup(typeCode, type.label);
               out.push(groups[typeCode]);
             }
-            groups[typeCode].cards.push(card);
+            addOrReplaceCard(groups[typeCode], card);
             break;
             
           case 'influence':
@@ -66,7 +79,7 @@ app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
               groups[card.faction_cost] = createGroup(card.faction_cost, title);
               out.push(groups[card.faction_cost]);
             }
-            groups[card.faction_cost].cards.push(card);
+            addOrReplaceCard(groups[card.faction_cost], card);
             break;
             
           case 'agenda':
@@ -80,7 +93,7 @@ app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
               groups[pts] = createGroup(pts, pluralString(pts, 'point'));
               out.push(groups[pts]);
             }
-            groups[pts].cards.push(card);
+            addOrReplaceCard(groups[pts], card);
             break;
             
           case 'cost':
@@ -89,7 +102,7 @@ app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
               groups[cst] = createGroup(cst, cst + ' ' + icon('credit'));
               out.push(groups[cst]);
             }
-            groups[cst].cards.push(card);
+            addOrReplaceCard(groups[cst], card);
             break;
             
           case 'strength':
@@ -99,7 +112,7 @@ app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
               groups[str] = createGroup(card.strength, title);
               out.push(groups[str]);
             }
-            groups[str].cards.push(card);
+            addOrReplaceCard(groups[str], card);
             break;
             
           case 'subroutines':
@@ -108,7 +121,7 @@ app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
               groups[card.subroutines] = createGroup(card.subroutines, title);
               out.push(groups[card.subroutines]);
             }
-            groups[card.subroutines].cards.push(card);
+            addOrReplaceCard(groups[card.subroutines], card);
             break;
             
           case 'trash':
@@ -117,7 +130,7 @@ app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
               groups[trs] = createGroup(trs, trs + ' ' + icon('trash'));
               out.push(groups[trs]);
             }
-            groups[trs].cards.push(card);
+            addOrReplaceCard(groups[trs], card);
             break;
             
           case 'illustrator':
@@ -126,7 +139,7 @@ app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
               groups[ill] = createGroup(ill, ill);
               out.push(groups[ill]);
             }
-            groups[ill].cards.push(card);
+            addOrReplaceCard(groups[ill], card);
             break;
             
           default:
@@ -134,7 +147,7 @@ app.filter('groupBy', function (CardMemoize, TypesSvc, SetsSvc, FactionsSvc) {
               groups.all = createGroup('default', '');
               out.push(groups.all);
             }
-             groups.all.cards.push(card);
+            addOrReplaceCard(groups.all, card);
             break;
         }
       });
